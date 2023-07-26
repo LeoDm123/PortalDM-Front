@@ -1,0 +1,85 @@
+/* LANDING PAGE */
+.logo {
+  width: 500px;
+  padding:10px;
+}
+
+.headerBg {
+  background-color: white;
+  opacity: 0.8;
+}
+
+  /* Login Form CSS */
+  body {
+    height: 100%;
+  }
+
+  .form-signin {
+    max-width: 330px;
+    padding: 1rem;
+  }
+
+  .form-signin .form-floating:focus-within {
+    z-index: 2;
+  }
+
+  .form-signin input[type="email"] {
+    margin-bottom: -1px;
+  }
+
+/* MAIN PAGE */
+.ActionButton {
+  width: 260px;
+}
+
+.ActionButtonListless {
+  width: 300px;
+}
+
+.ActionButtonIcon {
+  width: 0px;
+}
+
+
+/* GESTIONAR CLIENTES */
+.ListButtonLayout {
+}
+
+.ListContainer {
+  width: 400px;
+}
+
+  /* INGRESAR CLIENTE */
+  .AddClientButton {
+    width: 200px;
+  }
+
+  .CreateModal {
+    width: 60%;
+    height: 80%;
+  }
+
+  .CUITs {
+    width: 10%;
+    margin-top: 15px;
+  }
+
+  .CUITl {
+    width: 80%;
+    margin-inline: 10px;  
+    margin-top: 15px;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* MODIFICAR CLIENTE */
+ 
+
+/* GESTIONAR MATERIALES */
+.AddMatButton {
+  width: 200px;
+}
