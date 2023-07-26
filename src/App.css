@@ -83,3 +83,15 @@
 .AddMatButton {
   width: 200px;
 }
+
+.MatListColumnXL {
+  width: 300px;
+}
+
+.MatListColumnM {
+  width:200px;
+}
+
+.MatListColumnS {
+  width:150px;
+}

@@ -1,7 +1,6 @@
-import * as React from "react";
+import React from "react";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grow from "@mui/material/Grow";
 import Paper from "@mui/material/Paper";
@@ -11,38 +10,35 @@ import MenuList from "@mui/material/MenuList";
 import { useNavigate } from "react-router-dom";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
+interface MatFilterButtonProps {
+  onFilterChange: (selectedCategory: string) => void;
+}
+
 const options = [
-  "Mostrar Placas de MDF y Cantos",
-  "Mostrar Madera Maciza y Alistonados",
-  "Mostrar Deck y Revestimientos de WPC",
-  "Mostrar Insumos de Lustre",
-  "Mostrar Insumos Varios",
+  "Placas de MDF y Cantos",
+  "Madera Maciza y Alistonados",
+  "Deck y Revestimientos de WPC",
+  "Insumos de Lustre",
+  "Insumos Varios",
+  "Mostrar Todos",
 ];
 
-export default function MatFilterButton() {
+export default function MatFilterButton({
+  onFilterChange,
+}: MatFilterButtonProps) {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [selectedPage, setSelectedPage] = React.useState("");
-  const [filteredMats, setFilteredMats] = React.useState("");
-
-  const handleClick = () => {
-    console.info(`You clicked ${options[selectedIndex]}`);
-  };
 
   const FilteredCategory = (index: number) => {
-    if (index === 0) {
-      setFilteredMats("Mostrar Placas de MDF y Cantos");
-    } else if (index === 1) {
-      setFilteredMats("Mostrar Madera Maciza y Alistonados");
-    } else if (index === 2) {
-      setFilteredMats("Mostrar Deck y Revestimientos de WPC");
-    } else if (index === 3) {
-      setFilteredMats("Mostrar Insumos de Lustre");
+    setSelectedIndex(index);
+    if (index === 5) {
+      onFilterChange("");
     } else {
-      setFilteredMats("Mostrar Insumos Varios");
+      onFilterChange(options[index]);
     }
+    setOpen(false);
   };
 
   const handleMenuItemClick = (
@@ -51,7 +47,6 @@ export default function MatFilterButton() {
   ) => {
     FilteredCategory(index);
     setOpen(false);
-    console.log(filteredMats);
   };
 
   const handleToggle = () => {

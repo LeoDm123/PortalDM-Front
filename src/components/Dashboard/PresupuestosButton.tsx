@@ -46,7 +46,6 @@ export default function PresupuestosButton() {
   ) => {
     travelToPage(index);
     setOpen(false);
-    console.log(selectedPage);
   };
 
   const handleToggle = () => {
