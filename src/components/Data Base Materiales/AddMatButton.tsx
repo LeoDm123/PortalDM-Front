@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-import AgregarMat from "../../pages/Presupuestos/AgregarMat";
+import AgregarMat from "../../pages/Data Base Materiales/AgregarMat";
 
 export default function AddMatButton() {
   const navigate = useNavigate();

@@ -10,8 +10,10 @@ import PresupuestoPM from "./pages/Presupuestos/PresupuestoPM";
 import PresupuestoEM from "./pages/Presupuestos/PresupuestoEM";
 import PresupuestoExtras from "./pages/Presupuestos/PresupuestoExtras";
 import PresupuestoDeck from "./pages/Presupuestos/PresupuestoDeck";
-import BaseDatosMats from "./pages/Presupuestos/BaseDatosMats";
-import AgregarMat from "./pages/Presupuestos/AgregarMat";
+//Paginas de Base de Datos de Materiales
+import BaseDatosMats from "./pages/Data Base Materiales/BaseDatosMats";
+import AgregarMat from "./pages/Data Base Materiales/AgregarMat";
+import ModificarMat from "./pages/Data Base Materiales/ModificarMat";
 //Paginas de Pedidos
 import PedidoPerfiles from "./pages/Pedidos/PedidoPerfiles";
 import PedidoHerrajes from "./pages/Pedidos/PedidoHerrajes";
@@ -31,8 +33,10 @@ function App() {
         <Route path="/PresupuestoEM" element={<PresupuestoEM />} />
         <Route path="/PresupuestoDeck" element={<PresupuestoDeck />} />
         <Route path="/PresupuestoExtras" element={<PresupuestoExtras />} />
+        {/* BASE DE DATOS DE MATERIALES */}
         <Route path="/BaseDatosMats" element={<BaseDatosMats />} />
         <Route path="/AgregarMat" element={<AgregarMat />} />
+        <Route path="/ModificarMat" element={<ModificarMat />} />
         {/* PEDIDOS */}
         <Route path="/PedidoPerfiles" element={<PedidoPerfiles />} />
         <Route path="/PedidoHerrajes" element={<PedidoHerrajes />} />

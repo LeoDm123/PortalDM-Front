@@ -13,14 +13,14 @@ import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import MatList from "../../components/Presupuestos/MatList";
+import MatList from "../../components/Data Base Materiales/MatList";
 import "../../App.css";
-import MatMenuListItems from "../../components/Presupuestos/MatMenuList";
-import AddMatButton from "../../components/Presupuestos/AddMatButton";
+import MatMenuListItems from "../../components/Data Base Materiales/MatMenuList";
+import AddMatButton from "../../components/Data Base Materiales/AddMatButton";
+import ModifyMatButton from "../../components/Data Base Materiales/ModifyMatButton";
 
 const drawerWidth: number = 240;
 
@@ -152,7 +152,10 @@ const BaseDatosMats = () => {
           <Toolbar />
           <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
             <Grid container>
-              <AddMatButton />
+              <div className="d-flex">
+                <AddMatButton />
+                <ModifyMatButton />
+              </div>
               <Paper
                 sx={{
                   p: 2,
