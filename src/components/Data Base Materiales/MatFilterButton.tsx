@@ -67,6 +67,7 @@ export default function MatFilterButton({
   return (
     <React.Fragment>
       <ButtonGroup
+        className="me-5"
         variant="contained"
         ref={anchorRef}
         aria-label="split button"
