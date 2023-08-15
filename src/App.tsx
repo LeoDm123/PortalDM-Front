@@ -11,15 +11,19 @@ import PresupuestoEM from "./pages/Presupuestos/PresupuestoEM";
 import PresupuestoExtras from "./pages/Presupuestos/PresupuestoExtras";
 import PresupuestoDeck from "./pages/Presupuestos/PresupuestoDeck";
 //Paginas de Base de Datos de Materiales
-import BaseDatosMats from "./pages/Data Base Materiales/BaseDatosMats";
-import AgregarMat from "./pages/Data Base Materiales/AgregarMat";
-import ModificarMat from "./pages/Data Base Materiales/ModificarMat";
+import BaseDatosMats from "./pages/Data Base Materiales/MatsDB/BaseDatosMats";
+import AgregarMat from "./pages/Data Base Materiales/MatsDB/AgregarMat";
+import ModificarMat from "./pages/Data Base Materiales/MatsDB/ModificarMat";
+import DBPuertasPlacas from "./pages/Data Base Materiales/DBPuertasPlacas";
+import DBManoObra from "./pages/Data Base Materiales/DBManoObra";
+import DBInfoProduccion from "./pages/Data Base Materiales/ProdInfoDB/DBInfoProduccion";
 //Paginas de Pedidos
 import PedidoPerfiles from "./pages/Pedidos/PedidoPerfiles";
 import PedidoHerrajes from "./pages/Pedidos/PedidoHerrajes";
 import PedidoVidrios from "./pages/Pedidos/PedidoVidrios";
 //Paginas de Gestion de Clientes
 import GestionarClientes from "./pages/Clientes/GestionarClientes";
+import ClientesDB from "./pages/Clientes/ClientesDB";
 
 function App() {
   return (
@@ -37,12 +41,16 @@ function App() {
         <Route path="/BaseDatosMats" element={<BaseDatosMats />} />
         <Route path="/AgregarMat" element={<AgregarMat />} />
         <Route path="/ModificarMat" element={<ModificarMat />} />
+        <Route path="/DBPuertasPlacas" element={<DBPuertasPlacas />} />
+        <Route path="/DBManoObra" element={<DBManoObra />} />
+        <Route path="/DBInfoProduccion" element={<DBInfoProduccion />} />
         {/* PEDIDOS */}
         <Route path="/PedidoPerfiles" element={<PedidoPerfiles />} />
         <Route path="/PedidoHerrajes" element={<PedidoHerrajes />} />
         <Route path="/PedidoVidrios" element={<PedidoVidrios />} />
         {/* GESTION DE CLIENTES */}
         <Route path="/GestionarClientes" element={<GestionarClientes />} />
+        <Route path="/ClientesDB" element={<ClientesDB />} />
       </Routes>
     </Router>
   );

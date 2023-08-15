@@ -6,12 +6,13 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Title from "../../components/Title";
-import "../../App.css";
-import ModifyIconButton from "../../components/Data Base Materiales/ModifyIconButton";
-import SaveChangesButton from "../../components/Data Base Materiales/SaveChangesButton";
-import GoBackButton from "../../components/GoBackButton";
-import CloseButton from "../../components/CloseButton";
+import Title from "../../../components/Title";
+import "../../../App.css";
+import ModifyIconButton from "../../../components/Data Base Materiales/ModifyIconButton";
+import SaveChangesButton from "../../../components/Data Base Materiales/SaveChangesButton";
+import GoBackButton from "../../../components/GoBackButton";
+import CloseButton from "../../../components/CloseButton";
+import DeleteButton from "../../../components/DeleteButton";
 
 interface MatListProps {
   handleFilterChange: (selectedCategory: string) => void;
@@ -182,6 +183,7 @@ const ModificarMat = ({ open, onClose }) => {
     }
   };
 
+  // CODIGO PARA VOLVER A LA LISTA ANTERIORE DE LA VENTANA
   const handleGoBack = () => {
     setSelectedMaterial(null);
     setUpdatedDetail("");
@@ -191,6 +193,25 @@ const ModificarMat = ({ open, onClose }) => {
     setUpdatedLargo(NaN);
     setUpdatedEspesor(NaN);
     setUpdatedPrice(NaN);
+  };
+
+  //CODIGO PARA BORRAR MATERIAL SELECCIONADO
+  const handleDeletedMaterial = () => {
+    if (!selectedMaterial) {
+      return;
+    }
+
+    // Filter out the selected material from the rows array
+    const updatedRows = rows.filter(
+      (material: Material) => material.id !== selectedMaterial.id
+    );
+
+    // Save the updated rows array to localStorage
+    localStorage.setItem("materials", JSON.stringify(updatedRows));
+
+    // Reset the selectedMaterial and editableMaterial states
+    setSelectedMaterial(null);
+    setEditableMaterial(null);
   };
 
   return (
@@ -433,10 +454,7 @@ const ModificarMat = ({ open, onClose }) => {
                 </TableHead>
                 <TableBody>
                   {rows.map((material: Material) => (
-                    <TableRow
-                      key={material.id}
-                      onClick={() => handleSelectMaterial(material)}
-                    >
+                    <TableRow key={material.id}>
                       <TableCell className="text-start">
                         {material.matDetail}
                       </TableCell>
@@ -463,7 +481,14 @@ const ModificarMat = ({ open, onClose }) => {
                         })}
                       </TableCell>
                       <TableCell className="text-center">
-                        <ModifyIconButton />
+                        <div className="d-flex">
+                          <ModifyIconButton
+                            onPress={() => handleSelectMaterial(material)}
+                          />
+                          <div className="ms-2">
+                            <DeleteButton onDelete={handleDeletedMaterial} />
+                          </div>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -501,7 +526,6 @@ const ModificarMat = ({ open, onClose }) => {
                     <TableRow
                       className="align-items-center justify-content-center"
                       key={material.id}
-                      onClick={() => handleSelectMaterial(material)}
                     >
                       <TableCell className="text-start">
                         {material.matDetail}
@@ -528,7 +552,16 @@ const ModificarMat = ({ open, onClose }) => {
                           maximumFractionDigits: 2,
                         })}
                       </TableCell>
-                      <ModifyIconButton />
+                      <TableCell className="text-center">
+                        <div className="d-flex">
+                          <ModifyIconButton
+                            onPress={() => handleSelectMaterial(material)}
+                          />
+                          <div className="ms-2">
+                            <DeleteButton onDelete={handleDeletedMaterial} />
+                          </div>
+                        </div>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

@@ -9,39 +9,31 @@ import Title from "../Title";
 import "../../App.css";
 import Grid from "@mui/material/Grid";
 
-// Generate Order Data
-function createData(
-  id: number,
-  nombre: string,
-  sumaPres: number,
-  desc: number,
-  actualiz: number,
-  pagos: number,
-  extras: number
-) {
-  const IVA = sumaPres * 0.21;
-  const TotalConIVA = sumaPres + IVA;
-  const TotalConIVAyDesc = TotalConIVA - desc;
-  const PagarTotal = TotalConIVAyDesc + actualiz - pagos + extras;
+// Retrieve data from local storage
+const clientData = JSON.parse(localStorage.getItem("clients")) || [];
+
+//FORMATO DE MONEDA
+const formatCurrency = (value: number) => {
+  return new Intl.NumberFormat("es-AR", {
+    style: "currency",
+    currency: "ARS",
+    minimumFractionDigits: 2,
+  }).format(value);
+};
+
+// Generate Order Data for presupuestos
+function createPresupuestoRow(presupuesto) {
+  const { PresupuestoCodigo, CondicionFacturacion, Precio, IVA, Total } =
+    presupuesto;
 
   return {
-    id,
-    nombre,
-    sumaPres,
-    desc,
-    actualiz,
-    pagos,
-    extras,
+    PresupuestoCodigo,
+    CondicionFacturacion,
+    Precio,
     IVA,
-    TotalConIVA,
-    TotalConIVAyDesc,
-    PagarTotal,
+    Total,
   };
 }
-
-const rows = [
-  createData(0, "Nombre Apellido", 1500000, 50000, 30000, 700000, 10000),
-];
 
 function preventDefault(event: React.MouseEvent) {
   event.preventDefault();
@@ -51,64 +43,89 @@ export default function ListaClientes() {
   return (
     <Grid item xs={12} md={12} lg={12}>
       <React.Fragment>
-        <Title>Clientes Activos</Title>
+        <Title>Presupuestos Activos según Cliente</Title>
         <Table size="medium">
           <TableHead>
             <TableRow>
-              <TableCell className="text-center">Nombre</TableCell>
-              <TableCell className="text-center">Total s/ IVA</TableCell>
-              <TableCell className="text-center">IVA Total</TableCell>
-              <TableCell className="text-center">Total c/ IVA</TableCell>
-              <TableCell className="text-center">Total Descuentos</TableCell>
-              <TableCell className="text-center">Total a Pagar</TableCell>
-              <TableCell className="text-center">Total Actualización</TableCell>
-              <TableCell className="text-center">Total Pagado</TableCell>
-              <TableCell className="text-center">Total Extras</TableCell>
-              <TableCell className="text-center">Saldo Total</TableCell>
+              <TableCell className="text-center fw-bold">Nombre</TableCell>
+              <TableCell className="text-center fw-bold">Codigo</TableCell>
+              <TableCell className="text-center fw-bold">Facturac.</TableCell>
+              <TableCell className="text-center fw-bold">Precio</TableCell>
+              <TableCell className="text-center fw-bold">IVA</TableCell>
+              <TableCell className="text-center fw-bold">Total</TableCell>
+              <TableCell className="text-center fw-bold">
+                Total Pagado
+              </TableCell>
+              <TableCell className="text-center fw-bold">
+                Actualización
+              </TableCell>
+              <TableCell className="text-center fw-bold">Extras</TableCell>
+              <TableCell className="text-center fw-bold">Total Final</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.id}>
-                {/* Nombre Cliente */}
-                <TableCell className="text-center">{row.nombre}</TableCell>
-                {/* Suma de los presupuestos */}
-                <TableCell className="text-center">
-                  ${row.sumaPres.toLocaleString()}
-                </TableCell>
-                {/* IVA Total */}
-                <TableCell className="text-center">
-                  ${row.IVA.toLocaleString()}
-                </TableCell>
-                {/* Suma de los presupuestos + IVA */}
-                <TableCell className="text-center">
-                  ${row.TotalConIVA.toLocaleString()}
-                </TableCell>
-                {/* Suma de los descuentos */}
-                <TableCell className="text-center">
-                  ${row.desc.toLocaleString()}
-                </TableCell>
-                {/* Total a pagar con descuentos */}
-                <TableCell className="text-center">
-                  ${row.TotalConIVAyDesc.toLocaleString()}
-                </TableCell>
-                {/* Suma Actualizaciones */}
-                <TableCell className="text-center">
-                  ${row.actualiz.toLocaleString()}
-                </TableCell>
-                {/* Suma Pagos */}
-                <TableCell className="text-center">
-                  ${row.pagos.toLocaleString()}
-                </TableCell>
-                {/* Suma extras */}
-                <TableCell className="text-center">
-                  ${row.extras.toLocaleString()}
-                </TableCell>
-                {/* Total a Pagar */}
-                <TableCell className="text-center">
-                  ${row.PagarTotal.toLocaleString()}
-                </TableCell>
-              </TableRow>
+            {clientData.map((client, clientIndex) => (
+              <React.Fragment key={clientIndex}>
+                {client.Presupuestos.map((presupuesto, presupuestoIndex) => (
+                  <TableRow key={presupuestoIndex}>
+                    <TableCell className="text-center">
+                      {client.ClientName && client.ClientApellido
+                        ? `${client.ClientName} ${client.ClientApellido}`
+                        : "Nombre no disponible"}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {presupuesto.PresupuestoCodigo}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {presupuesto.CondicionFacturacion}%
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {formatCurrency(presupuesto.Precio)}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {formatCurrency(presupuesto.IVA)}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {formatCurrency(presupuesto.Total)}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {formatCurrency(
+                        presupuesto.pagos
+                          ? presupuesto.pagos
+                              .filter((pago) => pago.EstadoConcepto === 0)
+                              .reduce((sum, pago) => sum + pago.MontoPago, 0)
+                          : 0
+                      )}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {formatCurrency(
+                        presupuesto.pagos
+                          ? presupuesto.pagos
+                              .filter((pago) => pago.EstadoConcepto === 1)
+                              .reduce((sum, pago) => sum + pago.MontoPago, 0)
+                          : 0
+                      )}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {formatCurrency(
+                        presupuesto.pagos
+                          ? presupuesto.pagos
+                              .filter((pago) => pago.EstadoConcepto === 2)
+                              .reduce((sum, pago) => sum + pago.MontoPago, 0)
+                          : 0
+                      )}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {formatCurrency(
+                        presupuesto.Total -
+                          (presupuesto.TotalPagado || 0) +
+                          (presupuesto.Actualizacion || 0) +
+                          (presupuesto.Extras || 0)
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </React.Fragment>
             ))}
           </TableBody>
         </Table>

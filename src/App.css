@@ -1,7 +1,7 @@
 /* LANDING PAGE */
 .logo {
   width: 500px;
-  padding:10px;
+  padding: 10px;
 }
 
 .headerBg {
@@ -9,23 +9,23 @@
   opacity: 0.8;
 }
 
-  /* Login Form CSS */
-  body {
-    height: 100%;
-  }
+/* Login Form CSS */
+body {
+  height: 100%;
+}
 
-  .form-signin {
-    max-width: 330px;
-    padding: 1rem;
-  }
+.form-signin {
+  max-width: 330px;
+  padding: 1rem;
+}
 
-  .form-signin .form-floating:focus-within {
-    z-index: 2;
-  }
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
 
-  .form-signin input[type="email"] {
-    margin-bottom: -1px;
-  }
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+}
 
 /* MAIN PAGE */
 .ActionButton {
@@ -40,48 +40,72 @@
   width: 0px;
 }
 
-
 /* GESTIONAR CLIENTES */
-.ListButtonLayout {
-}
 
 .ListContainer {
   width: 400px;
 }
 
-  /* INGRESAR CLIENTE */
-  .AddClientButton {
-    width: 200px;
-  }
+.DatosList {
+  width: 500px;
+}
 
-  .CreateModal {
-    width: 60%;
-    height: 80%;
-  }
+.DeleteSwalPos {
+  z-index: 9000;
+}
 
-  .CUITs {
-    width: 10%;
-    margin-top: 15px;
-  }
+.ABMButtonLayout {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  .CUITl {
-    width: 80%;
-    margin-inline: 10px;  
-    margin-top: 15px;
-  }
+/* INGRESAR PRESUPUESTOS A CTA CLIENTE */
+.totalIvaContainer {
+  border-width: 2px;
+}
 
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+/* INGRESAR CLIENTE */
+.AddClientButton {
+  width: 200px;
+}
 
-  /* MODIFICAR CLIENTE */
- 
+.AddPresupuestoButton {
+  width: 220px;
+}
+
+.CreateModal {
+  width: 60%;
+  height: 80%;
+}
+
+.CUITs {
+  width: 10%;
+  margin-top: 15px;
+}
+
+.CUITl {
+  width: 80%;
+  margin-inline: 10px;
+  margin-top: 15px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* MODIFICAR CLIENTE */
 
 /* GESTIONAR MATERIALES */
-.AddMatButton {
+.AddButton {
   width: 200px;
+}
+
+.MatListColumnXXL {
+  width: 500px;
 }
 
 .MatListColumnXL {
@@ -89,11 +113,11 @@
 }
 
 .MatListColumnM {
-  width:200px;
+  width: 200px;
 }
 
 .MatListColumnS {
-  width:150px;
+  width: 150px;
 }
 
 .MatListModal {
@@ -125,4 +149,3 @@
   justify-content: space-between;
   align-items: center;
 }
-

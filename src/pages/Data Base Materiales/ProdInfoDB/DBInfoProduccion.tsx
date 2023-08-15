@@ -16,13 +16,14 @@ import Paper from "@mui/material/Paper";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import MatList from "../../components/Data Base Materiales/MatList";
-import "../../App.css";
-import MatMenuListItems from "../../components/Data Base Materiales/MatMenuList";
-import AddMatButton from "../../components/Data Base Materiales/AddMatButton";
-import ModifyMatButton from "../../components/Data Base Materiales/ModifyMatButton";
+import "../../../App.css";
+import MatMenuListItems from "../../../components/Data Base Materiales/MatMenuList";
+import GoBackButton from "../../../components/GoBackButton";
+import { useNavigate } from "react-router-dom";
+import AddProdInfoButton from "../../../components/Data Base Materiales/AddProdInfoButton";
+import InfoList from "../../../components/Data Base Materiales/InfoList";
 
-const drawerWidth: number = 240;
+const drawerWidth: number = 350;
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -75,11 +76,13 @@ const Drawer = styled(MuiDrawer, {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-const BaseDatosMats = () => {
-  const [open, setOpen] = React.useState(true);
+const DBInfoProduccion = () => {
+  const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const navigate = useNavigate();
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -110,8 +113,9 @@ const BaseDatosMats = () => {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Base de Datos de Materiales
+              Base de Datos de Información de Producción
             </Typography>
+            <GoBackButton handleClick={() => navigate(-1)} />
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
@@ -152,10 +156,8 @@ const BaseDatosMats = () => {
           <Toolbar />
           <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
             <Grid container>
-              <div className="d-flex">
-                <AddMatButton />
-                <ModifyMatButton />
-              </div>
+              <AddProdInfoButton />
+              <div className="d-flex"></div>
               <Paper
                 sx={{
                   p: 2,
@@ -165,7 +167,7 @@ const BaseDatosMats = () => {
                   width: "100%",
                 }}
               >
-                <MatList />
+                <InfoList />
               </Paper>
             </Grid>
           </Container>
@@ -175,4 +177,4 @@ const BaseDatosMats = () => {
   );
 };
 
-export default BaseDatosMats;
+export default DBInfoProduccion;

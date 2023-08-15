@@ -19,13 +19,9 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MainListItems from "../../components/Menu/MainListItems";
 import Paper from "@mui/material/Paper";
 import "../../App.css";
-import ListaClientes from "../../components/Clientes/ListaClientes";
-import AddClientButton from "../../components/Clientes/AddClientButton";
 import GoBackButton from "../../components/GoBackButton";
 import { useNavigate } from "react-router-dom";
-import OpenClientesDBButton from "../../components/Clientes/OpenClientsDBButton";
-import AddPresupuestoButton from "../../components/Clientes/AddPresupuestoButton";
-import AddPagoButton from "../../components/Clientes/AddPagoButton";
+import ClientesDBList from "../../components/Clientes/ClientesDBList";
 
 const drawerWidth: number = 240;
 
@@ -80,8 +76,8 @@ const Drawer = styled(MuiDrawer, {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-const GestionarClientes = () => {
-  const [open, setOpen] = React.useState(false);
+const ClientesDB = () => {
+  const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -159,13 +155,7 @@ const GestionarClientes = () => {
         >
           <Toolbar />
           <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
-            <Grid container>
-              <div className="d-flex">
-                <AddClientButton />
-                <OpenClientesDBButton />
-                <AddPresupuestoButton />
-                <AddPagoButton />
-              </div>
+            <Grid container spacing={3}>
               {/* Listado de Clientes */}
               <Grid item xs={12} md={12} lg={12}>
                 <Paper
@@ -176,7 +166,7 @@ const GestionarClientes = () => {
                     height: 550,
                   }}
                 >
-                  <ListaClientes />
+                  <ClientesDBList />
                 </Paper>
               </Grid>
             </Grid>
@@ -187,4 +177,4 @@ const GestionarClientes = () => {
   );
 };
 
-export default GestionarClientes;
+export default ClientesDB;

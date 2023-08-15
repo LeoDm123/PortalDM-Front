@@ -12,22 +12,19 @@ import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import MainListItems from "../../components/Menu/MainListItems";
-import Paper from "@mui/material/Paper";
+import MatList from "../../components/Data Base Materiales/MatList";
 import "../../App.css";
-import ListaClientes from "../../components/Clientes/ListaClientes";
-import AddClientButton from "../../components/Clientes/AddClientButton";
+import MatMenuListItems from "../../components/Data Base Materiales/MatMenuList";
+import AddMatButton from "../../components/Data Base Materiales/AddMatButton";
+import ModifyMatButton from "../../components/Data Base Materiales/ModifyMatButton";
 import GoBackButton from "../../components/GoBackButton";
 import { useNavigate } from "react-router-dom";
-import OpenClientesDBButton from "../../components/Clientes/OpenClientsDBButton";
-import AddPresupuestoButton from "../../components/Clientes/AddPresupuestoButton";
-import AddPagoButton from "../../components/Clientes/AddPagoButton";
 
-const drawerWidth: number = 240;
+const drawerWidth: number = 350;
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -80,7 +77,7 @@ const Drawer = styled(MuiDrawer, {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-const GestionarClientes = () => {
+const DBPuertasPlacas = () => {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -117,7 +114,7 @@ const GestionarClientes = () => {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Gestionar Clientes
+              Base de Datos de Materiales para Puertas Placas
             </Typography>
             <GoBackButton handleClick={() => navigate(-1)} />
             <IconButton color="inherit">
@@ -142,7 +139,7 @@ const GestionarClientes = () => {
           </Toolbar>
           <Divider />
           <List component="nav">
-            <MainListItems />
+            <MatMenuListItems />
           </List>
         </Drawer>
         <Box
@@ -161,24 +158,20 @@ const GestionarClientes = () => {
           <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
             <Grid container>
               <div className="d-flex">
-                <AddClientButton />
-                <OpenClientesDBButton />
-                <AddPresupuestoButton />
-                <AddPagoButton />
+                <AddMatButton />
+                <ModifyMatButton />
               </div>
-              {/* Listado de Clientes */}
-              <Grid item xs={12} md={12} lg={12}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 550,
-                  }}
-                >
-                  <ListaClientes />
-                </Paper>
-              </Grid>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                  height: 550,
+                  width: "100%",
+                }}
+              >
+                <MatList />
+              </Paper>
             </Grid>
           </Container>
         </Box>
@@ -187,4 +180,4 @@ const GestionarClientes = () => {
   );
 };
 
-export default GestionarClientes;
+export default DBPuertasPlacas;

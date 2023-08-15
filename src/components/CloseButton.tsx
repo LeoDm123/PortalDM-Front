@@ -9,8 +9,12 @@ interface CloseButtonProps {
 
 const CloseButton: React.FC<CloseButtonProps> = ({ handleClick }) => {
   return (
-    <ButtonGroup variant="contained" aria-label="split button">
-      <Button onClick={handleClick}>
+    <ButtonGroup
+      sx={{ borderRadius: 50 }}
+      variant="contained"
+      aria-label="split button"
+    >
+      <Button sx={{ borderRadius: 50 }} onClick={handleClick}>
         <CloseIcon />
       </Button>
     </ButtonGroup>

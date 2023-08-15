@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { useNavigate } from "react-router-dom";
 
-export default function MatsDatabaseButton() {
+export default function DatabaseButton() {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate("/BaseDatosMats");
@@ -13,7 +13,7 @@ export default function MatsDatabaseButton() {
     <React.Fragment>
       <ButtonGroup variant="contained" aria-label="split button">
         <Button className="ActionButtonListless" onClick={handleClick}>
-          Gestionar DB de Materiales
+          Gestionar Bases de Datos
         </Button>
       </ButtonGroup>
     </React.Fragment>

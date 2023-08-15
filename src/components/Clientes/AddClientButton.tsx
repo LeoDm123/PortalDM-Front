@@ -26,7 +26,11 @@ export default function AddClientButton() {
   return (
     <Grid item xs={12} md={12} lg={12}>
       <React.Fragment>
-        <ButtonGroup variant="contained" aria-label="split button">
+        <ButtonGroup
+          variant="contained"
+          aria-label="split button"
+          className="mb-3"
+        >
           <Button className="AddClientButton" onClick={handleClick}>
             Agregar Cliente
           </Button>

@@ -3,97 +3,69 @@ import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
 import { useState } from "react";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import swal from "sweetalert";
 
 const CrearCuenta = ({ open, onClose }) => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Prevent the default form submission behavior
-
-    // Retrieve the form values using the "name" attribute
-    const userName = (
-      event.currentTarget.elements.namedItem("nameInput") as HTMLInputElement
-    ).value;
-
-    const userApellido = (
-      event.currentTarget.elements.namedItem(
-        "ApellidoInput"
-      ) as HTMLInputElement
-    ).value;
-
-    const userIVACond = (
-      event.currentTarget.elements.namedItem("ivaInput") as HTMLInputElement
-    ).value;
-
-    const passwordConfirmation = (
-      event.currentTarget.elements.namedItem(
-        "passwordConfirmationInput"
-      ) as HTMLInputElement
-    ).value;
-
-    const userDNI = (
-      event.currentTarget.elements.namedItem("dniInput") as HTMLInputElement
-    ).value;
-
-    const userCUIT = (
-      event.currentTarget.elements.namedItem("cuitInput") as HTMLInputElement
-    ).value;
-
-    const userAdress = (
-      event.currentTarget.elements.namedItem("adressInput") as HTMLInputElement
-    ).value;
-
-    const userTel = (
-      event.currentTarget.elements.namedItem("telInput") as HTMLInputElement
-    ).value;
-
-    const userEmail = (
-      event.currentTarget.elements.namedItem("emailInput") as HTMLInputElement
-    ).value;
-
-    // Create a user object to save in local storage
-    const client = {
-      userName,
-      userApellido,
-      userIVACond,
-      passwordConfirmation,
-      userDNI,
-      userCUIT,
-      userAdress,
-      userTel,
-      userEmail,
-    };
-
-    // Save the user object to local storage
-    localStorage.setItem("client", JSON.stringify(client));
-
-    // Clear the form after submission (optional)
-    event.currentTarget.reset();
-    window.location.href = "/";
-  };
-
-  //xxxxxxxxxxxxxxxxxxx CONDICION DE IVA xxxxxxxxxxxxxxxxxxxxxxxxxx//
   const [selectedIVA, setSelectedIVA] = useState("");
+  const [cuit, setCuit] = useState("");
+
+  const SwAlert = () => {
+    swal({
+      title: "¡Exito!",
+      text: "El cliente se agregó correctamente",
+      icon: "success",
+    });
+  };
 
   const handleIVAChange = (e) => {
     setSelectedIVA(e.target.value);
   };
-  //xxxxxxxxxxxxxxxxxxx CUIT FORMAT xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
-  const [cuit, setCuit] = useState("");
 
   const handleCUITChange = (e) => {
-    // Remove any non-numeric characters from the input
     const inputNumber = e.target.value.replace(/\D/g, "");
-
-    // Pad the number with leading zeros to ensure a length of 11 characters
     const paddedNumber = inputNumber.padStart(11, "");
-
-    // Format the number with the desired pattern xx-xxxxxxxx-x
     const formattedCuit = `${paddedNumber.substring(
       0,
       2
     )}-${paddedNumber.substring(2, 10)}-${paddedNumber.charAt(10)}`;
-
-    // Update the state with the formatted value
     setCuit(formattedCuit);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const formElements = event.currentTarget.elements;
+
+    const ClientName = formElements["nameInput"].value;
+    const ClientApellido = formElements["apellidoInput"].value;
+    const ClientIVACond = selectedIVA;
+    const ClientDNI = formElements["dniInput"].value;
+    const ClientCUIT = cuit;
+    const ClientAdress = formElements["adressInput"].value;
+    const ClientTel = formElements["telInput"].value;
+    const ClientEmail = formElements["emailInput"].value;
+
+    const newClient = {
+      ClientName,
+      ClientApellido,
+      ClientIVACond,
+      ClientDNI,
+      ClientCUIT,
+      ClientAdress,
+      ClientTel,
+      ClientEmail,
+    };
+
+    // Retrieve existing clients from local storage
+    const existingClients = JSON.parse(localStorage.getItem("clients")) || [];
+
+    // Add the new client to the array
+    existingClients.push(newClient);
+
+    // Store the updated array of clients in local storage
+    localStorage.setItem("clients", JSON.stringify(existingClients));
+
+    SwAlert();
   };
 
   return (

@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import Title from "../../../components/Title";
+import CloseButton from "../../../components/CloseButton";
+import swal from "sweetalert";
 
 const AgregarMat = ({ open, onClose }) => {
   const [categoria, setCategoria] = useState("");
   const [materials, setMaterials] = useState([]);
+
+  const SwAlert = () => {
+    swal({
+      title: "¡Exito!",
+      text: "El material se agregó correctamente",
+      icon: "success",
+    });
+  };
 
   useEffect(() => {
     // Retrieve existing materials from local storage and parse the JSON data
@@ -82,10 +92,14 @@ const AgregarMat = ({ open, onClose }) => {
 
     // Clear the form after submission (optional)
     event.currentTarget.reset();
+    setCategoria("");
     // window.location.href = "/BaseDatosMats"; // If you redirect, the state will be reset anyway
 
     // Optionally, you can update the state with the new materials
     setMaterials(updatedMaterials);
+
+    //Alerta
+    SwAlert();
   };
 
   const handleCatChange = (e) => {
@@ -106,8 +120,8 @@ const AgregarMat = ({ open, onClose }) => {
       >
         <form id="registerForm" onSubmit={handleSubmit}>
           <div className="d-flex justify-content-between mb-2">
-            <h1 className="h3">Agregar Material</h1>
-            <HighlightOffIcon onClick={onClose} fontSize="large" />
+            <Title>Agergar Material</Title>
+            <CloseButton handleClick={onClose} />
           </div>
 
           {/* DETALLE */}

@@ -2,7 +2,7 @@ import PresupuestosButton from "./PresupuestosButton";
 import PedidosButton from "./PedidosButton";
 import "../../App.css";
 import ClientesButton from "./ClientesButton";
-import MatsDatabaseButton from "./MatsDatabaseButton";
+import DatabaseButton from "./DatabaseButton";
 
 export default function ButtonChart() {
   return (
@@ -20,7 +20,7 @@ export default function ButtonChart() {
       </div>
       <div>
         <div className="py-1">
-          <MatsDatabaseButton />
+          <DatabaseButton />
         </div>
       </div>
     </div>

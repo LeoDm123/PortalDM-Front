@@ -3,10 +3,9 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-import AgregarMat from "../../pages/Data Base Materiales/AgregarMat";
+import AgregarMat from "../../pages/Data Base Materiales/MatsDB/AgregarMat";
 
 export default function AddMatButton() {
-  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -17,12 +16,6 @@ export default function AddMatButton() {
     setModalOpen(false);
   };
 
-  const handleAddClient = () => {
-    // Your logic for adding a new client goes here
-    // For example, you can navigate to the Add Client page
-    navigate("/AgregarMat");
-  };
-
   return (
     <Grid item xs={12} md={12} lg={12}>
       <React.Fragment>
@@ -31,7 +24,7 @@ export default function AddMatButton() {
           variant="contained"
           aria-label="split button"
         >
-          <Button className="AddMatButton" onClick={handleClick}>
+          <Button className="AddButton" onClick={handleClick}>
             Agregar Material
           </Button>
         </ButtonGroup>

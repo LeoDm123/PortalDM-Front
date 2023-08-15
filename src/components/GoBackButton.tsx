@@ -10,9 +10,9 @@ interface GoBackButtonProps {
 
 const GoBackButton: React.FC<GoBackButtonProps> = ({ handleClick }) => {
   return (
-    <ButtonGroup className="me-5" variant="contained" aria-label="split button">
-      <Button onClick={handleClick}>
-        <ArrowBackIcon />
+    <ButtonGroup className="me-4" variant="contained" aria-label="split button">
+      <Button sx={{ backgroundColor: "#fff" }} onClick={handleClick}>
+        <ArrowBackIcon sx={{ color: "#6a6a6a" }} />
       </Button>
     </ButtonGroup>
   );
