@@ -22,10 +22,10 @@ const AddPresupuesto = ({ open, onClose }) => {
     e.preventDefault();
 
     const presCode = e.target.presCode.value;
-    const clientCUIT = selectedClient;
+    const clientDNI = selectedClient;
     const clientData = JSON.parse(localStorage.getItem("clients")) || [];
     const clientIndex = clientData.findIndex(
-      (client) => client.ClientCUIT === clientCUIT
+      (client) => client.ClientDNI === clientDNI
     );
 
     if (clientIndex !== -1) {
@@ -136,8 +136,8 @@ const AddPresupuesto = ({ open, onClose }) => {
                 Seleccionar cliente
               </option>
               {clientData.map((client, index) => (
-                <option key={index} value={client.ClientCUIT}>
-                  {client.ClientName} {client.ClientApellido}
+                <option key={index} value={client.ClientDNI}>
+                  {client.ClientApellido}, {client.ClientName}
                 </option>
               ))}
             </select>

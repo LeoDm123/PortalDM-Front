@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,10 +9,48 @@ import Title from "../Title";
 import "../../App.css";
 import Grid from "@mui/material/Grid";
 import VerClienteButton from "./VerClienteButton";
+import DeleteButton from "../DeleteButton";
+import Swal from "sweetalert2";
 
 export default function ClientesDBList() {
   // Retrieve data from local storage
-  const clientData = JSON.parse(localStorage.getItem("clients"));
+  const [clientData, setClientData] = useState(
+    JSON.parse(localStorage.getItem("clients")) || []
+  );
+
+  const handleDeleteCliente = (clientIndex) => {
+    Swal.fire({
+      title: "Confirm Deletion",
+      text: "Are you sure you want to delete this client?",
+      icon: "warning",
+      customClass: { container: "DeleteSwalPos" },
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const updatedClientData = [...clientData];
+
+        // Remove the client at the specified index
+        const deletedClient = updatedClientData.splice(clientIndex, 1)[0]; // Get the deleted client
+
+        localStorage.setItem("clients", JSON.stringify(updatedClientData));
+        // Trigger a state update or re-render to reflect the changes in the UI if needed
+
+        setClientData(updatedClientData);
+
+        Swal.fire({
+          title: "Deleted!",
+          text: `The client ${deletedClient.ClientName} has been deleted.`,
+          icon: "success",
+          customClass: {
+            container: "DeleteSwalPos", // Add your custom class here
+          },
+        });
+      }
+    });
+  };
 
   return (
     <Grid item xs={12} md={12} lg={12}>
@@ -60,7 +99,12 @@ export default function ClientesDBList() {
                   <TableCell className="text-center">
                     {client.ClientEmail}
                   </TableCell>
-                  <VerClienteButton />
+                  <div className="d-flex align-items-center">
+                    <div className="me-3">
+                      <VerClienteButton selectedClientIndex={index} />
+                    </div>
+                    <DeleteButton onDelete={() => handleDeleteCliente(index)} />
+                  </div>
                 </TableRow>
               ))}
           </TableBody>

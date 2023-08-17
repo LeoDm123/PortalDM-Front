@@ -10,8 +10,10 @@ import TableRow from "@mui/material/TableRow";
 import CloseButton from "../../components/CloseButton";
 import DeleteButton from "../../components/DeleteButton";
 import Swal from "sweetalert2";
+import List from "@mui/material/List";
+import { ListItem } from "@mui/material";
 
-const DetailsClientes = ({ open, onClose }) => {
+const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
   const [ClientData, setClientData] = useState(
     JSON.parse(localStorage.getItem("clients")) || []
   );
@@ -113,13 +115,13 @@ const DetailsClientes = ({ open, onClose }) => {
           <CloseButton handleClick={onClose} />
         </div>
 
-        <div className="d-flex mb-4">
-          <div className="border-3 border-end DatosList">
+        <div className="d-flex mb-4 DatosPagosContainer">
+          <div className="DatosList">
             <div className="d-flex justify-content-between mb-2">
               <h1 className="h3">Datos del Cliente</h1>
             </div>
 
-            {ClientData.map((client) => (
+            {ClientData[selectedClientIndex] && (
               <div>
                 <div className="d-flex w-100">
                   <div>
@@ -127,7 +129,8 @@ const DetailsClientes = ({ open, onClose }) => {
                   </div>
                   <div>
                     <p>
-                      {client.ClientName} {client.ClientApellido}
+                      {ClientData[selectedClientIndex].ClientName}{" "}
+                      {ClientData[selectedClientIndex].ClientApellido}
                     </p>
                   </div>
                 </div>
@@ -136,7 +139,7 @@ const DetailsClientes = ({ open, onClose }) => {
                     <p className="fw-bold">CUIT:&nbsp;</p>
                   </div>
                   <div>
-                    <p>{client.ClientCUIT}</p>
+                    <p>{ClientData[selectedClientIndex].ClientCUIT}</p>
                   </div>
                 </div>
                 <div className="d-flex w-100">
@@ -144,7 +147,7 @@ const DetailsClientes = ({ open, onClose }) => {
                     <p className="fw-bold">DNI:&nbsp;</p>
                   </div>
                   <div>
-                    <p>{client.ClientDNI}</p>
+                    <p>{ClientData[selectedClientIndex].ClientDNI}</p>
                   </div>
                 </div>
 
@@ -153,7 +156,7 @@ const DetailsClientes = ({ open, onClose }) => {
                     <p className="fw-bold">Dirección:&nbsp;</p>
                   </div>
                   <div>
-                    <p>{client.ClientAdress}</p>
+                    <p>{ClientData[selectedClientIndex].ClientAdress}</p>
                   </div>
                 </div>
                 <div className="d-flex w-100">
@@ -161,7 +164,7 @@ const DetailsClientes = ({ open, onClose }) => {
                     <p className="fw-bold">Email:&nbsp;</p>
                   </div>
                   <div>
-                    <p>{client.ClientEmail}</p>
+                    <p>{ClientData[selectedClientIndex].ClientEmail}</p>
                   </div>
                 </div>
                 <div className="d-flex w-100">
@@ -169,7 +172,7 @@ const DetailsClientes = ({ open, onClose }) => {
                     <p className="fw-bold">Condición de facturación:&nbsp;</p>
                   </div>
                   <div>
-                    <p>{client.ClientIVACond}</p>
+                    <p>{ClientData[selectedClientIndex].ClientIVACond}</p>
                   </div>
                 </div>
 
@@ -178,72 +181,77 @@ const DetailsClientes = ({ open, onClose }) => {
                     <p className="fw-bold">Teléfono:&nbsp;</p>
                   </div>
                   <div>
-                    <p>{client.ClientTel}</p>
+                    <p>{ClientData[selectedClientIndex].ClientTel}</p>
                   </div>
                 </div>
               </div>
-            ))}
+            )}
           </div>
 
-          <div className="w-100 mx-3">
+          <div className="w-100 mx-3 border-3 border-start">
             <div className="d-flex justify-content-between">
-              <h1 className="h3">Pagos</h1>
+              <h1 className="h3 ms-2">Pagos</h1>
             </div>
-            <Table size="medium">
-              <TableHead>
-                <TableRow>
-                  <TableCell className="text-center fw-bold">Codigo</TableCell>
-                  <TableCell className="text-center fw-bold">Fecha</TableCell>
-                  <TableCell className="text-center fw-bold">Monto</TableCell>
-                  <TableCell className="text-center fw-bold">
-                    Concepto
-                  </TableCell>
-                  <TableCell className="text-center fw-bold">
-                    Comprobante
-                  </TableCell>
-                  <TableCell className="text-center fw-bold">
-                    Comentarios
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {ClientData.map((client, clientIndex) =>
-                  client.Presupuestos?.map((presupuesto, presupuestoIndex) =>
-                    presupuesto.pagos?.map((pago, pagoIndex) => (
-                      <TableRow key={pagoIndex}>
-                        <TableCell className="text-center">
-                          {presupuesto.PresupuestoCodigo}
-                        </TableCell>
-                        <TableCell className="text-center">
-                          {pago.Fecha}
-                        </TableCell>
-                        <TableCell className="text-center">
-                          {formatCurrency(pago.MontoPago)}
-                        </TableCell>
-                        <TableCell className="text-center">
-                          {pago.ConceptoPago}
-                        </TableCell>
-                        <TableCell className="text-center">
-                          {pago.NumeroComprobante}
-                        </TableCell>
-                        <TableCell className="text-center">
-                          {pago.Comentarios}
-                        </TableCell>
-                        <DeleteButton
-                          onDelete={() =>
-                            handleDeletePago(
-                              clientIndex,
-                              presupuestoIndex,
-                              pagoIndex
-                            )
-                          }
-                        />
-                      </TableRow>
-                    ))
-                  )
-                )}
-              </TableBody>
-            </Table>
+            <List className="scrollable-paylist">
+              <Table size="medium">
+                <TableHead>
+                  <TableRow>
+                    <TableCell className="text-center fw-bold">
+                      Codigo
+                    </TableCell>
+                    <TableCell className="text-center fw-bold">Fecha</TableCell>
+                    <TableCell className="text-center fw-bold">Monto</TableCell>
+                    <TableCell className="text-center fw-bold">
+                      Concepto
+                    </TableCell>
+                    <TableCell className="text-center fw-bold">
+                      Comprobante
+                    </TableCell>
+                    <TableCell className="text-center fw-bold">
+                      Comentarios
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {ClientData[selectedClientIndex]?.Presupuestos?.map(
+                    (presupuesto, presupuestoIndex) =>
+                      presupuesto.pagos?.map((pago, pagoIndex) => (
+                        <TableRow key={pagoIndex}>
+                          <TableCell className="text-center">
+                            {presupuesto.PresupuestoCodigo}
+                          </TableCell>
+                          <TableCell className="text-center">
+                            {pago.Fecha}
+                          </TableCell>
+                          <TableCell className="text-center">
+                            {formatCurrency(pago.MontoPago)}
+                          </TableCell>
+                          <TableCell className="text-center">
+                            {pago.ConceptoPago}
+                          </TableCell>
+                          <TableCell className="text-center">
+                            {pago.NumeroComprobante}
+                          </TableCell>
+                          <TableCell className="text-center">
+                            {pago.Comentarios}
+                          </TableCell>
+                          <TableCell className="text-center">
+                            <DeleteButton
+                              onDelete={() =>
+                                handleDeletePago(
+                                  selectedClientIndex,
+                                  presupuestoIndex,
+                                  pagoIndex
+                                )
+                              }
+                            />
+                          </TableCell>
+                        </TableRow>
+                      ))
+                  )}
+                </TableBody>
+              </Table>
+            </List>
           </div>
         </div>
 
@@ -251,30 +259,32 @@ const DetailsClientes = ({ open, onClose }) => {
           <div className="d-flex justify-content-between mt-3">
             <h1 className="h3">Presupuestos</h1>
           </div>
-          <Table size="medium">
-            <TableHead>
-              <TableRow>
-                <TableCell className="text-center fw-bold">Codigo</TableCell>
-                <TableCell className="text-center fw-bold">Facturac.</TableCell>
-                <TableCell className="text-center fw-bold">Precio</TableCell>
-                <TableCell className="text-center fw-bold">IVA</TableCell>
-                <TableCell className="text-center fw-bold">Total</TableCell>
-                <TableCell className="text-center fw-bold">
-                  Total Pagado
-                </TableCell>
-                <TableCell className="text-center fw-bold">
-                  Actualización
-                </TableCell>
-                <TableCell className="text-center fw-bold">Extras</TableCell>
-                <TableCell className="text-center fw-bold">
-                  Total Final
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {ClientData.map((client, clientIndex) => (
-                <React.Fragment key={clientIndex}>
-                  {client.Presupuestos?.map((presupuesto, presupuestoIndex) => (
+          <div className="scrollable-list">
+            <Table size="medium">
+              <TableHead>
+                <TableRow>
+                  <TableCell className="text-center fw-bold">Codigo</TableCell>
+                  <TableCell className="text-center fw-bold">
+                    Facturac.
+                  </TableCell>
+                  <TableCell className="text-center fw-bold">Precio</TableCell>
+                  <TableCell className="text-center fw-bold">IVA</TableCell>
+                  <TableCell className="text-center fw-bold">Total</TableCell>
+                  <TableCell className="text-center fw-bold">
+                    Total Pagado
+                  </TableCell>
+                  <TableCell className="text-center fw-bold">
+                    Actualización
+                  </TableCell>
+                  <TableCell className="text-center fw-bold">Extras</TableCell>
+                  <TableCell className="text-center fw-bold">
+                    Total Final
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {ClientData[selectedClientIndex]?.Presupuestos?.map(
+                  (presupuesto, presupuestoIndex) => (
                     <TableRow key={presupuestoIndex}>
                       <TableCell className="text-center">
                         {presupuesto.PresupuestoCodigo}
@@ -347,17 +357,22 @@ const DetailsClientes = ({ open, onClose }) => {
                               : 0)
                         )}
                       </TableCell>
-                      <DeleteButton
-                        onDelete={() =>
-                          handleDeletePresupuesto(clientIndex, presupuestoIndex)
-                        }
-                      />
+                      <TableCell className="text-center">
+                        <DeleteButton
+                          onDelete={() =>
+                            handleDeletePresupuesto(
+                              selectedClientIndex,
+                              presupuestoIndex
+                            )
+                          }
+                        />
+                      </TableCell>
                     </TableRow>
-                  ))}
-                </React.Fragment>
-              ))}
-            </TableBody>
-          </Table>
+                  )
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </React.Fragment>
       </Paper>
     </Modal>

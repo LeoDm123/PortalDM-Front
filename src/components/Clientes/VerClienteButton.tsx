@@ -4,7 +4,7 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DetailsClientes from "../../pages/Clientes/DetailsClientes";
 
-export default function VerClienteButton() {
+export default function VerClienteButton({ selectedClientIndex }) {
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -29,7 +29,11 @@ export default function VerClienteButton() {
         <Button onClick={handleClick}>
           <VisibilityIcon />
         </Button>
-        <DetailsClientes open={modalOpen} onClose={handleCloseModal} />
+        <DetailsClientes
+          open={modalOpen}
+          onClose={handleCloseModal}
+          selectedClientIndex={selectedClientIndex}
+        />
       </ButtonGroup>
     </div>
   );

@@ -34,16 +34,16 @@ const CrearCuenta = ({ open, onClose }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const formElements = event.currentTarget.elements;
+    const form = event.currentTarget;
 
-    const ClientName = formElements["nameInput"].value;
-    const ClientApellido = formElements["apellidoInput"].value;
+    const ClientName = form.elements["nameInput"].value;
+    const ClientApellido = form.elements["apellidoInput"].value;
     const ClientIVACond = selectedIVA;
-    const ClientDNI = formElements["dniInput"].value;
+    const ClientDNI = form.elements["dniInput"].value;
     const ClientCUIT = cuit;
-    const ClientAdress = formElements["adressInput"].value;
-    const ClientTel = formElements["telInput"].value;
-    const ClientEmail = formElements["emailInput"].value;
+    const ClientAdress = form.elements["adressInput"].value;
+    const ClientTel = form.elements["telInput"].value;
+    const ClientEmail = form.elements["emailInput"].value;
 
     const newClient = {
       ClientName,
@@ -64,6 +64,9 @@ const CrearCuenta = ({ open, onClose }) => {
 
     // Store the updated array of clients in local storage
     localStorage.setItem("clients", JSON.stringify(existingClients));
+
+    form.reset();
+    setCuit("");
 
     SwAlert();
   };

@@ -54,6 +54,15 @@ body {
   z-index: 9000;
 }
 
+.DatosPagosContainer {
+  height: 360px;
+}
+
+.scrollable-paylist {
+  height: 300px;
+  overflow: auto;
+}
+
 .ABMButtonLayout {
   display: flex;
   flex-direction: row;

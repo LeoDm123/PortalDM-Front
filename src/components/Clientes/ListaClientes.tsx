@@ -66,7 +66,7 @@ export default function ListaClientes() {
           <TableBody>
             {clientData.map((client, clientIndex) => (
               <React.Fragment key={clientIndex}>
-                {client.Presupuestos.map((presupuesto, presupuestoIndex) => (
+                {client.Presupuestos?.map((presupuesto, presupuestoIndex) => (
                   <TableRow key={presupuestoIndex}>
                     <TableCell className="text-center">
                       {client.ClientName && client.ClientApellido
@@ -118,9 +118,21 @@ export default function ListaClientes() {
                     <TableCell className="text-center">
                       {formatCurrency(
                         presupuesto.Total -
-                          (presupuesto.TotalPagado || 0) +
-                          (presupuesto.Actualizacion || 0) +
-                          (presupuesto.Extras || 0)
+                          (presupuesto.pagos
+                            ? presupuesto.pagos
+                                .filter((pago) => pago.EstadoConcepto === 0)
+                                .reduce((sum, pago) => sum + pago.MontoPago, 0)
+                            : 0) +
+                          (presupuesto.pagos
+                            ? presupuesto.pagos
+                                .filter((pago) => pago.EstadoConcepto === 1)
+                                .reduce((sum, pago) => sum + pago.MontoPago, 0)
+                            : 0) +
+                          (presupuesto.pagos
+                            ? presupuesto.pagos
+                                .filter((pago) => pago.EstadoConcepto === 2)
+                                .reduce((sum, pago) => sum + pago.MontoPago, 0)
+                            : 0)
                       )}
                     </TableCell>
                   </TableRow>
