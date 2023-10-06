@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import AddPago from "../../../pages/Clientes/Modals/AddPago";
 
-export default function AddPagoButton() {
+export default function AddPagoButton({ onPay }) {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = React.useState(false);
 
@@ -29,7 +29,7 @@ export default function AddPagoButton() {
             Ingresar Pago
           </Button>
         </ButtonGroup>
-        <AddPago open={modalOpen} onClose={handleCloseModal} />
+        <AddPago open={modalOpen} onClose={handleCloseModal} onPay={onPay} />
       </React.Fragment>
     </Grid>
   );

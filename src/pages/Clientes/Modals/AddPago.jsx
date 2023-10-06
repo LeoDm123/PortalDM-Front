@@ -1,155 +1,132 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import swal from "sweetalert";
+import serverAPI from "../../../api/serverAPI";
 
-const AddPago = ({ open, onClose }) => {
+const AddPago = ({ open, onClose, onPay }) => {
+  const [ClientData, setClientData] = useState([]);
   const [selectedClient, setSelectedClient] = useState("");
-  const [selectedPresupuesto, setSelectedPresupuesto] = useState("");
-  const [pago, setPago] = useState("");
-  const [pagoCondicion, setPagoCondicion] = useState("");
-  const [pagoConcepto, setPagoConcepto] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
-  const [comprobante, setComprobante] = useState("");
-  const [comments, setComments] = useState("");
+  const [PresupuestoCodigo, setPresupuestoCodigo] = useState("");
+  const [PagoMonto, setPagoMonto] = useState(0);
+  const [PagoCondicion, setPagoCondicion] = useState("");
+  const [PagoConcepto, setPagoConcepto] = useState("");
+  const [FechaPago, setFechaPago] = useState("");
+  const [PagoComprobante, setPagoComprobante] = useState("");
+  const [Comentarios, setComentarios] = useState("");
   const [showResumen, setShowResumen] = useState(false);
+  const [ClientCUIT, setClientCUIT] = useState("");
 
-  const clientData = JSON.parse(localStorage.getItem("clients")) || [];
+  useEffect(() => {
+    fetchClientsData();
+  }, []);
 
-  const handleClientChange = (e) => {
-    const newValue = e.target.value;
-    setSelectedClient(newValue);
-    setSelectedPresupuesto(""); // Reset selectedPresupuesto when client changes
-  };
-
-  const handlePresupuestoChange = (e) => {
-    setSelectedPresupuesto(e.target.value);
-  };
-
-  const handleDateChange = (e) => {
-    setSelectedDate(e.target.value);
-  };
-
-  const handlePagoCondicionChange = (e) => {
-    setPagoCondicion(e.target.value);
-  };
-
-  const handlePagoConceptoChange = (e) => {
-    setPagoConcepto(e.target.value);
-  };
-
-  const handleComprobanteChange = (e) => {
-    setComprobante(e.target.value);
-  };
-
-  const handleCommentsChange = (e) => {
-    setComments(e.target.value);
-  };
-
-  const handlePagoChange = (e) => {
-    const newPago = parseFloat(e.target.value);
-    setPago(newPago.toString()); // Store as number, not formatted string
-  };
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-
-    const presCode = selectedPresupuesto;
-    const clientCUIT = selectedClient;
-    const clientIndex = clientData.findIndex(
-      (client) => client.ClientCUIT === clientCUIT
-    );
-
-    if (clientIndex !== -1) {
-      const selectedPresupuestoIndex = clientData[
-        clientIndex
-      ].Presupuestos.findIndex(
-        (presupuesto) => presupuesto.PresupuestoCodigo === presCode
-      );
-
-      if (selectedPresupuestoIndex !== -1) {
-        if (
-          !clientData[clientIndex].Presupuestos[selectedPresupuestoIndex].pagos
-        ) {
-          clientData[clientIndex].Presupuestos[selectedPresupuestoIndex].pagos =
-            [];
-        }
-
-        let EstadoConcepto = 0; // Default value
-
-        if (pagoConcepto === "Actualización") {
-          EstadoConcepto = 1;
-        } else if (pagoConcepto === "Extra") {
-          EstadoConcepto = 2;
-        }
-
-        const newPago = {
-          Fecha: selectedDate,
-          CondicionPago: pagoCondicion,
-          ConceptoPago: pagoConcepto,
-          EstadoConcepto: EstadoConcepto,
-          MontoPago: parseFloat(pago),
-          NumeroComprobante: comprobante,
-          Comentarios: comments,
-        };
-
-        clientData[clientIndex].Presupuestos[
-          selectedPresupuestoIndex
-        ].pagos.push(newPago);
-
-        localStorage.setItem("clients", JSON.stringify(clientData));
-
-        SwAlert();
-
-        setSelectedClient("");
-        setPago("");
-        setSelectedPresupuesto("");
-        setPagoCondicion("");
-        setPagoConcepto("");
-        setComprobante("");
-        setComments("");
-        setSelectedDate("");
-      } else {
-        console.error("Selected presupuesto not found.");
-      }
-    } else {
-      console.error("Selected client not found.");
+  const fetchClientsData = async () => {
+    try {
+      const resp = await serverAPI.get("/clients/obtenerClientes");
+      setClientData(resp.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
   };
 
-  const SwAlert = () => {
+  const crearPago = async (
+    ClientCUIT,
+    PresupuestoCodigo,
+    FechaPago,
+    PagoCondicion,
+    PagoConcepto,
+    PagoComprobante,
+    PagoMonto,
+    Comentarios
+  ) => {
+    try {
+      const resp = await serverAPI.post("/pay/crearPago", {
+        ClientCUIT,
+        PresupuestoCodigo,
+        FechaPago,
+        PagoCondicion,
+        PagoConcepto,
+        PagoComprobante,
+        PagoMonto,
+        Comentarios,
+      });
+
+      if (
+        resp.data.msg === "El código de presupuesto no se encuentra registrado"
+      ) {
+        SwAlertError();
+      } else {
+        onPay();
+        SwAlertOk();
+        onClose();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    const monto = parseFloat(PagoMonto);
+
+    if (
+      selectedClient === "" ||
+      PresupuestoCodigo === "" ||
+      FechaPago === "" ||
+      PagoCondicion === "" ||
+      PagoConcepto === "" ||
+      PagoComprobante === "" ||
+      isNaN(monto) ||
+      monto <= 0
+    ) {
+      return swal({
+        title: "¡Error!",
+        text: "Todos los campos son obligatorios",
+        icon: "error",
+      });
+    }
+
+    crearPago(
+      ClientCUIT,
+      PresupuestoCodigo,
+      FechaPago,
+      PagoCondicion,
+      PagoConcepto,
+      PagoComprobante,
+      monto,
+      Comentarios
+    );
+
+    setSelectedClient("");
+    setClientCUIT("");
+    setPresupuestoCodigo("");
+    setFechaPago("");
+    setPagoCondicion("");
+    setPagoConcepto("");
+    setPagoComprobante("");
+    setPagoMonto(0);
+    setComentarios("");
+  };
+
+  const SwAlertOk = () => {
     swal({
       title: "¡Exito!",
-      text: "El presupuesto se agregó correctamente al cliente",
+      text: "El pago se agregó correctamente al presupuesto",
       icon: "success",
     });
   };
 
-  const handleAgregarPagoClick = () => {
-    // Check if all required fields are completed
-    if (
-      selectedClient &&
-      selectedPresupuesto &&
-      selectedDate &&
-      pagoCondicion &&
-      pagoConcepto &&
-      pago &&
-      comprobante &&
-      comments
-    ) {
-      setShowResumen(true);
-    } else {
-      // If not all fields are completed, display an alert or message to the user
-      swal({
-        title: "¡Error!",
-        text: "Por favor, complete todos los campos antes de continuar.",
-        icon: "error",
-      });
-    }
+  const SwAlertError = () => {
+    swal({
+      title: "¡Error!",
+      text: "El código de presupuesto no se encuentra registrado",
+      icon: "error",
+    });
   };
 
-  //FORMATO DE MONEDA
   const formatCurrency = (value) => {
     return new Intl.NumberFormat("es-AR", {
       style: "currency",
@@ -159,11 +136,26 @@ const AddPago = ({ open, onClose }) => {
   };
 
   const getClientNameAndApellido = (cuit) => {
-    const client = clientData.find((client) => client.ClientCUIT === cuit);
+    const client = ClientData.find((client) => client.ClientCUIT === cuit);
     if (client) {
       return `${client.ClientName} ${client.ClientApellido}`;
     }
-    return ""; // Return an empty string if client is not found
+    return "";
+  };
+
+  const handleClientSelect = (event) => {
+    const ClientCUIT = event.target.value;
+    const selectedClientData = ClientData.find(
+      (client) => client.ClientCUIT === ClientCUIT
+    );
+
+    if (selectedClientData) {
+      setSelectedClient(selectedClientData.ClientCUIT);
+      setClientCUIT(ClientCUIT);
+    } else {
+      setSelectedClient("");
+      setClientCUIT("");
+    }
   };
 
   return (
@@ -194,13 +186,13 @@ const AddPago = ({ open, onClose }) => {
                     className="form-select my-2 w-100"
                     name="client"
                     value={selectedClient}
-                    onChange={handleClientChange}
+                    onChange={handleClientSelect}
                     required
                   >
                     <option value="" disabled>
                       Seleccionar cliente
                     </option>
-                    {clientData.map((client, index) => (
+                    {ClientData.map((client, index) => (
                       <option key={index} value={client.ClientCUIT}>
                         {client.ClientName} {client.ClientApellido}
                       </option>
@@ -213,14 +205,14 @@ const AddPago = ({ open, onClose }) => {
                   <select
                     className="form-select my-2 w-100"
                     name="presupuesto"
-                    value={selectedPresupuesto}
-                    onChange={handlePresupuestoChange}
+                    value={PresupuestoCodigo}
+                    onChange={(e) => setPresupuestoCodigo(e.target.value)}
                     required
                   >
                     <option value="" disabled>
                       Seleccionar presupuesto
                     </option>
-                    {clientData.map((client) => {
+                    {ClientData.map((client) => {
                       if (
                         client.ClientCUIT === selectedClient &&
                         client.Presupuestos
@@ -250,8 +242,8 @@ const AddPago = ({ open, onClose }) => {
                     className="form-control w-100 my-2"
                     name="datePago"
                     placeholder="Fecha de Pago"
-                    value={selectedDate}
-                    onChange={handleDateChange}
+                    value={FechaPago}
+                    onChange={(e) => setFechaPago(e.target.value)}
                     required
                   />
                   <label htmlFor="datePago">Fecha de Pago</label>
@@ -261,8 +253,8 @@ const AddPago = ({ open, onClose }) => {
                   <select
                     className="form-select my-2 w-100"
                     name="pagoCondicion"
-                    value={pagoCondicion}
-                    onChange={handlePagoCondicionChange}
+                    value={PagoCondicion}
+                    onChange={(e) => setPagoCondicion(e.target.value)}
                     required
                   >
                     <option value="">Seleccionar una condición de pago</option>
@@ -273,7 +265,7 @@ const AddPago = ({ open, onClose }) => {
                   </select>
                   <label htmlFor="pagoCondicion">
                     Condición de pago:{" "}
-                    {pagoCondicion ? pagoCondicion : "Seleccionar"}
+                    {PagoCondicion ? PagoCondicion : "Seleccionar"}
                   </label>
                 </div>
               </div>
@@ -284,8 +276,8 @@ const AddPago = ({ open, onClose }) => {
                   <select
                     className="form-select my-2 w-100"
                     name="pagoConcepto"
-                    value={pagoConcepto}
-                    onChange={handlePagoConceptoChange}
+                    value={PagoConcepto}
+                    onChange={(e) => setPagoConcepto(e.target.value)}
                     required
                   >
                     <option value="">Seleccionar un concepto de pago</option>
@@ -299,20 +291,20 @@ const AddPago = ({ open, onClose }) => {
                   </select>
                   <label htmlFor="pagoConcepto">
                     Concepto de pago:{" "}
-                    {pagoConcepto ? pagoConcepto : "Seleccionar"}
+                    {PagoConcepto ? PagoConcepto : "Seleccionar"}
                   </label>
                 </div>
                 {/* MONTO DE PAGO */}
                 <div className="form-floating w-100">
                   <input
-                    type="text"
+                    type="number"
                     min={0}
                     maxLength={15}
                     className="form-control w-100 my-2"
                     name="pago"
                     placeholder="Monto de Pago"
-                    value={pago}
-                    onChange={handlePagoChange}
+                    value={PagoMonto}
+                    onChange={(e) => setPagoMonto(e.target.value)}
                     required
                   />
                   <label htmlFor="pago">Monto de Pago</label>
@@ -329,8 +321,8 @@ const AddPago = ({ open, onClose }) => {
                     className="form-control w-100 my-2"
                     name="comprobante"
                     placeholder="Numero de Comprobante"
-                    value={comprobante}
-                    onChange={handleComprobanteChange}
+                    value={PagoComprobante}
+                    onChange={(e) => setPagoComprobante(e.target.value)}
                     required
                   />
                   <label htmlFor="comprobante">Numero de Comprobante</label>
@@ -344,8 +336,8 @@ const AddPago = ({ open, onClose }) => {
                     className="form-control w-100 my-2"
                     name="comments"
                     placeholder="Comentarios"
-                    value={comments}
-                    onChange={handleCommentsChange}
+                    value={Comentarios}
+                    onChange={(e) => setComentarios(e.target.value)}
                     required
                   />
                   <label htmlFor="comments">Comentarios</label>
@@ -385,7 +377,7 @@ const AddPago = ({ open, onClose }) => {
                   <p>Fecha:&nbsp;</p>
                 </div>
                 <div>
-                  <p>{selectedDate}</p>
+                  <p>{FechaPago}</p>
                 </div>
               </div>
 
@@ -394,7 +386,7 @@ const AddPago = ({ open, onClose }) => {
                   <p>Codigo:&nbsp;</p>
                 </div>
                 <div>
-                  <p>{selectedPresupuesto}</p>
+                  <p>{PresupuestoCodigo}</p>
                 </div>
               </div>
               <div className="d-flex w-50">
@@ -402,7 +394,7 @@ const AddPago = ({ open, onClose }) => {
                   <p>Condición de Pago:&nbsp;</p>
                 </div>
                 <div>
-                  <p>{pagoCondicion}</p>
+                  <p>{PagoCondicion}</p>
                 </div>
               </div>
               <div className="d-flex w-50">
@@ -410,7 +402,7 @@ const AddPago = ({ open, onClose }) => {
                   <p>Concepto de Pago:&nbsp;</p>
                 </div>
                 <div>
-                  <p>{pagoConcepto}</p>
+                  <p>{PagoConcepto}</p>
                 </div>
               </div>
 
@@ -419,7 +411,7 @@ const AddPago = ({ open, onClose }) => {
                   <p>Monto de Pago:&nbsp;</p>
                 </div>
                 <div>
-                  <p>{formatCurrency(pago)}</p>
+                  <p>{formatCurrency(PagoMonto)}</p>
                 </div>
               </div>
               <div className="d-flex w-50">
@@ -427,7 +419,7 @@ const AddPago = ({ open, onClose }) => {
                   <p>Numero de Comprobante:&nbsp;</p>
                 </div>
                 <div>
-                  <p>{comprobante}</p>
+                  <p>{PagoComprobante}</p>
                 </div>
               </div>
 
@@ -436,7 +428,7 @@ const AddPago = ({ open, onClose }) => {
                   <p>Comentarios:&nbsp;</p>
                 </div>
                 <div>
-                  <p>{comments}</p>
+                  <p>{Comentarios}</p>
                 </div>
               </div>
 

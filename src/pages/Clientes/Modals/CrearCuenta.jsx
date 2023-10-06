@@ -91,7 +91,7 @@ const CrearCuenta = ({ open, onClose }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (ClientEmail === "" || ClientApellido === "" || ClientIVACond === "") {
+    if (ClientEmail === "" || ClientName === "" || ClientIVACond === "") {
       return console.log("todos los campos son obligatorios");
     }
 
@@ -117,14 +117,14 @@ const CrearCuenta = ({ open, onClose }) => {
       ClientEmail
     );
 
-    setClientName("");
-    setClientApellido("");
-    setClientIVACond("");
-    setClientDNI("");
-    setClientEmail("");
-    setClientAdress("");
-    setClientTel("");
-    setClientCUIT("");
+    // setClientName("");
+    // setClientApellido("");
+    // setClientIVACond("");
+    // setClientDNI("");
+    // setClientEmail("");
+    // setClientAdress("");
+    // setClientTel("");
+    // setClientCUIT("");
   };
 
   return (

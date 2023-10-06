@@ -67,7 +67,7 @@ const EditCliente = ({ open, onClose, selectedClientIndex }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (ClientEmail === "" || ClientApellido === "" || ClientIVACond === "") {
+    if (ClientEmail === "" || ClientName === "" || ClientIVACond === "") {
       return console.log("Todos los campos son obligatorios");
     }
 

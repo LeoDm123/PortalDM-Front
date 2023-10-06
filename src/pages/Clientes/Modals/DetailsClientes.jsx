@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
 import Typography from "@mui/material/Typography";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import CloseButton from "../../../components/CloseButton";
-import DeleteButton from "../../../components/DeleteButton";
+import { DividerTitle } from "../../../components/Dividers";
 import swal from "sweetalert";
-import List from "@mui/material/List";
 import serverAPI from "../../../api/serverAPI";
 import EditClienteButton from "../../../components/Clientes/Buttons/EditClienteButton";
+import AddPresupuestoButton from "../../../components/Clientes/Buttons/AddPresupuestoButton";
+import AddPagoButton from "../../../components/Clientes/Buttons/AddPagoButton";
+import PresupuestosList from "../../../components/Clientes/Lists/PresupuestosLists";
+import PagosList from "../../../components/Clientes/Lists/PagosList";
+import ClientDataList from "../../../components/Clientes/Lists/ClientDataList";
 
 const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
   const [ClientData, setClientData] = useState([]);
+  const [onPay, setOnPay] = useState(true);
 
   useEffect(() => {
     fetchClientsData();
@@ -93,297 +94,103 @@ const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
     });
   };
 
+  const handleOnPay = () => {
+    setOnPay(!onPay);
+  };
+
   useEffect(() => {
     fetchClientsData();
-  }, [DeletePres]);
+  }, [DeletePres, handleOnPay]);
+
+  const defaultTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#01662b",
+      },
+      secondary: {
+        main: "#6a6a6a",
+      },
+    },
+  });
 
   return (
-    <Modal open={open} onClose={onClose}>
-      <Paper
-        sx={{
-          height: "100%",
-          width: "100%",
-          p: 2,
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-        }}
-        className="CreateModal"
-      >
-        <div className="d-flex justify-content-end">
-          <CloseButton handleClick={onClose} />
-        </div>
-
-        <div className="d-flex mb-4 DatosPagosContainer">
-          <div>
+    <ThemeProvider theme={defaultTheme}>
+      <Modal open={open} onClose={onClose}>
+        <Paper
+          sx={{
+            height: "100%",
+            width: "100%",
+            p: 2,
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[300]
+                : theme.palette.grey[900],
+          }}
+          className="CreateModal"
+        >
+          <div className="d-flex justify-content-between align-items-center">
             <Grid
               sx={{
-                width: 450,
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                marginBottom: 2,
               }}
             >
-              <Typography variant="h4">Datos del Cliente</Typography>
-              <EditClienteButton selectedClientIndex={selectedClientIndex} />
+              <AddPresupuestoButton />
+              <AddPagoButton onPay={handleOnPay} />
             </Grid>
+            <CloseButton handleClick={onClose} />
+          </div>
 
-            {ClientData[selectedClientIndex] && (
-              <div>
-                <div className="d-flex w-100">
-                  <div>
-                    <p className="fw-bold">Cliente:&nbsp;</p>
-                  </div>
-                  <div>
-                    <p>
-                      {ClientData[selectedClientIndex].ClientName}{" "}
-                      {ClientData[selectedClientIndex].ClientApellido}
-                    </p>
-                  </div>
-                </div>
-                <div className="d-flex w-100">
-                  <div>
-                    <p className="fw-bold">CUIT:&nbsp;</p>
-                  </div>
-                  <div>
-                    <p>{ClientData[selectedClientIndex].ClientCUIT}</p>
-                  </div>
-                </div>
-                <div className="d-flex w-100">
-                  <div>
-                    <p className="fw-bold">DNI:&nbsp;</p>
-                  </div>
-                  <div>
-                    <p>{ClientData[selectedClientIndex].ClientDNI}</p>
-                  </div>
-                </div>
+          <div className="d-flex mb-3 DatosPagosContainer">
+            <Paper
+              sx={{
+                height: "100%",
+                py: 1,
+                px: 2,
+              }}
+            >
+              <Grid
+                sx={{
+                  width: 450,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  paddingRight: 1,
+                }}
+              >
+                <Typography variant="h4">Datos del Cliente</Typography>
+                <EditClienteButton selectedClientIndex={selectedClientIndex} />
+              </Grid>
+              <Grid mb={2}>
+                <DividerTitle />
+              </Grid>
+              <ClientDataList selectedClientIndex={selectedClientIndex} />
+            </Paper>
 
-                <div className="d-flex w-100">
-                  <div>
-                    <p className="fw-bold">Dirección:&nbsp;</p>
-                  </div>
-                  <div>
-                    <p>{ClientData[selectedClientIndex].ClientAdress}</p>
-                  </div>
-                </div>
-                <div className="d-flex w-100">
-                  <div>
-                    <p className="fw-bold">Email:&nbsp;</p>
-                  </div>
-                  <div>
-                    <p>{ClientData[selectedClientIndex].ClientEmail}</p>
-                  </div>
-                </div>
-                <div className="d-flex w-100">
-                  <div>
-                    <p className="fw-bold">Condición de facturación:&nbsp;</p>
-                  </div>
-                  <div>
-                    <p>{ClientData[selectedClientIndex].ClientIVACond}</p>
-                  </div>
-                </div>
-
-                <div className="d-flex w-100">
-                  <div>
-                    <p className="fw-bold">Teléfono:&nbsp;</p>
-                  </div>
-                  <div>
-                    <p>{ClientData[selectedClientIndex].ClientTel}</p>
-                  </div>
-                </div>
+            <Paper sx={{ width: "100%", py: 1, px: 2, ml: 2 }}>
+              <div className="d-flex justify-content-between">
+                <h1 className="h3 ms-2">Pagos</h1>
               </div>
-            )}
+              <DividerTitle />
+              <PagosList selectedClientIndex={selectedClientIndex} />
+            </Paper>
           </div>
 
-          <div className="w-75 mx-3 border-3 border-start">
-            <div className="d-flex justify-content-between">
-              <h1 className="h3 ms-2">Pagos</h1>
+          <Paper sx={{ width: "100%", py: 1, px: 2, height: 290 }}>
+            <div className="d-flex justify-content-between ">
+              <h1 className="h3">Presupuestos</h1>
             </div>
-            <List className="scrollable-paylist">
-              <Table size="medium">
-                <TableHead>
-                  <TableRow>
-                    <TableCell className="text-center fw-bold">
-                      Codigo
-                    </TableCell>
-                    <TableCell className="text-center fw-bold">Fecha</TableCell>
-                    <TableCell className="text-center fw-bold">Monto</TableCell>
-                    <TableCell className="text-center fw-bold">
-                      Concepto
-                    </TableCell>
-                    <TableCell className="text-center fw-bold">
-                      Comprobante
-                    </TableCell>
-                    <TableCell className="text-center fw-bold">
-                      Comentarios
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {ClientData[selectedClientIndex]?.Presupuestos?.map(
-                    (presupuesto, presupuestoIndex) =>
-                      presupuesto.pagos?.map((pago, pagoIndex) => (
-                        <TableRow key={pagoIndex}>
-                          <TableCell className="text-center">
-                            {presupuesto.PresupuestoCodigo}
-                          </TableCell>
-                          <TableCell className="text-center">
-                            {pago.Fecha}
-                          </TableCell>
-                          <TableCell className="text-center">
-                            {formatCurrency(pago.MontoPago)}
-                          </TableCell>
-                          <TableCell className="text-center">
-                            {pago.ConceptoPago}
-                          </TableCell>
-                          <TableCell className="text-center">
-                            {pago.NumeroComprobante}
-                          </TableCell>
-                          <TableCell className="text-center">
-                            {pago.Comentarios}
-                          </TableCell>
-                          <TableCell className="text-center">
-                            <DeleteButton
-                              onDelete={() =>
-                                handleDeletePago(
-                                  selectedClientIndex,
-                                  presupuestoIndex,
-                                  pagoIndex
-                                )
-                              }
-                            />
-                          </TableCell>
-                        </TableRow>
-                      ))
-                  )}
-                </TableBody>
-              </Table>
-            </List>
-          </div>
-        </div>
-
-        <React.Fragment>
-          <div className="d-flex justify-content-between mt-3">
-            <h1 className="h3">Presupuestos</h1>
-          </div>
-          <div className="scrollable-list">
-            <Table size="medium">
-              <TableHead>
-                <TableRow>
-                  <TableCell className="text-center fw-bold">Codigo</TableCell>
-                  <TableCell className="text-center fw-bold">
-                    Facturac.
-                  </TableCell>
-                  <TableCell className="text-center fw-bold">Precio</TableCell>
-                  <TableCell className="text-center fw-bold">IVA</TableCell>
-                  <TableCell className="text-center fw-bold">Total</TableCell>
-                  <TableCell className="text-center fw-bold">
-                    Total Pagado
-                  </TableCell>
-                  <TableCell className="text-center fw-bold">
-                    Actualización
-                  </TableCell>
-                  <TableCell className="text-center fw-bold">Extras</TableCell>
-                  <TableCell className="text-center fw-bold">
-                    Total Final
-                  </TableCell>
-                  <TableCell className="text-center fw-bold">Estado</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {ClientData[selectedClientIndex]?.Presupuestos?.map(
-                  (presupuesto, presupuestoIndex) => (
-                    <TableRow key={presupuestoIndex}>
-                      <TableCell className="text-center">
-                        {presupuesto.PresupuestoCodigo}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {presupuesto.CondicionFacturacion}%
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {formatCurrency(presupuesto.Precio)}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {formatCurrency(presupuesto.IVA)}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {formatCurrency(presupuesto.Total)}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {formatCurrency(
-                          presupuesto.pagos
-                            ? presupuesto.pagos
-                                .filter((pago) => pago.EstadoConcepto === 0)
-                                .reduce((sum, pago) => sum + pago.MontoPago, 0)
-                            : 0
-                        )}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {formatCurrency(
-                          presupuesto.pagos
-                            ? presupuesto.pagos
-                                .filter((pago) => pago.EstadoConcepto === 1)
-                                .reduce((sum, pago) => sum + pago.MontoPago, 0)
-                            : 0
-                        )}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {formatCurrency(
-                          presupuesto.pagos
-                            ? presupuesto.pagos
-                                .filter((pago) => pago.EstadoConcepto === 2)
-                                .reduce((sum, pago) => sum + pago.MontoPago, 0)
-                            : 0
-                        )}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {formatCurrency(
-                          presupuesto.Total -
-                            (presupuesto.pagos
-                              ? presupuesto.pagos
-                                  .filter((pago) => pago.EstadoConcepto === 0)
-                                  .reduce(
-                                    (sum, pago) => sum + pago.MontoPago,
-                                    0
-                                  )
-                              : 0) +
-                            (presupuesto.pagos
-                              ? presupuesto.pagos
-                                  .filter((pago) => pago.EstadoConcepto === 1)
-                                  .reduce(
-                                    (sum, pago) => sum + pago.MontoPago,
-                                    0
-                                  )
-                              : 0) +
-                            (presupuesto.pagos
-                              ? presupuesto.pagos
-                                  .filter((pago) => pago.EstadoConcepto === 2)
-                                  .reduce(
-                                    (sum, pago) => sum + pago.MontoPago,
-                                    0
-                                  )
-                              : 0)
-                        )}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {presupuesto.Estado}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        <DeleteButton
-                          onDelete={() => handleDeletePres(presupuesto._id)}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  )
-                )}
-              </TableBody>
-            </Table>
-          </div>
-        </React.Fragment>
-      </Paper>
-    </Modal>
+            <DividerTitle />
+            <PresupuestosList selectedClientIndex={selectedClientIndex} />
+          </Paper>
+        </Paper>
+      </Modal>
+    </ThemeProvider>
   );
 };
 
