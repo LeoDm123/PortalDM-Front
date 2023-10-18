@@ -1,21 +1,28 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import AddPago from "../../../pages/Clientes/Modals/AddPago";
 
-export default function AddPagoButton({ onPay }) {
-  const navigate = useNavigate();
+export default function AddPagoButton({ onPay, selectedClientIndex }) {
   const [modalOpen, setModalOpen] = React.useState(false);
+  const [selectedClient, setSelectedClient] = useState("");
 
   const handleClick = () => {
     setModalOpen(true);
+    setSelectedClient(selectedClientIndex);
+    console.log("selectedClient:", selectedClient);
   };
 
   const handleCloseModal = () => {
     setModalOpen(false);
   };
+
+  useEffect(() => {
+    setSelectedClient(selectedClientIndex);
+  }, [handleClick]);
 
   return (
     <Grid item xs={12} md={12} lg={12}>
@@ -29,7 +36,12 @@ export default function AddPagoButton({ onPay }) {
             Ingresar Pago
           </Button>
         </ButtonGroup>
-        <AddPago open={modalOpen} onClose={handleCloseModal} onPay={onPay} />
+        <AddPago
+          open={modalOpen}
+          onClose={handleCloseModal}
+          onPay={onPay}
+          selectedClientIndex={selectedClient}
+        />
       </React.Fragment>
     </Grid>
   );

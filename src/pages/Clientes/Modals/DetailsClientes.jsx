@@ -140,8 +140,11 @@ const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
                 alignItems: "center",
               }}
             >
-              <AddPresupuestoButton />
-              <AddPagoButton onPay={handleOnPay} />
+              <AddPresupuestoButton selectedClientIndex={selectedClientIndex} />
+              <AddPagoButton
+                onPay={handleOnPay}
+                selectedClientIndex={selectedClientIndex}
+              />
             </Grid>
             <CloseButton handleClick={onClose} />
           </div>
@@ -181,7 +184,7 @@ const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
             </Paper>
           </div>
 
-          <Paper sx={{ width: "100%", py: 1, px: 2, height: 290 }}>
+          <Paper sx={{ width: "100%", py: 1, px: 2, height: 280 }}>
             <div className="d-flex justify-content-between ">
               <h1 className="h3">Presupuestos</h1>
             </div>

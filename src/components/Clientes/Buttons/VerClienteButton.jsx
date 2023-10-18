@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -6,14 +7,21 @@ import DetailsClientes from "../../../pages/Clientes/Modals/DetailsClientes";
 
 export default function VerClienteButton({ selectedClientIndex }) {
   const [modalOpen, setModalOpen] = React.useState(false);
+  const [selectedClient, setSelectedClient] = useState("");
 
   const handleClick = () => {
     setModalOpen(true);
+    setSelectedClient(selectedClientIndex);
+    console.log("selectedClient:", selectedClient);
   };
 
   const handleCloseModal = () => {
     setModalOpen(false);
   };
+
+  useEffect(() => {
+    setSelectedClient(selectedClientIndex);
+  }, [handleClick]);
 
   return (
     <div>
@@ -32,7 +40,7 @@ export default function VerClienteButton({ selectedClientIndex }) {
         <DetailsClientes
           open={modalOpen}
           onClose={handleCloseModal}
-          selectedClientIndex={selectedClientIndex}
+          selectedClientIndex={selectedClient}
         />
       </ButtonGroup>
     </div>

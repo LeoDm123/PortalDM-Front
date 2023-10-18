@@ -5,7 +5,6 @@ import LoginForm from "../components/LoginForm";
 const Landing = () => {
   return (
     <div>
-      <HeaderLanding />
       <LoginForm />
     </div>
   );

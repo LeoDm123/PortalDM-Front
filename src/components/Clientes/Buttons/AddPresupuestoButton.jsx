@@ -1,21 +1,27 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import AddPresupuesto from "../../../pages/Clientes/Modals/AddPresupuesto";
 
-export default function AddPresupuestoButton() {
-  const navigate = useNavigate();
+export default function AddPresupuestoButton({ selectedClientIndex }) {
   const [modalOpen, setModalOpen] = React.useState(false);
+  const [selectedClient, setSelectedClient] = useState("");
 
   const handleClick = () => {
     setModalOpen(true);
+    setSelectedClient(selectedClientIndex);
+    console.log("selectedClient:", selectedClient);
   };
 
   const handleCloseModal = () => {
     setModalOpen(false);
   };
+
+  useEffect(() => {
+    setSelectedClient(selectedClientIndex);
+  }, [handleClick]);
 
   return (
     <Grid item xs={12} md={12} lg={12}>
@@ -29,7 +35,11 @@ export default function AddPresupuestoButton() {
             Asociar Presupuesto
           </Button>
         </ButtonGroup>
-        <AddPresupuesto open={modalOpen} onClose={handleCloseModal} />
+        <AddPresupuesto
+          open={modalOpen}
+          onClose={handleCloseModal}
+          selectedClientIndex={selectedClient}
+        />
       </React.Fragment>
     </Grid>
   );

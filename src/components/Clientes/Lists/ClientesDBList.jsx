@@ -5,14 +5,14 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Title from "../../js/Title";
-import "../../App.css";
+import Title from "../../../js/Title";
+import "../../../App.css";
 import Grid from "@mui/material/Grid";
-import VerClienteButton from "./Buttons/VerClienteButton";
-import DeleteButton from "../DeleteButton";
-import serverAPI from "../../api/serverAPI";
+import VerClienteButton from "../Buttons/VerClienteButton";
+import DeleteButton from "../../DeleteButton";
+import serverAPI from "../../../api/serverAPI";
 import swal from "sweetalert";
-import GoBackButton from "../GoBackButton";
+import GoBackButton from "../../GoBackButton";
 
 export default function ClientesDBList({ onClientCreation }) {
   const [clientData, setClientData] = useState([]);

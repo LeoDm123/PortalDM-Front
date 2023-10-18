@@ -3,7 +3,7 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import "../../App.css";
-import ClientesDBList from "../../components/Clientes/ClientesDBList";
+import ClientesDBList from "../../components/Clientes/Lists/ClientesDBList";
 import Header from "../../components/Menu/Header";
 
 const defaultTheme = createTheme();

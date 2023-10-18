@@ -19,7 +19,9 @@ const PagosList = ({ open, onClose, selectedClientIndex }) => {
 
   const fetchClientsData = async () => {
     try {
-      const resp = await serverAPI.get("/clients/obtenerClientes");
+      const resp = await serverAPI.get(
+        `/clients/obtenerClientePorId/${selectedClientIndex}`
+      );
       setClientData(resp.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -113,41 +115,40 @@ const PagosList = ({ open, onClose, selectedClientIndex }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {ClientData[selectedClientIndex]?.Presupuestos?.map(
-              (presupuesto, presupuestoIndex) =>
-                presupuesto.Pagos?.map((pago, pagoIndex) => (
-                  <TableRow key={pagoIndex}>
-                    <TableCell className="text-center">
-                      {pago.PresupuestoCodigo}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      {pago.FechaPago}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      {formatCurrency(pago.PagoMonto)}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      {pago.PagoConcepto}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      {pago.PagoComprobante}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      {pago.Comentarios}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <DeleteButton
-                        onDelete={() =>
-                          handleDeletePago(
-                            selectedClientIndex,
-                            presupuestoIndex,
-                            pagoIndex
-                          )
-                        }
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))
+            {ClientData.Presupuestos?.map((presupuesto, presupuestoIndex) =>
+              presupuesto.Pagos?.map((pago, pagoIndex) => (
+                <TableRow key={pagoIndex}>
+                  <TableCell className="text-center">
+                    {pago.PresupuestoCodigo}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {pago.FechaPago}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {formatCurrency(pago.PagoMonto)}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {pago.PagoConcepto}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {pago.PagoComprobante}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {pago.Comentarios}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <DeleteButton
+                      onDelete={() =>
+                        handleDeletePago(
+                          selectedClientIndex,
+                          presupuestoIndex,
+                          pagoIndex
+                        )
+                      }
+                    />
+                  </TableCell>
+                </TableRow>
+              ))
             )}
           </TableBody>
         </Table>

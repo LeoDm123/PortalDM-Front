@@ -1,23 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Modal from "@mui/material/Modal";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import Typography from "@mui/material/Typography";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import CloseButton from "../../../components/CloseButton";
 import DeleteButton from "../../../components/DeleteButton";
-import { DividerTitle } from "../../../components/Dividers";
-import swal from "sweetalert";
-import List from "@mui/material/List";
 import serverAPI from "../../../api/serverAPI";
-import EditClienteButton from "../../../components/Clientes/Buttons/EditClienteButton";
-import AddPresupuestoButton from "../../../components/Clientes/Buttons/AddPresupuestoButton";
-import AddPagoButton from "../../../components/Clientes/Buttons/AddPagoButton";
 
 const PresupuestosList = ({ open, onClose, selectedClientIndex }) => {
   const [ClientData, setClientData] = useState([]);
@@ -29,7 +17,9 @@ const PresupuestosList = ({ open, onClose, selectedClientIndex }) => {
 
   const fetchClientsData = async () => {
     try {
-      const resp = await serverAPI.get("/clients/obtenerClientes");
+      const resp = await serverAPI.get(
+        `/clients/obtenerClientePorId/${selectedClientIndex}`
+      );
       setClientData(resp.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -107,97 +97,93 @@ const PresupuestosList = ({ open, onClose, selectedClientIndex }) => {
                 Actualización
               </TableCell>
               <TableCell className="text-center fw-bold">Extras</TableCell>
-              <TableCell className="text-center fw-bold">Total Final</TableCell>
+              <TableCell className="text-center fw-bold">Saldo</TableCell>
               <TableCell className="text-center fw-bold">Estado</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {ClientData[selectedClientIndex]?.Presupuestos?.map(
-              (presupuesto, presupuestoIndex) => (
-                <TableRow key={presupuestoIndex}>
-                  <TableCell className="text-center">
-                    {presupuesto.PresupuestoCodigo}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {presupuesto.CondicionFacturacion}%
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {formatCurrency(presupuesto.Precio)}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {formatCurrency(presupuesto.IVA)}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {formatCurrency(presupuesto.Total)}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {formatCurrency(
-                      presupuesto.Pagos
+            {ClientData.Presupuestos?.map((presupuesto, presupuestoIndex) => (
+              <TableRow key={presupuestoIndex}>
+                <TableCell className="text-center">
+                  {presupuesto.PresupuestoCodigo}
+                </TableCell>
+                <TableCell className="text-center">
+                  {presupuesto.CondicionFacturacion}%
+                </TableCell>
+                <TableCell className="text-center">
+                  {formatCurrency(presupuesto.Precio)}
+                </TableCell>
+                <TableCell className="text-center">
+                  {formatCurrency(presupuesto.IVA)}
+                </TableCell>
+                <TableCell className="text-center">
+                  {formatCurrency(presupuesto.Total)}
+                </TableCell>
+                <TableCell className="text-center">
+                  {formatCurrency(
+                    presupuesto.Pagos
+                      ? presupuesto.Pagos.filter(
+                          (pago) =>
+                            pago.PagoConcepto === "Anticipo Parcial" ||
+                            pago.PagoConcepto === "Anticipo Completo" ||
+                            pago.PagoConcepto === "Saldo Parcial" ||
+                            pago.PagoConcepto === "Saldo Completo"
+                        ).reduce((sum, pago) => sum + pago.PagoMonto, 0)
+                      : 0
+                  )}
+                </TableCell>
+                <TableCell className="text-center">
+                  {formatCurrency(
+                    presupuesto.Pagos
+                      ? presupuesto.Pagos.filter(
+                          (pago) => pago.PagoConcepto === "Actualización"
+                        ).reduce((sum, pago) => sum + pago.PagoMonto, 0)
+                      : 0
+                  )}
+                </TableCell>
+                <TableCell className="text-center">
+                  {formatCurrency(
+                    presupuesto.Pagos
+                      ? presupuesto.Pagos.filter(
+                          (pago) => pago.PagoConcepto === "Extras"
+                        ).reduce((sum, pago) => sum + pago.PagoMonto, 0)
+                      : 0
+                  )}
+                </TableCell>
+                <TableCell className="text-center">
+                  {formatCurrency(
+                    presupuesto.Total -
+                      (presupuesto.Pagos
                         ? presupuesto.Pagos.filter(
                             (pago) =>
                               pago.PagoConcepto === "Anticipo Parcial" ||
-                              pago.PagoConcepto === "Anticipo Total" ||
+                              pago.PagoConcepto === "Anticipo Completo" ||
                               pago.PagoConcepto === "Saldo Parcial" ||
-                              pago.PagoConcepto === "Saldo Total" ||
-                              pago.PagoConcepto === "Pago Total"
+                              pago.PagoConcepto === "Saldo Completo"
                           ).reduce((sum, pago) => sum + pago.PagoMonto, 0)
-                        : 0
-                    )}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {formatCurrency(
-                      presupuesto.Pagos
+                        : 0) +
+                      (presupuesto.Pagos
                         ? presupuesto.Pagos.filter(
-                            (pago) => pago.PagoConcepto === "Actualizacion"
+                            (pago) => pago.PagoConcepto === "Actualización"
                           ).reduce((sum, pago) => sum + pago.PagoMonto, 0)
-                        : 0
-                    )}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {formatCurrency(
-                      presupuesto.Pagos
+                        : 0) +
+                      (presupuesto.Pagos
                         ? presupuesto.Pagos.filter(
                             (pago) => pago.PagoConcepto === "Extras"
                           ).reduce((sum, pago) => sum + pago.PagoMonto, 0)
-                        : 0
-                    )}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {formatCurrency(
-                      presupuesto.Total -
-                        (presupuesto.Pagos
-                          ? presupuesto.Pagos.filter(
-                              (pago) =>
-                                pago.PagoConcepto === "Anticipo Parcial" ||
-                                pago.PagoConcepto === "Anticipo Total" ||
-                                pago.PagoConcepto === "Saldo Parcial" ||
-                                pago.PagoConcepto === "Saldo Total" ||
-                                pago.PagoConcepto === "Pago Total"
-                            ).reduce((sum, pago) => sum + pago.PagoMonto, 0)
-                          : 0) +
-                        (presupuesto.Pagos
-                          ? presupuesto.Pagos.filter(
-                              (pago) => pago.PagoConcepto === "Actualizacion"
-                            ).reduce((sum, pago) => sum + pago.PagoMonto, 0)
-                          : 0) +
-                        (presupuesto.Pagos
-                          ? presupuesto.Pagos.filter(
-                              (pago) => pago.PagoConcepto === "Extras"
-                            ).reduce((sum, pago) => sum + pago.PagoMonto, 0)
-                          : 0)
-                    )}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {presupuesto.Estado}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <DeleteButton
-                      onDelete={() => handleDeletePres(presupuesto._id)}
-                    />
-                  </TableCell>
-                </TableRow>
-              )
-            )}
+                        : 0)
+                  )}
+                </TableCell>
+                <TableCell className="text-center">
+                  {presupuesto.Estado}
+                </TableCell>
+                <TableCell className="text-center">
+                  <DeleteButton
+                    onDelete={() => handleDeletePres(presupuesto._id)}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </div>

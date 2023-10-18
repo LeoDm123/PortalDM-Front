@@ -1,13 +1,32 @@
 import React, { useState } from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import logo from "../assets/Logo.png";
+import loginImg from "../assets/login/Img3.jpg";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import serverAPI from "../api/serverAPI";
+
+const defaultTheme = createTheme();
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const startLogin = async (email, password) => {
     try {
+      setIsLoading(true);
+
       const resp = await serverAPI.post("/auth/login", {
         email,
         password,
@@ -18,7 +37,9 @@ const LoginForm = () => {
       console.log(resp);
       setError(resp.data.msg);
     } catch (error) {
-      console.log(error);
+      console.log(loginError);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -34,50 +55,118 @@ const LoginForm = () => {
   };
 
   return (
-    <main className="form-signin w-100 m-auto">
-      <form onSubmit={handleSubmit}>
-        <h1 className="h3 mb-3 fw-normal">Iniciar sesión</h1>
-
-        <div className="form-floating">
-          <input
-            type="email"
-            className="form-control"
-            name="emailInput"
-            placeholder="name@example.com"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <label htmlFor="emailInput">Correo Electronico</label>
-        </div>
-        <div className="form-floating">
-          <input
-            type="password"
-            className="form-control"
-            name="passwordInput"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <label htmlFor="passwordInput">Contraseña</label>
-        </div>
-
-        <div className="form-check text-start my-3">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            value="remember-me"
-          />
-          <label className="form-check-label" htmlFor="flexCheckDefault">
-            Recordarme
-          </label>
-        </div>
-        <button className="btn btn-primary w-100 py-2" type="submit">
-          Iniciar sesión
-        </button>
-
-        {error && (
-          <p className="text-danger mt-3">Usuario o contraseña incorrectos.</p>
-        )}
-      </form>
-    </main>
+    <ThemeProvider theme={defaultTheme}>
+      <Grid container component="main" sx={{ height: "100vh" }}>
+        <CssBaseline />
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage: `url(${loginImg})`,
+            backgroundRepeat: "no-repeat",
+            backgroundColor: (t) =>
+              t.palette.mode === "light"
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          md={5}
+          component={Paper}
+          elevation={6}
+          square
+          mt={4}
+        >
+          <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              px: 10,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Grid sx={{ justifyContent: "center", display: "flex" }}>
+              <img
+                src={logo}
+                className="w-25 d-flex justify-content-center mb-3"
+              />
+            </Grid>
+            <Typography component="h1" variant="h5">
+              Iniciar Sesión
+            </Typography>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1 }}
+            >
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Correo Electrónico"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Contraseña"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Recordarme"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                disabled={isLoading}
+              >
+                {isLoading && (
+                  <>
+                    <span
+                      className="spinner-border spinner-border-sm me-2"
+                      aria-hidden="true"
+                    ></span>
+                    <span className="visually-hidden" role="status">
+                      Iniciando Sesión
+                    </span>
+                  </>
+                )}
+                {!isLoading ? "Iniciar sesión" : "Iniciando sesión..."}
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Olvidó su contraseña?
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+    </ThemeProvider>
   );
 };
 

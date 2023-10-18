@@ -3,10 +3,10 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import "../../App.css";
-import ListaClientes from "../../components/Clientes/ListaClientes";
 import AddClientButton from "../../components/Clientes/Buttons/AddClientButton";
 import OpenClientesDBButton from "../../components/Clientes/Buttons/OpenClientsDBButton";
 import Header from "../../components/Menu/Header";
+import ListaCardClientes from "../../components/Clientes/Lists/ListaCardClientes";
 
 const defaultTheme = createTheme();
 
@@ -22,16 +22,38 @@ const GestionarClientes = () => {
                 <OpenClientesDBButton />
               </div>
               {/* Listado de Clientes */}
-              <Grid item xs={12} md={12} lg={12}>
+              <Grid xs={12} md={12} lg={12} display={"flex"}>
                 <Paper
                   sx={{
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    height: 550,
+                    height: 570,
+                    width: "50%",
+                    marginRight: 1,
+                  }}
+                ></Paper>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    height: 570,
+                    width: "50%",
+                    marginLeft: 1,
+                    overflow: "auto",
+                    scrollbarWidth: "thin",
+                    scrollbarColor: "dark",
+                    "&::-webkit-scrollbar": {
+                      width: "8px",
+                    },
+                    "&::-webkit-scrollbar-thumb": {
+                      background: "lightgray",
+                      borderRadius: "5px",
+                    },
                   }}
                 >
-                  <ListaClientes />
+                  <ListaCardClientes />
                 </Paper>
               </Grid>
             </Grid>
