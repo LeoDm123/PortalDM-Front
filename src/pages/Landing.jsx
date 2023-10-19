@@ -1,5 +1,4 @@
 import React from "react";
-import HeaderLanding from "../components/HeaderLanding";
 import LoginForm from "../components/LoginForm";
 
 const Landing = () => {

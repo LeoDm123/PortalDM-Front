@@ -2,25 +2,16 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 
 function Register() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
 
     // Retrieve the form values using the "name" attribute
-    const userName = (
-      event.currentTarget.elements.namedItem("userInput") as HTMLInputElement
-    ).value;
-    const email = (
-      event.currentTarget.elements.namedItem("emailInput") as HTMLInputElement
-    ).value;
-    const password = (
-      event.currentTarget.elements.namedItem(
-        "passwordInput"
-      ) as HTMLInputElement
-    ).value;
-    const passwordConfirmation = (
-      event.currentTarget.elements.namedItem(
-        "passwordConfirmationInput"
-      ) as HTMLInputElement
+    const userName = event.currentTarget.elements.namedItem("userInput").value;
+    const email = event.currentTarget.elements.namedItem("emailInput").value;
+    const password =
+      event.currentTarget.elements.namedItem("passwordInput").value;
+    const passwordConfirmation = event.currentTarget.elements.namedItem(
+      "passwordConfirmationInput"
     ).value;
 
     // Create a user object to save in local storage
@@ -48,7 +39,7 @@ function Register() {
 
         <div className="form-floating">
           <input
-            type="name"
+            type="text"
             className="form-control"
             name="userInput" // Use "name" attribute to access the input in the event target
             placeholder="name@example.com"
