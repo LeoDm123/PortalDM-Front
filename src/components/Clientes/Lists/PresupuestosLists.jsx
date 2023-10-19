@@ -4,6 +4,7 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import Grid from "@mui/material/Grid";
 import DeleteButton from "../../../components/DeleteButton";
 import serverAPI from "../../../api/serverAPI";
 
@@ -81,7 +82,27 @@ const PresupuestosList = ({ open, onClose, selectedClientIndex }) => {
 
   return (
     <div>
-      <div className="scrollable-list">
+      <Grid
+        sx={{
+          px: 2,
+          py: 1,
+          mb: 1,
+          display: "flex",
+          flexDirection: "column",
+          height: 200,
+          marginLeft: 1,
+          overflow: "auto",
+          scrollbarWidth: "thin",
+          scrollbarColor: "dark",
+          "&::-webkit-scrollbar": {
+            width: "8px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "lightgray",
+            borderRadius: "5px",
+          },
+        }}
+      >
         <Table size="medium">
           <TableHead>
             <TableRow>
@@ -186,7 +207,7 @@ const PresupuestosList = ({ open, onClose, selectedClientIndex }) => {
             ))}
           </TableBody>
         </Table>
-      </div>
+      </Grid>
     </div>
   );
 };

@@ -166,7 +166,9 @@ const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
                   paddingRight: 1,
                 }}
               >
-                <Typography variant="h4">Datos del Cliente</Typography>
+                <div className="d-flex justify-content-between">
+                  <h1 className="h3">Datos del Cliente</h1>
+                </div>
                 <EditClienteButton selectedClientIndex={selectedClientIndex} />
               </Grid>
               <Grid mb={2}>

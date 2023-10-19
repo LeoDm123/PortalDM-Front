@@ -89,11 +89,21 @@ const ClientDataList = ({ open, onClose, selectedClientIndex }) => {
           </div>
 
           <div className="d-flex w-100">
-            <div>
-              <p className="fw-bold">Teléfono:&nbsp;</p>
+            <div className="d-flex w-50">
+              <div>
+                <p className="fw-bold">Teléfono:&nbsp;</p>
+              </div>
+              <div>
+                <p>{ClientData.ClientTel}</p>
+              </div>
             </div>
-            <div>
-              <p>{ClientData.ClientTel}</p>
+            <div className="d-flex w-50">
+              <div>
+                <p className="fw-bold">Estado:&nbsp;</p>
+              </div>
+              <div>
+                <p>{ClientData.ClientStatus}</p>
+              </div>
             </div>
           </div>
         </div>

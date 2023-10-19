@@ -15,7 +15,7 @@ const GestionarClientes = () => {
     <ThemeProvider theme={defaultTheme}>
       <Header
         content={
-          <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="xl" sx={{ mt: 2, mb: 2 }}>
             <Grid container>
               <div className="d-flex">
                 <AddClientButton />
@@ -35,25 +35,36 @@ const GestionarClientes = () => {
                 ></Paper>
                 <Paper
                   sx={{
-                    p: 2,
                     display: "flex",
                     flexDirection: "column",
                     height: 570,
                     width: "50%",
                     marginLeft: 1,
-                    overflow: "auto",
-                    scrollbarWidth: "thin",
-                    scrollbarColor: "dark",
-                    "&::-webkit-scrollbar": {
-                      width: "8px",
-                    },
-                    "&::-webkit-scrollbar-thumb": {
-                      background: "lightgray",
-                      borderRadius: "5px",
-                    },
                   }}
                 >
-                  <ListaCardClientes />
+                  <Grid
+                    sx={{
+                      px: 2,
+                      py: 1,
+                      mb: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                      height: 570,
+                      marginLeft: 1,
+                      overflow: "auto",
+                      scrollbarWidth: "thin",
+                      scrollbarColor: "dark",
+                      "&::-webkit-scrollbar": {
+                        width: "8px",
+                      },
+                      "&::-webkit-scrollbar-thumb": {
+                        background: "lightgray",
+                        borderRadius: "5px",
+                      },
+                    }}
+                  >
+                    <ListaCardClientes />
+                  </Grid>
                 </Paper>
               </Grid>
             </Grid>

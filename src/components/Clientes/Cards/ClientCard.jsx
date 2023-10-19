@@ -38,7 +38,7 @@ const ClientCard = () => {
           <CardContent>
             <Grid display={"flex"}>
               <Grid width={"100%"}>
-                {client.Apellido !== "" ? (
+                {client.ClientApellido !== "" ? (
                   <Typography variant="h6" component="div">
                     {client.ClientApellido}, {client.ClientName}
                   </Typography>
@@ -49,6 +49,11 @@ const ClientCard = () => {
                 )}
                 <Typography color="text.secondary">
                   Presupuestos Activos: {client.Presupuestos.length}
+                </Typography>
+              </Grid>
+              <Grid>
+                <Typography color="text.secondary">
+                  Saldo Pendiente: {client.Presupuestos.length}
                 </Typography>
               </Grid>
               <VerClienteButton selectedClientIndex={client._id} />

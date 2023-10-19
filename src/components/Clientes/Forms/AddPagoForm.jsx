@@ -27,7 +27,7 @@ const AddPagoForm = ({ open, onClose, selectedClientIndex }) => {
 
   useEffect(() => {
     fetchClientsData();
-  }, [selectedClientIndex, open]);
+  }, []);
 
   const fetchClientsData = async () => {
     try {

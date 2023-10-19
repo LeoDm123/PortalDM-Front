@@ -21,6 +21,7 @@ const CrearCuenta = ({ open, onClose }) => {
   const [ClientTel, setClientTel] = useState("");
   const [ClientEmail, setClientEmail] = useState("");
   const [ClientCUIT, setClientCUIT] = useState("");
+  const [ClientStatus, setClientStatus] = useState("Activo");
 
   const crearCliente = async (
     ClientName,
@@ -30,7 +31,8 @@ const CrearCuenta = ({ open, onClose }) => {
     ClientCUIT,
     ClientAdress,
     ClientTel,
-    ClientEmail
+    ClientEmail,
+    ClientStatus
   ) => {
     try {
       const resp = await serverAPI.post("/clients/crearCliente", {
@@ -42,6 +44,7 @@ const CrearCuenta = ({ open, onClose }) => {
         ClientAdress,
         ClientTel,
         ClientEmail,
+        ClientStatus,
       });
 
       if (
@@ -103,7 +106,8 @@ const CrearCuenta = ({ open, onClose }) => {
       ClientCUIT,
       ClientAdress,
       ClientTel,
-      ClientEmail
+      ClientEmail,
+      ClientStatus
     );
 
     crearCliente(
@@ -114,17 +118,18 @@ const CrearCuenta = ({ open, onClose }) => {
       ClientCUIT,
       ClientAdress,
       ClientTel,
-      ClientEmail
+      ClientEmail,
+      ClientStatus
     );
 
-    // setClientName("");
-    // setClientApellido("");
-    // setClientIVACond("");
-    // setClientDNI("");
-    // setClientEmail("");
-    // setClientAdress("");
-    // setClientTel("");
-    // setClientCUIT("");
+    setClientName("");
+    setClientApellido("");
+    setClientIVACond("");
+    setClientDNI("");
+    setClientEmail("");
+    setClientAdress("");
+    setClientTel("");
+    setClientCUIT("");
   };
 
   return (

@@ -28,8 +28,8 @@ const EditCliente = ({ open, onClose, selectedClientIndex }) => {
   }, []);
 
   useEffect(() => {
-    if (selectedClientIndex !== null && ClientData[selectedClientIndex]) {
-      const selectedClient = ClientData[selectedClientIndex];
+    if (selectedClientIndex !== null && ClientData) {
+      const selectedClient = ClientData;
       setClientName(selectedClient.ClientName);
       setClientApellido(selectedClient.ClientApellido);
       setClientIVACond(selectedClient.ClientIVACond);
@@ -43,7 +43,9 @@ const EditCliente = ({ open, onClose, selectedClientIndex }) => {
 
   const fetchClientsData = async () => {
     try {
-      const resp = await serverAPI.get("/clients/obtenerClientes");
+      const resp = await serverAPI.get(
+        `/clients/obtenerClientePorId/${selectedClientIndex}`
+      );
       setClientData(resp.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -72,19 +74,16 @@ const EditCliente = ({ open, onClose, selectedClientIndex }) => {
     }
 
     try {
-      await serverAPI.put(
-        `/clients/editCliente/${ClientData[selectedClientIndex]._id}`,
-        {
-          ClientName,
-          ClientApellido,
-          ClientIVACond,
-          ClientDNI,
-          ClientCUIT,
-          ClientAdress,
-          ClientTel,
-          ClientEmail,
-        }
-      );
+      await serverAPI.put(`/clients/editCliente/${selectedClientIndex}`, {
+        ClientName,
+        ClientApellido,
+        ClientIVACond,
+        ClientDNI,
+        ClientCUIT,
+        ClientAdress,
+        ClientTel,
+        ClientEmail,
+      });
 
       SwAlertOk();
       onClose();
@@ -96,9 +95,7 @@ const EditCliente = ({ open, onClose, selectedClientIndex }) => {
 
   const handleDelete = async () => {
     try {
-      await serverAPI.delete(
-        `/clients/deleteCliente/${ClientData[selectedClientIndex]._id}`
-      );
+      await serverAPI.delete(`/clients/deleteCliente/${selectedClientIndex}`);
 
       SwAlertDelete();
       onClose();
@@ -144,7 +141,7 @@ const EditCliente = ({ open, onClose, selectedClientIndex }) => {
         }}
         className="CreateModal"
       >
-        {ClientData[selectedClientIndex] && (
+        {ClientData && (
           <form id="registerForm" onSubmit={handleSubmit}>
             <div className="d-flex justify-content-between mb-2">
               <h1 className="h3">Editar Cliente</h1>

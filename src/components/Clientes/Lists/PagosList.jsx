@@ -4,9 +4,9 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import Grid from "@mui/material/Grid";
 import DeleteButton from "../../../components/DeleteButton";
 import swal from "sweetalert";
-import List from "@mui/material/List";
 import serverAPI from "../../../api/serverAPI";
 
 const PagosList = ({ open, onClose, selectedClientIndex }) => {
@@ -100,7 +100,27 @@ const PagosList = ({ open, onClose, selectedClientIndex }) => {
 
   return (
     <div>
-      <List className="scrollable-paylist">
+      <Grid
+        sx={{
+          px: 2,
+          py: 1,
+          mb: 1,
+          display: "flex",
+          flexDirection: "column",
+          height: 300,
+          marginLeft: 1,
+          overflow: "auto",
+          scrollbarWidth: "thin",
+          scrollbarColor: "dark",
+          "&::-webkit-scrollbar": {
+            width: "8px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "lightgray",
+            borderRadius: "5px",
+          },
+        }}
+      >
         <Table size="medium">
           <TableHead>
             <TableRow>
@@ -152,7 +172,7 @@ const PagosList = ({ open, onClose, selectedClientIndex }) => {
             )}
           </TableBody>
         </Table>
-      </List>
+      </Grid>
     </div>
   );
 };
