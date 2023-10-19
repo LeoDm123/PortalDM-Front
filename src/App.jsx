@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 //Paginas Generales
 import Landing from "./pages/Landing";
 import Register from "./pages/Register";
-import Main from "./pages/Main.jsx";
+import Main from "./pages/Main";
 //Paginas de Presupuestos
 import PresupuestoPM from "./pages/Presupuestos/PresupuestoPM";
 import PresupuestoEM from "./pages/Presupuestos/PresupuestoEM";
