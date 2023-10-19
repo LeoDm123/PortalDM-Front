@@ -12,11 +12,6 @@ import Header from "../components/Menu/Header";
 const defaultTheme = createTheme();
 
 const Main = () => {
-  const [open, setOpen] = useState(true);
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Header
