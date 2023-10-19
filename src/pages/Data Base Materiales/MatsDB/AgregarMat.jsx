@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
-import Title from "../../../js/Title";
+import Title from "../../../components/Title";
 import CloseButton from "../../../components/CloseButton";
 import swal from "sweetalert";
 

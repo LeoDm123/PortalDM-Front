@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "@mui/material/Link";
-import Title from "../../../js/Title";
+import Title from "../../Title";
 import "../../../App.css";
 import Grid from "@mui/material/Grid";
 import GoBackButton from "../../GoBackButton";

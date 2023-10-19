@@ -5,7 +5,7 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Title from "../../js/Title";
+import Title from "../Title";
 
 // Generar datos de pedidos
 function createData(id, codigo, detalle, cantidad, fecha, obra, pedido, orden) {

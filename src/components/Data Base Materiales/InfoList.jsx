@@ -5,7 +5,7 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Title from "../../js/Title";
+import Title from "../Title";
 import "../../App.css";
 import Grid from "@mui/material/Grid";
 import InfoFilterButton from "./InfoFIlterButton";

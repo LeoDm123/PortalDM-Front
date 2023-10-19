@@ -6,7 +6,7 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Title from "../../../js/Title";
+import Title from "../../../components/Title";
 import "../../../App.css";
 import ModifyIconButton from "../../../components/Data Base Materiales/ModifyIconButton";
 import SaveChangesButton from "../../../components/Data Base Materiales/SaveChangesButton";
