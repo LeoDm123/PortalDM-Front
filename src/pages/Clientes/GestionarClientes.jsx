@@ -2,6 +2,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import { DividerTitle } from "../../components/Dividers";
+import Title from "../../components/Title";
 import "../../App.css";
 import AddClientButton from "../../components/Clientes/Buttons/AddClientButton";
 import OpenClientesDBButton from "../../components/Clientes/Buttons/OpenClientsDBButton";
@@ -42,6 +44,17 @@ const GestionarClientes = () => {
                     marginLeft: 1,
                   }}
                 >
+                  <Grid
+                    sx={{
+                      px: 2,
+                      py: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Title>Clientes Activos</Title>
+                    <DividerTitle />
+                  </Grid>
                   <Grid
                     sx={{
                       px: 2,

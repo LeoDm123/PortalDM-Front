@@ -5,7 +5,10 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import Grid from "@mui/material/Grid";
 import AddPresupuesto from "../../../pages/Clientes/Modals/AddPresupuesto";
 
-export default function AddPresupuestoButton({ selectedClientIndex }) {
+export default function AddPresupuestoButton({
+  selectedClientIndex,
+  onSubmitPres,
+}) {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [selectedClient, setSelectedClient] = useState("");
 
@@ -39,6 +42,7 @@ export default function AddPresupuestoButton({ selectedClientIndex }) {
           open={modalOpen}
           onClose={handleCloseModal}
           selectedClientIndex={selectedClient}
+          onSubmitPres={onSubmitPres}
         />
       </React.Fragment>
     </Grid>

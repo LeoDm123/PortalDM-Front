@@ -18,6 +18,11 @@ import ClientDataList from "../../../components/Clientes/Lists/ClientDataList";
 const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
   const [ClientData, setClientData] = useState([]);
   const [onPay, setOnPay] = useState(true);
+  const [onSubmit, setOnSubmit] = useState(false);
+
+  const handleOnSubmit = () => {
+    setOnSubmit(!onSubmit);
+  };
 
   useEffect(() => {
     fetchClientsData();
@@ -140,7 +145,10 @@ const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
                 alignItems: "center",
               }}
             >
-              <AddPresupuestoButton selectedClientIndex={selectedClientIndex} />
+              <AddPresupuestoButton
+                selectedClientIndex={selectedClientIndex}
+                onSubmitPres={handleOnSubmit}
+              />
               <AddPagoButton
                 onPay={handleOnPay}
                 selectedClientIndex={selectedClientIndex}
@@ -191,7 +199,10 @@ const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
               <h1 className="h3">Presupuestos</h1>
             </div>
             <DividerTitle />
-            <PresupuestosList selectedClientIndex={selectedClientIndex} />
+            <PresupuestosList
+              selectedClientIndex={selectedClientIndex}
+              onSubmitPres={handleOnSubmit}
+            />
           </Paper>
         </Paper>
       </Modal>

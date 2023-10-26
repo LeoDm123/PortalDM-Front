@@ -6,25 +6,16 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Grid from "@mui/material/Grid";
 import DeleteButton from "../../../components/DeleteButton";
-import serverAPI from "../../../api/serverAPI";
+import fetchClientByID from "../../../hooks/fetchClientByID";
+import useDeletePres from "../../../hooks/deletePresByID";
 
-const PresupuestosList = ({ open, onClose, selectedClientIndex }) => {
-  const [ClientData, setClientData] = useState([]);
+const PresupuestosList = ({ selectedClientIndex, onSubmitPres }) => {
   const [onPay, setOnPay] = useState(true);
+  const clientByID = fetchClientByID(selectedClientIndex, onSubmitPres);
+  const { deletePres, error } = useDeletePres(selectedClientIndex, clientByID);
 
-  useEffect(() => {
-    fetchClientsData();
-  }, []);
-
-  const fetchClientsData = async () => {
-    try {
-      const resp = await serverAPI.get(
-        `/clients/obtenerClientePorId/${selectedClientIndex}`
-      );
-      setClientData(resp.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+  const handleDeletePres = (presId) => {
+    deletePres(selectedClientIndex, presId);
   };
 
   const formatCurrency = (value) => {
@@ -35,50 +26,9 @@ const PresupuestosList = ({ open, onClose, selectedClientIndex }) => {
     }).format(value);
   };
 
-  const DeletePres = async (clientId, _id) => {
-    try {
-      const client = ClientData[selectedClientIndex];
-
-      if (!client) {
-        console.error("Cliente no encontrado.");
-        return;
-      }
-
-      console.log(client.Presupuestos);
-
-      const presupuestoToDelete = client.Presupuestos.find(
-        (presupuesto) => presupuesto._id === _id
-      );
-
-      console.log(presupuestoToDelete._id);
-
-      if (!presupuestoToDelete) {
-        console.error(`Presupuesto con código ${_id} no encontrado.`);
-        return;
-      }
-
-      const deleteResp = await serverAPI.delete(
-        `/pres/deletePres/${clientId}/${presupuestoToDelete._id}`
-      );
-
-      if (deleteResp.data.message === "Presupuesto deleted successfully") {
-        console.log(deleteResp);
-        fetchClientsData();
-      } else {
-        console.log("Operación de eliminación fallida.");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const handleOnPay = () => {
     setOnPay(!onPay);
   };
-
-  useEffect(() => {
-    fetchClientsData();
-  }, [DeletePres, handleOnPay]);
 
   return (
     <div>
@@ -123,7 +73,7 @@ const PresupuestosList = ({ open, onClose, selectedClientIndex }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {ClientData.Presupuestos?.map((presupuesto, presupuestoIndex) => (
+            {clientByID.Presupuestos?.map((presupuesto, presupuestoIndex) => (
               <TableRow key={presupuestoIndex}>
                 <TableCell className="text-center">
                   {presupuesto.PresupuestoCodigo}

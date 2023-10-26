@@ -14,7 +14,12 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import swal from "sweetalert";
 import serverAPI from "../../../api/serverAPI";
 
-const AddPresupuesto = ({ open, onClose, selectedClientIndex }) => {
+const AddPresupuesto = ({
+  open,
+  onClose,
+  selectedClientIndex,
+  onSubmitPres,
+}) => {
   const [ClientData, setClientData] = useState([]);
   const [selectedClientName, setSelectedClientName] = useState("");
   const [selectedClientApellido, setSelectedClientApellido] = useState("");
@@ -25,6 +30,7 @@ const AddPresupuesto = ({ open, onClose, selectedClientIndex }) => {
   const [codigo, setCodigo] = useState("");
   const [estado, setEstado] = useState("Activo");
   const [ClientCUIT, setClientCUIT] = useState("");
+  const [onSubmit, setOnSubmit] = useState(true);
 
   useEffect(() => {
     fetchClientsData();
@@ -109,6 +115,7 @@ const AddPresupuesto = ({ open, onClose, selectedClientIndex }) => {
       ClientCUIT,
       estado
     );
+    onSubmitPres();
   };
 
   const formatCurrency = (value) => {

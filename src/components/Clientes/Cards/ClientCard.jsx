@@ -1,62 +1,105 @@
-import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import serverAPI from "../../../api/serverAPI";
 import VerClienteButton from "../Buttons/VerClienteButton";
+import fetchClients from "../../../hooks/fetchClients";
 
 const ClientCard = () => {
-  const [clientData, setClientData] = useState([]);
+  const clients = fetchClients();
 
-  const fetchClientsData = async () => {
-    try {
-      const resp = await serverAPI.get("/clients/obtenerClientes");
-      setClientData(resp.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat("es-AR", {
+      style: "currency",
+      currency: "ARS",
+      minimumFractionDigits: 2,
+    }).format(value);
   };
-
-  useEffect(() => {
-    fetchClientsData();
-  }, []);
 
   return (
     <Card>
-      {clientData.map((client) => (
+      {clients.map((client) => (
         <Card
           key={client._id}
-          variant="outlined"
+          variant="elevation"
           sx={{
-            backgroundColor: "#fafafa",
+            backgroundColor: "#E1E3E1",
             marginTop: 1,
-            borderWidth: 0.5,
-            borderColor: "#01662b",
           }}
         >
           <CardContent>
-            <Grid display={"flex"}>
-              <Grid width={"100%"}>
-                {client.ClientApellido !== "" ? (
-                  <Typography variant="h6" component="div">
-                    {client.ClientApellido}, {client.ClientName}
+            <Grid display={"flex"} justifyContent={"space-between"}>
+              <Grid display={"flex"} width={"100%"}>
+                <Grid width={"100%"}>
+                  {client.ClientApellido !== "" ? (
+                    <Typography
+                      variant="body1"
+                      component="div"
+                      fontWeight="bold"
+                    >
+                      {client.ClientApellido}, {client.ClientName}
+                    </Typography>
+                  ) : (
+                    <Typography
+                      variant="body1"
+                      component="div"
+                      fontWeight="bold"
+                    >
+                      {client.ClientName}
+                    </Typography>
+                  )}
+                  <Typography color="text secondary" variant="subtitle2">
+                    Presupuestos Activos: {client.Presupuestos.length}
                   </Typography>
-                ) : (
-                  <Typography variant="h6" component="div">
-                    {client.ClientName}
+                </Grid>
+                <Grid width={"50%"}>
+                  <Typography color="text secondary" variant="subtitle2">
+                    Saldo Pendiente:
                   </Typography>
-                )}
-                <Typography color="text.secondary">
-                  Presupuestos Activos: {client.Presupuestos.length}
-                </Typography>
+                  <Typography color="text secondary" variant="subtitle2">
+                    {formatCurrency(
+                      client.Presupuestos.reduce((sum, presupuesto) => {
+                        return (
+                          sum +
+                          (presupuesto.Total -
+                            (presupuesto.Pagos
+                              ? presupuesto.Pagos.filter(
+                                  (pago) =>
+                                    pago.PagoConcepto === "Anticipo Parcial" ||
+                                    pago.PagoConcepto === "Anticipo Completo" ||
+                                    pago.PagoConcepto === "Saldo Parcial" ||
+                                    pago.PagoConcepto === "Saldo Completo"
+                                ).reduce(
+                                  (total, pago) => total + pago.PagoMonto,
+                                  0
+                                )
+                              : 0) +
+                            (presupuesto.Pagos
+                              ? presupuesto.Pagos.filter(
+                                  (pago) =>
+                                    pago.PagoConcepto === "Actualización"
+                                ).reduce(
+                                  (total, pago) => total + pago.PagoMonto,
+                                  0
+                                )
+                              : 0) +
+                            (presupuesto.Pagos
+                              ? presupuesto.Pagos.filter(
+                                  (pago) => pago.PagoConcepto === "Extras"
+                                ).reduce(
+                                  (total, pago) => total + pago.PagoMonto,
+                                  0
+                                )
+                              : 0))
+                        );
+                      }, 0)
+                    )}
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid>
-                <Typography color="text.secondary">
-                  Saldo Pendiente: {client.Presupuestos.length}
-                </Typography>
+              <Grid marginRight={2}>
+                <VerClienteButton selectedClientIndex={client._id} />
               </Grid>
-              <VerClienteButton selectedClientIndex={client._id} />
             </Grid>
           </CardContent>
         </Card>
