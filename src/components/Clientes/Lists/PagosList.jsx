@@ -8,25 +8,10 @@ import Grid from "@mui/material/Grid";
 import DeleteButton from "../../../components/DeleteButton";
 import swal from "sweetalert";
 import serverAPI from "../../../api/serverAPI";
+import fetchClientByID from "../../../hooks/fetchClientByID";
 
-const PagosList = ({ open, onClose, selectedClientIndex }) => {
-  const [ClientData, setClientData] = useState([]);
-  const [onPay, setOnPay] = useState(true);
-
-  useEffect(() => {
-    fetchClientsData();
-  }, []);
-
-  const fetchClientsData = async () => {
-    try {
-      const resp = await serverAPI.get(
-        `/clients/obtenerClientePorId/${selectedClientIndex}`
-      );
-      setClientData(resp.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+const PagosList = ({ open, onClose, selectedClientIndex, onSubmitPay }) => {
+  const clientByID = fetchClientByID(selectedClientIndex, onSubmitPay);
 
   const formatCurrency = (value) => {
     return new Intl.NumberFormat("es-AR", {
@@ -35,68 +20,6 @@ const PagosList = ({ open, onClose, selectedClientIndex }) => {
       minimumFractionDigits: 2,
     }).format(value);
   };
-
-  const DeletePres = async (clientId, _id) => {
-    try {
-      const client = ClientData[selectedClientIndex];
-
-      if (!client) {
-        console.error("Cliente no encontrado.");
-        return;
-      }
-
-      console.log(client.Presupuestos);
-
-      const presupuestoToDelete = client.Presupuestos.find(
-        (presupuesto) => presupuesto._id === _id
-      );
-
-      console.log(presupuestoToDelete._id);
-
-      if (!presupuestoToDelete) {
-        console.error(`Presupuesto con código ${_id} no encontrado.`);
-        return;
-      }
-
-      const deleteResp = await serverAPI.delete(
-        `/pres/deletePres/${clientId}/${presupuestoToDelete._id}`
-      );
-
-      if (deleteResp.data.message === "Presupuesto deleted successfully") {
-        console.log(deleteResp);
-        fetchClientsData();
-      } else {
-        console.log("Operación de eliminación fallida.");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleDeletePres = (codigo) => {
-    swal({
-      title: "¿Desea borrar el presupuesto?",
-      text: "Una vez borrado, este no podrá ser recuperado",
-      icon: "warning",
-      buttons: ["No", "Sí"],
-      dangerMode: true,
-    }).then((willCancel) => {
-      if (willCancel) {
-        swal("¡Presupuesto borrado con éxito!", {
-          icon: "success",
-        });
-        DeletePres(ClientData[selectedClientIndex]._id, codigo);
-      }
-    });
-  };
-
-  const handleOnPay = () => {
-    setOnPay(!onPay);
-  };
-
-  useEffect(() => {
-    fetchClientsData();
-  }, [DeletePres, handleOnPay]);
 
   return (
     <div>
@@ -135,7 +58,7 @@ const PagosList = ({ open, onClose, selectedClientIndex }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {ClientData.Presupuestos?.map((presupuesto, presupuestoIndex) =>
+            {clientByID.Presupuestos?.map((presupuesto, presupuestoIndex) =>
               presupuesto.Pagos?.map((pago, pagoIndex) => (
                 <TableRow key={pagoIndex}>
                   <TableCell className="text-center">

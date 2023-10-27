@@ -12,7 +12,7 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import swal from "sweetalert";
 import serverAPI from "../../../api/serverAPI";
 
-const AddPagoForm = ({ open, onClose, selectedClientIndex }) => {
+const AddPagoForm = ({ open, onClose, selectedClientIndex, onSubmitPay }) => {
   const [ClientData, setClientData] = useState([]);
   const [selectedClientName, setSelectedClientName] = useState("");
   const [selectedClientApellido, setSelectedClientApellido] = useState("");
@@ -118,6 +118,8 @@ const AddPagoForm = ({ open, onClose, selectedClientIndex }) => {
     setPagoComprobante("");
     setPagoMonto(0);
     setComentarios("");
+
+    onSubmitPay();
   };
 
   const SwAlertOk = () => {

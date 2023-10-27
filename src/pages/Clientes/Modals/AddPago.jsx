@@ -3,7 +3,13 @@ import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
 import AddPagoForm from "../../../components/Clientes/Forms/AddPagoForm";
 
-const AddPago = ({ open, onClose, onPay, selectedClientIndex }) => {
+const AddPago = ({
+  open,
+  onClose,
+  onPay,
+  selectedClientIndex,
+  onSubmitPay,
+}) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Paper
@@ -21,6 +27,7 @@ const AddPago = ({ open, onClose, onPay, selectedClientIndex }) => {
           onClose={onClose}
           open={open}
           selectedClientIndex={selectedClientIndex}
+          onSubmitPay={onSubmitPay}
         />
       </Paper>
     </Modal>

@@ -18,10 +18,15 @@ import ClientDataList from "../../../components/Clientes/Lists/ClientDataList";
 const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
   const [ClientData, setClientData] = useState([]);
   const [onPay, setOnPay] = useState(true);
-  const [onSubmit, setOnSubmit] = useState(false);
+  const [onSubmitPres, setOnSubmitPres] = useState(false);
+  const [onSubmitPay, setOnSubmitPay] = useState(false);
 
-  const handleOnSubmit = () => {
-    setOnSubmit(!onSubmit);
+  const handleOnSubmitPres = () => {
+    setOnSubmitPres(!onSubmitPres);
+  };
+
+  const handleOnSubmitPay = () => {
+    setOnSubmitPay(!onSubmitPay);
   };
 
   useEffect(() => {
@@ -147,11 +152,12 @@ const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
             >
               <AddPresupuestoButton
                 selectedClientIndex={selectedClientIndex}
-                onSubmitPres={handleOnSubmit}
+                onSubmitPres={handleOnSubmitPres}
               />
               <AddPagoButton
                 onPay={handleOnPay}
                 selectedClientIndex={selectedClientIndex}
+                onSubmitPay={handleOnSubmitPay}
               />
             </Grid>
             <CloseButton handleClick={onClose} />
@@ -190,7 +196,10 @@ const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
                 <h1 className="h3 ms-2">Pagos</h1>
               </div>
               <DividerTitle />
-              <PagosList selectedClientIndex={selectedClientIndex} />
+              <PagosList
+                selectedClientIndex={selectedClientIndex}
+                onSubmitPay={handleOnSubmitPay}
+              />
             </Paper>
           </div>
 
@@ -201,7 +210,7 @@ const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
             <DividerTitle />
             <PresupuestosList
               selectedClientIndex={selectedClientIndex}
-              onSubmitPres={handleOnSubmit}
+              onSubmitPres={handleOnSubmitPres}
             />
           </Paper>
         </Paper>
