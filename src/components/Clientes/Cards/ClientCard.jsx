@@ -5,8 +5,8 @@ import Typography from "@mui/material/Typography";
 import VerClienteButton from "../Buttons/VerClienteButton";
 import fetchClients from "../../../hooks/fetchClients";
 
-const ClientCard = () => {
-  const clients = fetchClients();
+const ClientCard = ({ onClientCreation }) => {
+  const clients = fetchClients(onClientCreation);
 
   const formatCurrency = (value) => {
     return new Intl.NumberFormat("es-AR", {

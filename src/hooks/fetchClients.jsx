@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import serverAPI from "../api/serverAPI";
 
-export default function fetchClients() {
+export default function fetchClients(onClientCreation) {
   const [clients, setClients] = useState([]);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function fetchClients() {
     };
 
     fetchClients();
-  }, []);
+  }, [onClientCreation]);
 
   return clients;
 }

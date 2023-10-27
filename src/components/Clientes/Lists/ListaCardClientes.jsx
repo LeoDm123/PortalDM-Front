@@ -3,7 +3,7 @@ import "../../../App.css";
 import Grid from "@mui/material/Grid";
 import ClientCard from "../Cards/ClientCard";
 
-export default function ListaCardClientes() {
+export default function ListaCardClientes({ onClientCreation }) {
   function preventDefault(event) {
     event.preventDefault();
   }
@@ -11,7 +11,7 @@ export default function ListaCardClientes() {
   return (
     <Grid item xs={12} md={12} lg={12}>
       <React.Fragment>
-        <ClientCard />
+        <ClientCard onClientCreation={onClientCreation} />
       </React.Fragment>
     </Grid>
   );

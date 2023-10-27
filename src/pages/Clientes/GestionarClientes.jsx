@@ -1,4 +1,5 @@
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useState } from "react";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -13,6 +14,11 @@ import ListaCardClientes from "../../components/Clientes/Lists/ListaCardClientes
 const defaultTheme = createTheme();
 
 const GestionarClientes = () => {
+  const [onClientCreation, setonClientCreation] = useState(false);
+
+  const handleOnClientCreation = () => {
+    setonClientCreation(!onClientCreation);
+  };
   return (
     <ThemeProvider theme={defaultTheme}>
       <Header
@@ -20,7 +26,7 @@ const GestionarClientes = () => {
           <Container maxWidth="xl" sx={{ mt: 2, mb: 2 }}>
             <Grid container>
               <div className="d-flex">
-                <AddClientButton />
+                <AddClientButton onClientCreation={handleOnClientCreation} />
                 <OpenClientesDBButton />
               </div>
               {/* Listado de Clientes */}
@@ -76,7 +82,9 @@ const GestionarClientes = () => {
                       },
                     }}
                   >
-                    <ListaCardClientes />
+                    <ListaCardClientes
+                      onClientCreation={handleOnClientCreation}
+                    />
                   </Grid>
                 </Paper>
               </Grid>

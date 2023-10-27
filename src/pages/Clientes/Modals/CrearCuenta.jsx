@@ -12,7 +12,7 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 
-const CrearCuenta = ({ open, onClose }) => {
+const CrearCuenta = ({ open, onClose, onClientCreation }) => {
   const [ClientName, setClientName] = useState("");
   const [ClientApellido, setClientApellido] = useState("");
   const [ClientIVACond, setClientIVACond] = useState("");
@@ -130,6 +130,8 @@ const CrearCuenta = ({ open, onClose }) => {
     setClientAdress("");
     setClientTel("");
     setClientCUIT("");
+
+    onClientCreation();
   };
 
   return (

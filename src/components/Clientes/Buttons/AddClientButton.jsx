@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import CrearCuenta from "../../../pages/Clientes/Modals/CrearCuenta";
 
-export default function AddClientButton() {
+export default function AddClientButton({ onClientCreation }) {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = React.useState(false);
 
@@ -33,7 +33,11 @@ export default function AddClientButton() {
             Agregar Cliente
           </Button>
         </ButtonGroup>
-        <CrearCuenta open={modalOpen} onClose={handleCloseModal} />
+        <CrearCuenta
+          open={modalOpen}
+          onClose={handleCloseModal}
+          onClientCreation={onClientCreation}
+        />
       </React.Fragment>
     </Grid>
   );
