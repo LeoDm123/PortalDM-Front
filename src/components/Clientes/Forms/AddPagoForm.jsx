@@ -9,13 +9,10 @@ import {
   Grid,
 } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import swal from "sweetalert";
-import serverAPI from "../../../api/serverAPI";
+import { crearPago } from "../../../hooks/crearPago";
+import fetchClientByID from "../../../hooks/fetchClientByID";
 
-const AddPagoForm = ({ open, onClose, selectedClientIndex, onSubmitPay }) => {
-  const [ClientData, setClientData] = useState([]);
-  const [selectedClientName, setSelectedClientName] = useState("");
-  const [selectedClientApellido, setSelectedClientApellido] = useState("");
+const AddPagoForm = ({ onClose, selectedClientIndex, onSubmitPay }) => {
   const [PresupuestoCodigo, setPresupuestoCodigo] = useState("");
   const [PagoMonto, setPagoMonto] = useState(0);
   const [PagoCondicion, setPagoCondicion] = useState("");
@@ -25,58 +22,7 @@ const AddPagoForm = ({ open, onClose, selectedClientIndex, onSubmitPay }) => {
   const [Comentarios, setComentarios] = useState("");
   const [ClientCUIT, setClientCUIT] = useState("");
 
-  useEffect(() => {
-    fetchClientsData();
-  }, []);
-
-  const fetchClientsData = async () => {
-    try {
-      const resp = await serverAPI.get(
-        `/clients/obtenerClientePorId/${selectedClientIndex}`
-      );
-      setClientData(resp.data);
-      setSelectedClientName(resp.data.ClientName);
-      setSelectedClientApellido(resp.data.ClientApellido);
-      setClientCUIT(resp.data.ClientCUIT);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  const crearPago = async (
-    ClientCUIT,
-    PresupuestoCodigo,
-    FechaPago,
-    PagoCondicion,
-    PagoConcepto,
-    PagoComprobante,
-    PagoMonto,
-    Comentarios
-  ) => {
-    try {
-      const resp = await serverAPI.post("/pay/crearPago", {
-        ClientCUIT,
-        PresupuestoCodigo,
-        FechaPago,
-        PagoCondicion,
-        PagoConcepto,
-        PagoComprobante,
-        PagoMonto,
-        Comentarios,
-      });
-
-      if (
-        resp.data.msg === "El código de presupuesto no se encuentra registrado"
-      ) {
-        SwAlertError();
-      } else {
-        SwAlertOk();
-        onClose();
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const clientByID = fetchClientByID(selectedClientIndex);
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -99,17 +45,17 @@ const AddPagoForm = ({ open, onClose, selectedClientIndex, onSubmitPay }) => {
     }
 
     crearPago(
-      ClientCUIT,
+      clientByID.ClientCUIT,
       PresupuestoCodigo,
       FechaPago,
       PagoCondicion,
       PagoConcepto,
       PagoComprobante,
       monto,
-      Comentarios
+      Comentarios,
+      onClose
     );
 
-    setSelectedClient("");
     setClientCUIT("");
     setPresupuestoCodigo("");
     setFechaPago("");
@@ -120,22 +66,6 @@ const AddPagoForm = ({ open, onClose, selectedClientIndex, onSubmitPay }) => {
     setComentarios("");
 
     onSubmitPay();
-  };
-
-  const SwAlertOk = () => {
-    swal({
-      title: "¡Exito!",
-      text: "El pago se agregó correctamente al presupuesto",
-      icon: "success",
-    });
-  };
-
-  const SwAlertError = () => {
-    swal({
-      title: "¡Error!",
-      text: "El código de presupuesto no se encuentra registrado",
-      icon: "error",
-    });
   };
 
   return (
@@ -151,7 +81,7 @@ const AddPagoForm = ({ open, onClose, selectedClientIndex, onSubmitPay }) => {
           className="form-control mt-3 w-75"
           name="Cliente"
           placeholder="Cliente"
-          value={`${selectedClientName} ${selectedClientApellido}`}
+          value={`${clientByID.ClientName} ${clientByID.ClientApellido}`}
           disabled
           label="Cliente"
         />
@@ -160,7 +90,7 @@ const AddPagoForm = ({ open, onClose, selectedClientIndex, onSubmitPay }) => {
           className="form-control mt-3 w-75 ms-3"
           name="CUIT"
           placeholder="CUIT"
-          value={ClientCUIT}
+          value={clientByID.ClientCUIT}
           disabled
           label="CUIT"
         />
@@ -185,8 +115,8 @@ const AddPagoForm = ({ open, onClose, selectedClientIndex, onSubmitPay }) => {
             <MenuItem value="" disabled>
               Seleccionar código de presupuesto
             </MenuItem>
-            {ClientData && ClientData.Presupuestos ? (
-              ClientData.Presupuestos.map((presupuesto, index) => (
+            {clientByID && clientByID.Presupuestos ? (
+              clientByID.Presupuestos.map((presupuesto, index) => (
                 <MenuItem key={index} value={presupuesto.PresupuestoCodigo}>
                   {presupuesto.PresupuestoCodigo}
                 </MenuItem>

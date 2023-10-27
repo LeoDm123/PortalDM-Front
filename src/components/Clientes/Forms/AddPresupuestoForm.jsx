@@ -13,6 +13,7 @@ import Paper from "@mui/material/Paper";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import swal from "sweetalert";
 import serverAPI from "../../../api/serverAPI";
+import fetchClientByID from "../../../hooks/fetchClientByID";
 
 const AddPresupuesto = ({
   open,
@@ -20,35 +21,15 @@ const AddPresupuesto = ({
   selectedClientIndex,
   onSubmitPres,
 }) => {
-  const [ClientData, setClientData] = useState([]);
-  const [selectedClientName, setSelectedClientName] = useState("");
-  const [selectedClientApellido, setSelectedClientApellido] = useState("");
   const [precio, setPrecio] = useState("");
   const [factCondicion, setFactCondicion] = useState("");
   const [calculatedIVA, setCalculatedIVA] = useState(0);
   const [total, setTotal] = useState(0);
   const [codigo, setCodigo] = useState("");
   const [estado, setEstado] = useState("Activo");
-  const [ClientCUIT, setClientCUIT] = useState("");
-  const [onSubmit, setOnSubmit] = useState(true);
 
-  useEffect(() => {
-    fetchClientsData();
-  }, [selectedClientIndex, open]);
+  const clientByID = fetchClientByID(selectedClientIndex);
 
-  const fetchClientsData = async () => {
-    try {
-      const resp = await serverAPI.get(
-        `/clients/obtenerClientePorId/${selectedClientIndex}`
-      );
-      setClientData(resp.data);
-      setSelectedClientName(resp.data.ClientName);
-      setSelectedClientApellido(resp.data.ClientApellido);
-      setClientCUIT(resp.data.ClientCUIT);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
   const crearPresupuesto = async (
     PresupuestoCodigo,
     CondicionFacturacion,
@@ -112,7 +93,7 @@ const AddPresupuesto = ({
       calculatedIVA,
       precio,
       total,
-      ClientCUIT,
+      clientByID.ClientCUIT,
       estado
     );
     onSubmitPres();
@@ -172,7 +153,7 @@ const AddPresupuesto = ({
               className="form-control mt-3 w-75"
               name="Cliente"
               placeholder="Cliente"
-              value={`${selectedClientName} ${selectedClientApellido}`}
+              value={`${clientByID.ClientName} ${clientByID.ClientApellido}`}
               disabled
               label="Cliente"
             />
@@ -181,7 +162,7 @@ const AddPresupuesto = ({
               className="form-control mt-3 w-75 ms-3"
               name="CUIT"
               placeholder="CUIT"
-              value={ClientCUIT}
+              value={clientByID.ClientCUIT}
               disabled
               label="CUIT"
             />
