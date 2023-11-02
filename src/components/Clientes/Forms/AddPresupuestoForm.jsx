@@ -11,9 +11,8 @@ import {
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import swal from "sweetalert";
-import serverAPI from "../../../api/serverAPI";
 import fetchClientByID from "../../../hooks/fetchClientByID";
+import { crearPresupuesto } from "../../../hooks/crearPres";
 
 const AddPresupuesto = ({
   open,
@@ -30,56 +29,6 @@ const AddPresupuesto = ({
 
   const clientByID = fetchClientByID(selectedClientIndex);
 
-  const crearPresupuesto = async (
-    PresupuestoCodigo,
-    CondicionFacturacion,
-    IVA,
-    Precio,
-    Total,
-    ClientCUIT,
-    Estado
-  ) => {
-    try {
-      const resp = await serverAPI.post("/pres/crearPresupuesto", {
-        PresupuestoCodigo,
-        CondicionFacturacion,
-        IVA,
-        Precio,
-        Total,
-        ClientCUIT,
-        Estado,
-      });
-
-      if (
-        resp.data.msg ===
-        "El código de presupuesto ya se encuentra registrado para este cliente"
-      ) {
-        SwAlertError();
-      } else {
-        SwAlertOk();
-        onClose();
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const SwAlertOk = () => {
-    swal({
-      title: "¡Exito!",
-      text: "El presupuesto se agregó correctamente",
-      icon: "success",
-    });
-  };
-
-  const SwAlertError = () => {
-    swal({
-      title: "¡Error!",
-      text: "El presupuesto ya se encuentra registrado",
-      icon: "error",
-    });
-  };
-
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
@@ -94,7 +43,8 @@ const AddPresupuesto = ({
       precio,
       total,
       clientByID.ClientCUIT,
-      estado
+      estado,
+      onClose
     );
     onSubmitPres();
   };

@@ -10,15 +10,22 @@ import AddClientButton from "../../components/Clientes/Buttons/AddClientButton";
 import OpenClientesDBButton from "../../components/Clientes/Buttons/OpenClientsDBButton";
 import Header from "../../components/Menu/Header";
 import ListaCardClientes from "../../components/Clientes/Lists/ListaCardClientes";
+import ListaPresCard from "../../components/Clientes/Lists/ListaPresCard";
 
 const defaultTheme = createTheme();
 
 const GestionarClientes = () => {
   const [onClientCreation, setonClientCreation] = useState(false);
+  const [onPresCreation, setonPresCreation] = useState(false);
 
   const handleOnClientCreation = () => {
     setonClientCreation(!onClientCreation);
   };
+
+  const handleOnPresCreation = () => {
+    setonPresCreation(!onPresCreation);
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Header
@@ -30,17 +37,51 @@ const GestionarClientes = () => {
                 <OpenClientesDBButton />
               </div>
               {/* Listado de Clientes */}
-              <Grid xs={12} md={12} lg={12} display={"flex"}>
+              <Grid item xs={12} md={12} lg={12} display={"flex"}>
                 <Paper
                   sx={{
-                    p: 2,
                     display: "flex",
                     flexDirection: "column",
                     height: 570,
                     width: "50%",
-                    marginRight: 1,
+                    marginLeft: 1,
                   }}
-                ></Paper>
+                >
+                  <Grid
+                    sx={{
+                      px: 2,
+                      py: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Title>Presupuestos Activos</Title>
+                    <DividerTitle />
+                  </Grid>
+                  <Grid
+                    sx={{
+                      px: 2,
+                      py: 1,
+                      mb: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                      height: 570,
+                      marginLeft: 1,
+                      overflow: "auto",
+                      scrollbarWidth: "thin",
+                      scrollbarColor: "dark",
+                      "&::-webkit-scrollbar": {
+                        width: "8px",
+                      },
+                      "&::-webkit-scrollbar-thumb": {
+                        background: "lightgray",
+                        borderRadius: "5px",
+                      },
+                    }}
+                  >
+                    <ListaPresCard onPresCreation={handleOnPresCreation} />
+                  </Grid>
+                </Paper>
                 <Paper
                   sx={{
                     display: "flex",

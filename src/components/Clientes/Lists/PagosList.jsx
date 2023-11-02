@@ -5,13 +5,28 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Grid from "@mui/material/Grid";
-import DeleteButton from "../../../components/DeleteButton";
 import swal from "sweetalert";
-import serverAPI from "../../../api/serverAPI";
+import DeleteButton from "../../../components/DeleteButton";
 import fetchClientByID from "../../../hooks/fetchClientByID";
+import DeletePago from "../../../hooks/deletePagoByID";
 
-const PagosList = ({ open, onClose, selectedClientIndex, onSubmitPay }) => {
+const PagosList = ({ selectedClientIndex, onSubmitPay }) => {
   const clientByID = fetchClientByID(selectedClientIndex, onSubmitPay);
+  const { deletePago, error } = DeletePago(selectedClientIndex);
+
+  const handleDeletePago = (presupuestoId, pagoId) => {
+    swal({
+      title: "¿Desea eliminar el pago?",
+      text: "Una vez eliminado no podrá ser recuperado",
+      icon: "warning",
+      buttons: ["No", "Sí"],
+      dangerMode: true,
+    }).then((willCancel) => {
+      if (willCancel) {
+        deletePago(selectedClientIndex, presupuestoId, pagoId);
+      }
+    });
+  };
 
   const formatCurrency = (value) => {
     return new Intl.NumberFormat("es-AR", {
@@ -60,7 +75,7 @@ const PagosList = ({ open, onClose, selectedClientIndex, onSubmitPay }) => {
           <TableBody>
             {clientByID.Presupuestos?.map((presupuesto, presupuestoIndex) =>
               presupuesto.Pagos?.map((pago, pagoIndex) => (
-                <TableRow key={pagoIndex}>
+                <TableRow key={pago._id}>
                   <TableCell className="text-center">
                     {pago.PresupuestoCodigo}
                   </TableCell>
@@ -82,11 +97,7 @@ const PagosList = ({ open, onClose, selectedClientIndex, onSubmitPay }) => {
                   <TableCell className="text-center">
                     <DeleteButton
                       onDelete={() =>
-                        handleDeletePago(
-                          selectedClientIndex,
-                          presupuestoIndex,
-                          pagoIndex
-                        )
+                        handleDeletePago(presupuesto._id, pago._id)
                       }
                     />
                   </TableCell>

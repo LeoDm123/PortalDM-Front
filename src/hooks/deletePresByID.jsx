@@ -1,4 +1,5 @@
 import { useState } from "react";
+import swal from "sweetalert";
 import fetchClientByID from "./fetchClientByID";
 import serverAPI from "../api/serverAPI";
 
@@ -14,10 +15,6 @@ export default function useDeletePres(selectedClientIndex) {
         console.error("Cliente no encontrado.");
         return;
       }
-
-      console.log("Cliente", client);
-      console.log(client.Presupuestos);
-      console.log("clienteID", clientId);
 
       const presupuestoToDelete = client.Presupuestos.find(
         (presupuesto) => presupuesto._id === _id
@@ -35,6 +32,7 @@ export default function useDeletePres(selectedClientIndex) {
 
         if (deleteResp.data.message === "Presupuesto eliminado correctamente") {
           console.log(deleteResp.data.message);
+          SwAlertOk();
         } else {
           console.log("Operación de eliminación fallida.");
         }
@@ -46,3 +44,11 @@ export default function useDeletePres(selectedClientIndex) {
 
   return { deletePres, error };
 }
+
+const SwAlertOk = () => {
+  swal({
+    title: "¡Exito!",
+    text: "El presupuesto se eliminó correctamente",
+    icon: "success",
+  });
+};

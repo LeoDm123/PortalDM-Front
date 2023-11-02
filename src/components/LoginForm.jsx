@@ -32,10 +32,12 @@ const LoginForm = () => {
         password,
       });
 
-      window.location.href = "/Main";
-
-      console.log(resp);
-      setError(resp.data.msg);
+      if (resp.data.msg === "Usuario logueado") {
+        window.location.href = "/Main";
+      } else {
+        console.log(resp.data.msg);
+        setError(resp.data.msg);
+      }
     } catch (error) {
       console.log(loginError);
     } finally {

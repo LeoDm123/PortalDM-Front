@@ -15,7 +15,17 @@ const PresupuestosList = ({ selectedClientIndex, onSubmitPres }) => {
   const { deletePres, error } = useDeletePres(selectedClientIndex, clientByID);
 
   const handleDeletePres = (presId) => {
-    deletePres(selectedClientIndex, presId);
+    swal({
+      title: "¿Desea eliminar el pago?",
+      text: "Una vez eliminado no podrá ser recuperado",
+      icon: "warning",
+      buttons: ["No", "Sí"],
+      dangerMode: true,
+    }).then((willCancel) => {
+      if (willCancel) {
+        deletePres(selectedClientIndex, presId);
+      }
+    });
   };
 
   const formatCurrency = (value) => {

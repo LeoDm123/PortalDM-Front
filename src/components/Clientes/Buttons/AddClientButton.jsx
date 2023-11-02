@@ -1,12 +1,10 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import CrearCuenta from "../../../pages/Clientes/Modals/CrearCuenta";
 
 export default function AddClientButton({ onClientCreation }) {
-  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -15,10 +13,6 @@ export default function AddClientButton({ onClientCreation }) {
 
   const handleCloseModal = () => {
     setModalOpen(false);
-  };
-
-  const handleAddClient = () => {
-    navigate("/GestionarClientes");
   };
 
   return (
