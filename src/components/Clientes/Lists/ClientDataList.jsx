@@ -1,36 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { createTheme } from "@mui/material/styles";
-import swal from "sweetalert";
-import serverAPI from "../../../api/serverAPI";
+import React from "react";
+import fetchClientByID from "../../../hooks/fetchClientByID";
 
-const ClientDataList = ({ open, onClose, selectedClientIndex }) => {
-  const [ClientData, setClientData] = useState([]);
-
-  useEffect(() => {
-    fetchClientsData();
-  }, []);
-
-  const fetchClientsData = async () => {
-    try {
-      const resp = await serverAPI.get(
-        `/clients/obtenerClientePorId/${selectedClientIndex}`
-      );
-      setClientData(resp.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  const defaultTheme = createTheme({
-    palette: {
-      primary: {
-        main: "#01662b",
-      },
-      secondary: {
-        main: "#6a6a6a",
-      },
-    },
-  });
+const ClientDataList = ({
+  open,
+  onClose,
+  selectedClientIndex,
+  onClientChange,
+}) => {
+  const ClientData = fetchClientByID(selectedClientIndex, onClientChange);
 
   return (
     <div>

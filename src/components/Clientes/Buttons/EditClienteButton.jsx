@@ -5,7 +5,10 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import EditIcon from "@mui/icons-material/Edit";
 import EditCliente from "../../../pages/Clientes/Modals/EditCliente";
 
-export default function EditClienteButton({ selectedClientIndex }) {
+export default function EditClienteButton({
+  selectedClientIndex,
+  onClientChange,
+}) {
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -33,6 +36,7 @@ export default function EditClienteButton({ selectedClientIndex }) {
           open={modalOpen}
           onClose={handleCloseModal}
           selectedClientIndex={selectedClientIndex}
+          onClientChange={onClientChange}
         />
       </ButtonGroup>
     </Grid>

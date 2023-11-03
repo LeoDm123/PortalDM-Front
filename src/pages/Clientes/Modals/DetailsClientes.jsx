@@ -20,6 +20,7 @@ const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
   const [onPay, setOnPay] = useState(true);
   const [onSubmitPres, setOnSubmitPres] = useState(false);
   const [onSubmitPay, setOnSubmitPay] = useState(false);
+  const [onClientEdit, setOnClientEdit] = useState(false);
 
   const handleOnSubmitPres = () => {
     setOnSubmitPres(!onSubmitPres);
@@ -27,6 +28,10 @@ const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
 
   const handleOnSubmitPay = () => {
     setOnSubmitPay(!onSubmitPay);
+  };
+
+  const handleOnClientEdit = () => {
+    setOnClientEdit(!onClientEdit);
   };
 
   useEffect(() => {
@@ -183,12 +188,18 @@ const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
                 <div className="d-flex justify-content-between">
                   <h1 className="h3">Datos del Cliente</h1>
                 </div>
-                <EditClienteButton selectedClientIndex={selectedClientIndex} />
+                <EditClienteButton
+                  selectedClientIndex={selectedClientIndex}
+                  onClientChange={handleOnClientEdit}
+                />
               </Grid>
               <Grid mb={2}>
                 <DividerTitle />
               </Grid>
-              <ClientDataList selectedClientIndex={selectedClientIndex} />
+              <ClientDataList
+                selectedClientIndex={selectedClientIndex}
+                onClientChange={handleOnClientEdit}
+              />
             </Paper>
 
             <Paper sx={{ width: "100%", py: 1, px: 2, ml: 2 }}>

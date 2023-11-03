@@ -22,6 +22,7 @@ const EditCliente = ({ open, onClose, selectedClientIndex }) => {
   const [ClientTel, setClientTel] = useState("");
   const [ClientEmail, setClientEmail] = useState("");
   const [ClientCUIT, setClientCUIT] = useState("");
+  const [ClientStatus, setClientStatus] = useState("");
 
   useEffect(() => {
     fetchClientsData();
@@ -38,6 +39,7 @@ const EditCliente = ({ open, onClose, selectedClientIndex }) => {
       setClientTel(selectedClient.ClientTel);
       setClientEmail(selectedClient.ClientEmail);
       setClientCUIT(selectedClient.ClientCUIT);
+      setClientStatus(selectedClient.ClientStatus);
     }
   }, [selectedClientIndex, ClientData]);
 
@@ -83,6 +85,7 @@ const EditCliente = ({ open, onClose, selectedClientIndex }) => {
         ClientAdress,
         ClientTel,
         ClientEmail,
+        ClientStatus,
       });
 
       SwAlertOk();
@@ -239,10 +242,31 @@ const EditCliente = ({ open, onClose, selectedClientIndex }) => {
                 type="email"
                 label="Correo Electrónico"
                 variant="outlined"
-                sx={{ marginLeft: 1, marginTop: 3 }}
+                sx={{ marginLeft: 1, marginRight: 1, marginTop: 3 }}
                 value={ClientEmail}
                 onChange={(e) => setClientEmail(e.target.value)}
               />
+
+              <FormControl
+                variant="outlined"
+                fullWidth
+                sx={{ marginRight: 1, marginTop: 3 }}
+              >
+                <InputLabel id="statusInputLabel">Estado</InputLabel>
+                <Select
+                  labelId="statusInputLabel"
+                  label="Estado"
+                  value={ClientStatus}
+                  onChange={(e) => setClientStatus(e.target.value)}
+                >
+                  <MenuItem value="">
+                    <em>Seleccione</em>
+                  </MenuItem>
+                  <MenuItem value="Activo">Activo</MenuItem>
+                  <MenuItem value="Cerrado">Cerrado</MenuItem>
+                  <MenuItem value="Deudor">Deudor</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
 
             <Grid>

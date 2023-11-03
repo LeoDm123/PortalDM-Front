@@ -126,7 +126,7 @@ const PresupuestosList = ({ selectedClientIndex, onSubmitPres }) => {
                   {formatCurrency(
                     presupuesto.Pagos
                       ? presupuesto.Pagos.filter(
-                          (pago) => pago.PagoConcepto === "Extras"
+                          (pago) => pago.PagoConcepto === "Extra"
                         ).reduce((sum, pago) => sum + pago.PagoMonto, 0)
                       : 0
                   )}
@@ -150,7 +150,7 @@ const PresupuestosList = ({ selectedClientIndex, onSubmitPres }) => {
                         : 0) +
                       (presupuesto.Pagos
                         ? presupuesto.Pagos.filter(
-                            (pago) => pago.PagoConcepto === "Extras"
+                            (pago) => pago.PagoConcepto === "Extra"
                           ).reduce((sum, pago) => sum + pago.PagoMonto, 0)
                         : 0)
                   )}

@@ -9,20 +9,25 @@ import "../../App.css";
 import AddClientButton from "../../components/Clientes/Buttons/AddClientButton";
 import OpenClientesDBButton from "../../components/Clientes/Buttons/OpenClientsDBButton";
 import Header from "../../components/Menu/Header";
-import ListaCardClientes from "../../components/Clientes/Lists/ListaCardClientes";
-import ListaPresCard from "../../components/Clientes/Lists/ListaPresCard";
+import ClientCardList from "../../components/Clientes/Lists/ClientCardList";
+import ClientInfo from "../../components/Clientes/ClientInfo";
 
 const defaultTheme = createTheme();
 
 const GestionarClientes = () => {
   const [onClientCreation, setonClientCreation] = useState(false);
   const [onPresCreation, setonPresCreation] = useState(false);
+  const [onSubmitPay, setOnSubmitPay] = useState(false);
 
   const handleOnClientCreation = () => {
     setonClientCreation(!onClientCreation);
   };
 
   const handleOnPresCreation = () => {
+    setonPresCreation(!onPresCreation);
+  };
+
+  const handleOnSubmitPay = () => {
     setonPresCreation(!onPresCreation);
   };
 
@@ -42,59 +47,14 @@ const GestionarClientes = () => {
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    height: 570,
-                    width: "50%",
-                    marginLeft: 1,
+                    height: 590,
+                    width: "60%",
                   }}
                 >
                   <Grid
                     sx={{
                       px: 2,
-                      py: 1,
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <Title>Presupuestos Activos</Title>
-                    <DividerTitle />
-                  </Grid>
-                  <Grid
-                    sx={{
-                      px: 2,
-                      py: 1,
-                      mb: 1,
-                      display: "flex",
-                      flexDirection: "column",
-                      height: 570,
-                      marginLeft: 1,
-                      overflow: "auto",
-                      scrollbarWidth: "thin",
-                      scrollbarColor: "dark",
-                      "&::-webkit-scrollbar": {
-                        width: "8px",
-                      },
-                      "&::-webkit-scrollbar-thumb": {
-                        background: "lightgray",
-                        borderRadius: "5px",
-                      },
-                    }}
-                  >
-                    <ListaPresCard onPresCreation={handleOnPresCreation} />
-                  </Grid>
-                </Paper>
-                <Paper
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 570,
-                    width: "50%",
-                    marginLeft: 1,
-                  }}
-                >
-                  <Grid
-                    sx={{
-                      px: 2,
-                      py: 1,
+                      pt: 1,
                       display: "flex",
                       flexDirection: "column",
                     }}
@@ -104,9 +64,9 @@ const GestionarClientes = () => {
                   </Grid>
                   <Grid
                     sx={{
-                      px: 2,
+                      px: 1,
                       py: 1,
-                      mb: 1,
+                      mb: 2,
                       display: "flex",
                       flexDirection: "column",
                       height: 570,
@@ -123,9 +83,32 @@ const GestionarClientes = () => {
                       },
                     }}
                   >
-                    <ListaCardClientes
-                      onClientCreation={handleOnClientCreation}
+                    <ClientCardList
+                      onPresCreation={handleOnPresCreation}
+                      onSubmitPay={handleOnSubmitPay}
                     />
+                  </Grid>
+                </Paper>
+                <Paper
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    height: 590,
+                    width: "40%",
+                    marginLeft: 1,
+                  }}
+                >
+                  <Grid
+                    sx={{
+                      px: 2,
+                      py: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Title>Información Extra</Title>
+                    <DividerTitle />
+                    <ClientInfo />
                   </Grid>
                 </Paper>
               </Grid>

@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import serverAPI from "../api/serverAPI";
 
-export default function fetchClientByID(selectedClientIndex, onSubmitPres) {
+export default function fetchClientByID(
+  selectedClientIndex,
+  onSubmitPres,
+  onPresCreation,
+  onSubmitPay,
+  onClientChange
+) {
   const [clientByID, setClientByID] = useState([]);
 
   useEffect(() => {
@@ -17,7 +23,13 @@ export default function fetchClientByID(selectedClientIndex, onSubmitPres) {
     };
 
     fetchClientByID();
-  }, [selectedClientIndex, onSubmitPres]);
+  }, [
+    selectedClientIndex,
+    onSubmitPres,
+    onPresCreation,
+    onSubmitPay,
+    onClientChange,
+  ]);
 
   return clientByID;
 }
