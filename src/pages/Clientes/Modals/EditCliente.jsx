@@ -114,6 +114,20 @@ const EditCliente = ({
     }
   };
 
+  const handleDeleteCliente = () => {
+    swal({
+      title: "¿Desea eliminar el cliente?",
+      text: "Una vez eliminado no podrá ser recuperado",
+      icon: "warning",
+      buttons: ["No", "Sí"],
+      dangerMode: true,
+    }).then((willCancel) => {
+      if (willCancel) {
+        handleDelete();
+      }
+    });
+  };
+
   const SwAlertOk = () => {
     swal({
       title: "¡Éxito!",
@@ -289,7 +303,7 @@ const EditCliente = ({
                 variant="outlined"
                 color="error"
                 size="large"
-                onClick={handleDelete}
+                onClick={handleDeleteCliente}
                 className="mt-4 ms-1"
               >
                 Borrar Cuenta
