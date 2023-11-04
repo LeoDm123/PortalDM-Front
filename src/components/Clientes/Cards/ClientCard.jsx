@@ -6,14 +6,14 @@ import Typography from "@mui/material/Typography";
 import fetchClients from "../../../hooks/fetchClients";
 import VerClienteButton from "../Buttons/VerClienteButton";
 
-const ClientCard = ({ onPresCreation, onClienCreation }) => {
+const ClientCard = ({ onPresCreation, onClientCreation }) => {
   const [onSubmitPay, setOnSubmitPay] = useState(false);
   const [onSubmitPres, setOnSubmitPres] = useState(false);
   const [onClientDelete, setOnClientDelete] = useState(false);
   const clients = fetchClients(
     onPresCreation,
     onSubmitPay,
-    onClienCreation,
+    onClientCreation,
     onClientDelete,
     onSubmitPres
   );
