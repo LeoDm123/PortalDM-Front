@@ -15,12 +15,12 @@ import ClientInfo from "../../components/Clientes/ClientInfo";
 const defaultTheme = createTheme();
 
 const GestionarClientes = () => {
-  const [onClientCreation, setonClientCreation] = useState(false);
+  const [onClientCreation, setOnClientCreation] = useState(false);
   const [onPresCreation, setonPresCreation] = useState(false);
   const [onSubmitPay, setOnSubmitPay] = useState(false);
 
   const handleOnClientCreation = () => {
-    setonClientCreation(!onClientCreation);
+    setOnClientCreation(!onClientCreation);
   };
 
   const handleOnPresCreation = () => {
@@ -28,7 +28,7 @@ const GestionarClientes = () => {
   };
 
   const handleOnSubmitPay = () => {
-    setonPresCreation(!onPresCreation);
+    setOnSubmitPay(!onSubmitPay);
   };
 
   return (
@@ -84,8 +84,8 @@ const GestionarClientes = () => {
                     }}
                   >
                     <ClientCardList
-                      onPresCreation={handleOnPresCreation}
-                      onSubmitPay={handleOnSubmitPay}
+                      onPresCreation={onPresCreation}
+                      onClientCreation={onClientCreation}
                     />
                   </Grid>
                 </Paper>

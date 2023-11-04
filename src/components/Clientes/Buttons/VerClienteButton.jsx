@@ -41,7 +41,7 @@ export default function VerClienteButton({ selectedClientIndex, onSubmitPay }) {
           open={modalOpen}
           onClose={handleCloseModal}
           selectedClientIndex={selectedClient}
-          onSubmitPay={onSubmitPay}
+          onPaySubmit={onSubmitPay}
         />
       </ButtonGroup>
     </div>

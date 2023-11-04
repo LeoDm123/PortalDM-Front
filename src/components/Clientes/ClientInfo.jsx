@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import fetchClients from "../../hooks/fetchClients";
+import { DividerSecondary } from "../Dividers";
 
 const ClientInfo = () => {
   const ClientsData = fetchClients();
@@ -14,15 +15,23 @@ const ClientInfo = () => {
     }).format(value);
   };
 
-  const calculateTotalActivePresupuestos = () => {
-    let totalActivePresupuestos = 0;
+  const calculateTotalPresupuestos = (status) => {
+    let totalPresupuestos = 0;
 
     for (const client of ClientsData) {
-      totalActivePresupuestos += client.Presupuestos.length;
+      for (const presupuesto of client.Presupuestos) {
+        if (presupuesto.Estado === status) {
+          totalPresupuestos += 1;
+        }
+      }
     }
 
-    return totalActivePresupuestos;
+    return totalPresupuestos;
   };
+
+  const totalActivePresupuestos = calculateTotalPresupuestos("Activo");
+  const totalCerradoPresupuestos = calculateTotalPresupuestos("Cerrado");
+  const totalPresupuestos = totalActivePresupuestos + totalCerradoPresupuestos;
 
   const calculateTotalSaldo = (status) => {
     let totalSaldo = 0;
@@ -63,28 +72,51 @@ const ClientInfo = () => {
   const totalSaldoActivo = calculateTotalSaldo("Activo");
   const totalSaldoDeudor = calculateTotalSaldo("Deudor");
 
-  const totalActivePresupuestos = calculateTotalActivePresupuestos();
+  const calculateTotalClients = (status) => {
+    return ClientsData.filter((client) => client.ClientStatus === status)
+      .length;
+  };
+
+  const totalActiveClients = calculateTotalClients("Activo");
+  const totalDeudorClients = calculateTotalClients("Deudor");
 
   return (
     <Grid
       sx={{
-        pt: 2,
         display: "flex",
         flexDirection: "column",
       }}
     >
-      <Typography variant="h6" component="div">
-        Cantidad de Clientes Activos: {ClientsData.length}
-      </Typography>
-      <Typography sx={{ mt: 1 }} variant="h6" component="div">
-        Cantidad de Presupuestos Activos: {totalActivePresupuestos}
-      </Typography>
-      <Typography sx={{ mt: 1 }} variant="h6" color="green">
-        Saldo a Cobrar: {formatCurrency(totalSaldoActivo)}
-      </Typography>
-      <Typography sx={{ mt: 1 }} variant="h6" color="error">
-        Saldo de Incobrables: {formatCurrency(totalSaldoDeudor)}
-      </Typography>
+      <Grid>
+        <Typography sx={{ mt: 1 }} variant="h6">
+          Contabildad
+        </Typography>
+        <DividerSecondary />
+        <Typography sx={{ mt: 1, ml: 1 }} variant="h6" color="green">
+          Saldo a cobrar: {formatCurrency(totalSaldoActivo)}
+        </Typography>
+        <Typography sx={{ mt: 1, ml: 1 }} variant="h6" color="error">
+          Saldo de incobrables: {formatCurrency(totalSaldoDeudor)}
+        </Typography>
+      </Grid>
+      <Grid sx={{ marginTop: 2 }}>
+        <Typography sx={{ mt: 1 }} variant="h6">
+          Base de Datos
+        </Typography>
+        <DividerSecondary />
+        <Typography sx={{ mt: 1, ml: 1 }} variant="h6" component="div">
+          Cantidad de clientes activos: {totalActiveClients}
+        </Typography>
+        <Typography sx={{ mt: 1, ml: 1 }} variant="h6" component="div">
+          Cantidad de clientes deudores: {totalDeudorClients}
+        </Typography>
+        <Typography sx={{ mt: 1, ml: 1 }} variant="h6" component="div">
+          Cantidad de presupuestos activos: {totalActivePresupuestos}
+        </Typography>
+        <Typography sx={{ mt: 1, ml: 1 }} variant="h6" component="div">
+          Cantidad de presupuestos totales: {totalPresupuestos}
+        </Typography>
+      </Grid>
     </Grid>
   );
 };

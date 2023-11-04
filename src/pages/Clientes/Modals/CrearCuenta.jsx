@@ -53,6 +53,7 @@ const CrearCuenta = ({ open, onClose, onClientCreation }) => {
       ) {
         SwAlertError();
       } else {
+        console.log(resp);
         SwAlertOk();
         onClose();
       }

@@ -44,7 +44,7 @@ const PresupuestosList = ({ selectedClientIndex, onSubmitPres }) => {
     <div>
       <Grid
         sx={{
-          px: 2,
+          pr: 2,
           py: 1,
           mb: 1,
           display: "flex",

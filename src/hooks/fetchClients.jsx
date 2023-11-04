@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import serverAPI from "../api/serverAPI";
 
-export default function fetchClients(onClientCreation) {
+export default function fetchClients(
+  onPresCreation,
+  onSubmitPay,
+  onClienCreation
+) {
   const [clients, setClients] = useState([]);
 
   useEffect(() => {
@@ -17,7 +21,7 @@ export default function fetchClients(onClientCreation) {
     };
 
     fetchClients();
-  }, [onClientCreation]);
+  }, [onPresCreation, onSubmitPay, onClienCreation]);
 
   return clients;
 }

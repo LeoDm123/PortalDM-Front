@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -5,8 +6,9 @@ import Typography from "@mui/material/Typography";
 import fetchClients from "../../../hooks/fetchClients";
 import VerClienteButton from "../Buttons/VerClienteButton";
 
-const ClientCard = ({ onPresCreation, onSubmitPay }) => {
-  const clients = fetchClients(onPresCreation, onSubmitPay);
+const ClientCard = ({ onPresCreation, onClienCreation }) => {
+  const [onSubmitPay, setOnSubmitPay] = useState(false);
+  const clients = fetchClients(onPresCreation, onSubmitPay, onClienCreation);
 
   const formatCurrency = (value) => {
     return new Intl.NumberFormat("es-AR", {
@@ -14,6 +16,10 @@ const ClientCard = ({ onPresCreation, onSubmitPay }) => {
       currency: "ARS",
       minimumFractionDigits: 2,
     }).format(value);
+  };
+
+  const handleOnSubmitPay = () => {
+    setOnSubmitPay(!onSubmitPay);
   };
 
   return (
@@ -69,7 +75,10 @@ const ClientCard = ({ onPresCreation, onSubmitPay }) => {
               </Grid>
 
               <Grid marginRight={6}>
-                <VerClienteButton selectedClientIndex={client._id} />
+                <VerClienteButton
+                  selectedClientIndex={client._id}
+                  onSubmitPay={handleOnSubmitPay}
+                />
               </Grid>
             </Grid>
             <Grid sx={{ display: "flex", width: "100%" }}>
@@ -170,6 +179,7 @@ const ClientCard = ({ onPresCreation, onSubmitPay }) => {
                       variant="subtitle2"
                       mr={1}
                       mt={1}
+                      mb={1}
                     >
                       Dirección: {client.ClientAdress}
                     </Typography>

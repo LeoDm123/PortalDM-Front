@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
+import Title from "../../../components/Title";
 import Typography from "@mui/material/Typography";
 import CloseButton from "../../../components/CloseButton";
 import { DividerTitle } from "../../../components/Dividers";
@@ -15,9 +16,12 @@ import PresupuestosList from "../../../components/Clientes/Lists/PresupuestosLis
 import PagosList from "../../../components/Clientes/Lists/PagosList";
 import ClientDataList from "../../../components/Clientes/Lists/ClientDataList";
 
-const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
-  const [ClientData, setClientData] = useState([]);
-  const [onPay, setOnPay] = useState(true);
+const DetailsClientes = ({
+  open,
+  onClose,
+  selectedClientIndex,
+  onPaySubmit,
+}) => {
   const [onSubmitPres, setOnSubmitPres] = useState(false);
   const [onSubmitPay, setOnSubmitPay] = useState(false);
   const [onClientEdit, setOnClientEdit] = useState(false);
@@ -28,23 +32,11 @@ const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
 
   const handleOnSubmitPay = () => {
     setOnSubmitPay(!onSubmitPay);
+    onPaySubmit();
   };
 
   const handleOnClientEdit = () => {
     setOnClientEdit(!onClientEdit);
-  };
-
-  useEffect(() => {
-    fetchClientsData();
-  }, []);
-
-  const fetchClientsData = async () => {
-    try {
-      const resp = await serverAPI.get("/clients/obtenerClientes");
-      setClientData(resp.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
   };
 
   const formatCurrency = (value) => {
@@ -54,68 +46,6 @@ const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
       minimumFractionDigits: 2,
     }).format(value);
   };
-
-  const DeletePres = async (clientId, _id) => {
-    try {
-      const client = ClientData[selectedClientIndex];
-
-      if (!client) {
-        console.error("Cliente no encontrado.");
-        return;
-      }
-
-      console.log(client.Presupuestos);
-
-      const presupuestoToDelete = client.Presupuestos.find(
-        (presupuesto) => presupuesto._id === _id
-      );
-
-      console.log(presupuestoToDelete._id);
-
-      if (!presupuestoToDelete) {
-        console.error(`Presupuesto con código ${_id} no encontrado.`);
-        return;
-      }
-
-      const deleteResp = await serverAPI.delete(
-        `/pres/deletePres/${clientId}/${presupuestoToDelete._id}`
-      );
-
-      if (deleteResp.data.message === "Presupuesto deleted successfully") {
-        console.log(deleteResp);
-        fetchClientsData();
-      } else {
-        console.log("Operación de eliminación fallida.");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleDeletePres = (codigo) => {
-    swal({
-      title: "¿Desea borrar el presupuesto?",
-      text: "Una vez borrado, este no podrá ser recuperado",
-      icon: "warning",
-      buttons: ["No", "Sí"],
-      dangerMode: true,
-    }).then((willCancel) => {
-      if (willCancel) {
-        swal("¡Presupuesto borrado con éxito!", {
-          icon: "success",
-        });
-        DeletePres(ClientData[selectedClientIndex]._id, codigo);
-      }
-    });
-  };
-
-  const handleOnPay = () => {
-    setOnPay(!onPay);
-  };
-
-  useEffect(() => {
-    fetchClientsData();
-  }, [DeletePres, handleOnPay]);
 
   const defaultTheme = createTheme({
     palette: {
@@ -160,7 +90,6 @@ const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
                 onSubmitPres={handleOnSubmitPres}
               />
               <AddPagoButton
-                onPay={handleOnPay}
                 selectedClientIndex={selectedClientIndex}
                 onSubmitPay={handleOnSubmitPay}
               />
@@ -186,7 +115,7 @@ const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
                 }}
               >
                 <div className="d-flex justify-content-between">
-                  <h1 className="h3">Datos del Cliente</h1>
+                  <Title>Datos del Cliente</Title>
                 </div>
                 <EditClienteButton
                   selectedClientIndex={selectedClientIndex}
@@ -204,19 +133,19 @@ const DetailsClientes = ({ open, onClose, selectedClientIndex }) => {
 
             <Paper sx={{ width: "100%", py: 1, px: 2, ml: 2 }}>
               <div className="d-flex justify-content-between">
-                <h1 className="h3 ms-2">Pagos</h1>
+                <Title>Pagos</Title>
               </div>
               <DividerTitle />
               <PagosList
                 selectedClientIndex={selectedClientIndex}
-                onSubmitPay={handleOnSubmitPay}
+                onSubmitPay={onSubmitPay}
               />
             </Paper>
           </div>
 
           <Paper sx={{ width: "100%", py: 1, px: 2, height: 280 }}>
             <div className="d-flex justify-content-between ">
-              <h1 className="h3">Presupuestos</h1>
+              <Title>Presupuestos</Title>
             </div>
             <DividerTitle />
             <PresupuestosList

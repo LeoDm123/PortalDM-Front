@@ -3,13 +3,7 @@ import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
 import AddPagoForm from "../../../components/Clientes/Forms/AddPagoForm";
 
-const AddPago = ({
-  open,
-  onClose,
-  onPay,
-  selectedClientIndex,
-  onSubmitPay,
-}) => {
+const AddPago = ({ open, onClose, selectedClientIndex, onSubmitPay }) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Paper
