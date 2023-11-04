@@ -5,7 +5,11 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DetailsClientes from "../../../pages/Clientes/Modals/DetailsClientes";
 
-export default function VerClienteButton({ selectedClientIndex, onSubmitPay }) {
+export default function VerClienteButton({
+  selectedClientIndex,
+  onSubmitPay,
+  onSubmitPres,
+}) {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [selectedClient, setSelectedClient] = useState("");
 
@@ -42,6 +46,7 @@ export default function VerClienteButton({ selectedClientIndex, onSubmitPay }) {
           onClose={handleCloseModal}
           selectedClientIndex={selectedClient}
           onPaySubmit={onSubmitPay}
+          onPresSubmit={onSubmitPres}
         />
       </ButtonGroup>
     </div>

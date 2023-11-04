@@ -21,6 +21,7 @@ const DetailsClientes = ({
   onClose,
   selectedClientIndex,
   onPaySubmit,
+  onPresSubmit,
 }) => {
   const [onSubmitPres, setOnSubmitPres] = useState(false);
   const [onSubmitPay, setOnSubmitPay] = useState(false);
@@ -28,6 +29,7 @@ const DetailsClientes = ({
 
   const handleOnSubmitPres = () => {
     setOnSubmitPres(!onSubmitPres);
+    onPresSubmit();
   };
 
   const handleOnSubmitPay = () => {

@@ -4,7 +4,8 @@ import serverAPI from "../api/serverAPI";
 export default function fetchClients(
   onPresCreation,
   onSubmitPay,
-  onClienCreation
+  onClienCreation,
+  onSubmitPres
 ) {
   const [clients, setClients] = useState([]);
 
@@ -21,7 +22,7 @@ export default function fetchClients(
     };
 
     fetchClients();
-  }, [onPresCreation, onSubmitPay, onClienCreation]);
+  }, [onPresCreation, onSubmitPay, onClienCreation, onSubmitPres]);
 
   return clients;
 }

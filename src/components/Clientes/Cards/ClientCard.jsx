@@ -8,7 +8,13 @@ import VerClienteButton from "../Buttons/VerClienteButton";
 
 const ClientCard = ({ onPresCreation, onClienCreation }) => {
   const [onSubmitPay, setOnSubmitPay] = useState(false);
-  const clients = fetchClients(onPresCreation, onSubmitPay, onClienCreation);
+  const [onSubmitPres, setOnSubmitPres] = useState(false);
+  const clients = fetchClients(
+    onPresCreation,
+    onSubmitPay,
+    onClienCreation,
+    onSubmitPres
+  );
 
   const formatCurrency = (value) => {
     return new Intl.NumberFormat("es-AR", {
@@ -20,6 +26,10 @@ const ClientCard = ({ onPresCreation, onClienCreation }) => {
 
   const handleOnSubmitPay = () => {
     setOnSubmitPay(!onSubmitPay);
+  };
+
+  const handleOnSubmitPres = () => {
+    setOnSubmitPres(!onSubmitPres);
   };
 
   return (
@@ -78,6 +88,7 @@ const ClientCard = ({ onPresCreation, onClienCreation }) => {
                 <VerClienteButton
                   selectedClientIndex={client._id}
                   onSubmitPay={handleOnSubmitPay}
+                  onSubmitPres={handleOnSubmitPres}
                 />
               </Grid>
             </Grid>
