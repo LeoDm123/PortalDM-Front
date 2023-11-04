@@ -168,37 +168,16 @@ const ClientCard = ({ onPresCreation, onClientCreation }) => {
                     </Grid>
                   </Grid>
                   <Grid>
-                    <Typography
-                      color="text secondary"
-                      variant="subtitle2"
-                      mr={1}
-                      mt={1}
-                    >
+                    <Typography variant="subtitle2" mr={1} mt={1}>
                       CUIT: {client.ClientCUIT}
                     </Typography>
-                    <Typography
-                      color="text secondary"
-                      variant="subtitle2"
-                      mr={1}
-                      mt={1}
-                    >
+                    <Typography variant="subtitle2" mr={1} mt={1}>
                       Email: {client.ClientEmail}
                     </Typography>
-                    <Typography
-                      color="text secondary"
-                      variant="subtitle2"
-                      mr={1}
-                      mt={1}
-                    >
+                    <Typography variant="subtitle2" mr={1} mt={1}>
                       Celular: {client.ClientTel}
                     </Typography>
-                    <Typography
-                      color="text secondary"
-                      variant="subtitle2"
-                      mr={1}
-                      mt={1}
-                      mb={1}
-                    >
+                    <Typography variant="subtitle2" mr={1} mt={1} mb={1}>
                       Dirección: {client.ClientAdress}
                     </Typography>
                   </Grid>
