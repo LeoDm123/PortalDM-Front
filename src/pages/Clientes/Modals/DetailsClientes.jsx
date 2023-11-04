@@ -22,10 +22,12 @@ const DetailsClientes = ({
   selectedClientIndex,
   onPaySubmit,
   onPresSubmit,
+  onDeleteClient,
 }) => {
   const [onSubmitPres, setOnSubmitPres] = useState(false);
   const [onSubmitPay, setOnSubmitPay] = useState(false);
   const [onClientEdit, setOnClientEdit] = useState(false);
+  const [onClientDelete, setOnClientDelete] = useState(false);
 
   const handleOnSubmitPres = () => {
     setOnSubmitPres(!onSubmitPres);
@@ -39,6 +41,11 @@ const DetailsClientes = ({
 
   const handleOnClientEdit = () => {
     setOnClientEdit(!onClientEdit);
+  };
+
+  const handleOnClientDelete = () => {
+    setOnClientDelete(!onClientDelete);
+    onDeleteClient();
   };
 
   const formatCurrency = (value) => {
@@ -122,6 +129,7 @@ const DetailsClientes = ({
                 <EditClienteButton
                   selectedClientIndex={selectedClientIndex}
                   onClientChange={handleOnClientEdit}
+                  onClientDelete={handleOnClientDelete}
                 />
               </Grid>
               <Grid mb={2}>

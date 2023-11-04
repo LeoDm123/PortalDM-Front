@@ -8,6 +8,7 @@ import EditCliente from "../../../pages/Clientes/Modals/EditCliente";
 export default function EditClienteButton({
   selectedClientIndex,
   onClientChange,
+  onClientDelete,
 }) {
   const [modalOpen, setModalOpen] = React.useState(false);
 
@@ -37,6 +38,7 @@ export default function EditClienteButton({
           onClose={handleCloseModal}
           selectedClientIndex={selectedClientIndex}
           onClientChange={onClientChange}
+          onClientDelete={onClientDelete}
         />
       </ButtonGroup>
     </Grid>

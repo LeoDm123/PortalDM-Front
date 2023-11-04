@@ -9,10 +9,12 @@ import VerClienteButton from "../Buttons/VerClienteButton";
 const ClientCard = ({ onPresCreation, onClienCreation }) => {
   const [onSubmitPay, setOnSubmitPay] = useState(false);
   const [onSubmitPres, setOnSubmitPres] = useState(false);
+  const [onClientDelete, setOnClientDelete] = useState(false);
   const clients = fetchClients(
     onPresCreation,
     onSubmitPay,
     onClienCreation,
+    onClientDelete,
     onSubmitPres
   );
 
@@ -30,6 +32,10 @@ const ClientCard = ({ onPresCreation, onClienCreation }) => {
 
   const handleOnSubmitPres = () => {
     setOnSubmitPres(!onSubmitPres);
+  };
+
+  const handleOnClientDelete = () => {
+    setOnClientDelete(!onClientDelete);
   };
 
   return (
@@ -89,6 +95,7 @@ const ClientCard = ({ onPresCreation, onClienCreation }) => {
                   selectedClientIndex={client._id}
                   onSubmitPay={handleOnSubmitPay}
                   onSubmitPres={handleOnSubmitPres}
+                  onDeleteClient={handleOnClientDelete}
                 />
               </Grid>
             </Grid>

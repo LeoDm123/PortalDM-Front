@@ -12,7 +12,12 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import swal from "sweetalert";
 import serverAPI from "../../../api/serverAPI";
 
-const EditCliente = ({ open, onClose, selectedClientIndex }) => {
+const EditCliente = ({
+  open,
+  onClose,
+  selectedClientIndex,
+  onClientDelete,
+}) => {
   const [ClientData, setClientData] = useState({});
   const [ClientName, setClientName] = useState("");
   const [ClientApellido, setClientApellido] = useState("");
@@ -101,6 +106,7 @@ const EditCliente = ({ open, onClose, selectedClientIndex }) => {
       await serverAPI.delete(`/clients/deleteCliente/${selectedClientIndex}`);
 
       SwAlertDelete();
+      onClientDelete();
       onClose();
     } catch (error) {
       console.error(error);
