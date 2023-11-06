@@ -206,7 +206,10 @@ const ClientCard = ({ onPresCreation, onClientCreation }) => {
                 <Grid sx={{ display: "Flex", width: "100%" }}>
                   <CardContent sx={{ padding: 0, width: "100%" }}>
                     {client.Presupuestos.filter(
-                      (presupuesto) => presupuesto.Estado === "Activo"
+                      (presupuesto) =>
+                        presupuesto.Estado === "Activo" ||
+                        presupuesto.Estado === "En proceso" ||
+                        presupuesto.Estado === "A cobrar"
                     ).map((presupuesto) => {
                       return (
                         <Card
@@ -234,7 +237,7 @@ const ClientCard = ({ onPresCreation, onClientCreation }) => {
                               variant="subtitle2"
                               width={"40%"}
                             >
-                              Cond. Fact.: {presupuesto.CondicionFacturacion}%
+                              Estado: {presupuesto.Estado}
                             </Typography>
                             <Typography
                               color="text secondary"
