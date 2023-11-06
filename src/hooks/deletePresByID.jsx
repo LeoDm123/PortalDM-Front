@@ -20,8 +20,6 @@ export default function useDeletePres(selectedClientIndex) {
         (presupuesto) => presupuesto._id === _id
       );
 
-      console.log("Presupuesto", presupuestoToDelete._id);
-
       if (!presupuestoToDelete) {
         console.error(`Presupuesto con código ${_id} no encontrado.`);
         return;

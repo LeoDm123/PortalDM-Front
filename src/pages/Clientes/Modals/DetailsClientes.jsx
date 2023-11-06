@@ -24,6 +24,7 @@ const DetailsClientes = ({
   onPresSubmit,
   onDeleteClient,
   onPresEdit,
+  onPresDelete,
 }) => {
   const [onSubmitPres, setOnSubmitPres] = useState(false);
   const [onSubmitPay, setOnSubmitPay] = useState(false);
@@ -163,6 +164,7 @@ const DetailsClientes = ({
               selectedClientIndex={selectedClientIndex}
               onSubmitPres={handleOnSubmitPres}
               onPresEdit={onPresEdit}
+              onPresDelete={onPresDelete}
             />
           </Paper>
         </Paper>
