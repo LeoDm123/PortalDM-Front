@@ -6,7 +6,8 @@ export default function fetchClientByID(
   onSubmitPres,
   onPresCreation,
   onSubmitPay,
-  onClientChange
+  onClientChange,
+  onPresEdit
 ) {
   const [clientByID, setClientByID] = useState([]);
 
@@ -29,6 +30,7 @@ export default function fetchClientByID(
     onPresCreation,
     onSubmitPay,
     onClientChange,
+    onPresEdit,
   ]);
 
   return clientByID;

@@ -9,11 +9,13 @@ import swal from "sweetalert";
 import DeleteButton from "../../../components/DeleteButton";
 import fetchClientByID from "../../../hooks/fetchClientByID";
 import DeletePago from "../../../hooks/deletePagoByID";
+import FormatCurrency from "../../../hooks/formatCurrency";
 
 const PagosList = ({ selectedClientIndex, onSubmitPay }) => {
   const clientByID = fetchClientByID(selectedClientIndex, onSubmitPay);
   const { deletePago, error } = DeletePago(selectedClientIndex);
   const [sortedPagos, setSortedPagos] = useState([]);
+  const formatCurrency = FormatCurrency();
 
   useEffect(() => {
     if (clientByID.Presupuestos) {
@@ -40,14 +42,6 @@ const PagosList = ({ selectedClientIndex, onSubmitPay }) => {
         deletePago(selectedClientIndex, presupuestoId, pagoId);
       }
     });
-  };
-
-  const formatCurrency = (value) => {
-    return new Intl.NumberFormat("es-AR", {
-      style: "currency",
-      currency: "ARS",
-      minimumFractionDigits: 2,
-    }).format(value);
   };
 
   const formatDate = (dateStr) => {

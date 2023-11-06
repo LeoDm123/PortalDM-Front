@@ -23,6 +23,7 @@ const DetailsClientes = ({
   onPaySubmit,
   onPresSubmit,
   onDeleteClient,
+  onPresEdit,
 }) => {
   const [onSubmitPres, setOnSubmitPres] = useState(false);
   const [onSubmitPay, setOnSubmitPay] = useState(false);
@@ -161,6 +162,7 @@ const DetailsClientes = ({
             <PresupuestosList
               selectedClientIndex={selectedClientIndex}
               onSubmitPres={handleOnSubmitPres}
+              onPresEdit={onPresEdit}
             />
           </Paper>
         </Paper>

@@ -4,15 +4,26 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
+import serverAPI from "../../../api/serverAPI";
 import DeleteButton from "../../../components/DeleteButton";
 import fetchClientByID from "../../../hooks/fetchClientByID";
 import useDeletePres from "../../../hooks/deletePresByID";
+import FormatCurrency from "../../../hooks/formatCurrency";
 
-const PresupuestosList = ({ selectedClientIndex, onSubmitPres }) => {
-  const [onPay, setOnPay] = useState(true);
+const PresupuestosList = ({
+  selectedClientIndex,
+  onSubmitPres,
+  onPresEdit,
+}) => {
   const clientByID = fetchClientByID(selectedClientIndex, onSubmitPres);
   const { deletePres, error } = useDeletePres(selectedClientIndex, clientByID);
+  const formatCurrency = FormatCurrency();
+  const [estadoPres, setEstadoPres] = useState(null);
+  const [selectedPresupuestoId, setSelectedPresupuestoId] = useState(null);
 
   const handleDeletePres = (presId) => {
     swal({
@@ -28,16 +39,63 @@ const PresupuestosList = ({ selectedClientIndex, onSubmitPres }) => {
     });
   };
 
-  const formatCurrency = (value) => {
-    return new Intl.NumberFormat("es-AR", {
-      style: "currency",
-      currency: "ARS",
-      minimumFractionDigits: 2,
-    }).format(value);
+  const handleChangeStatus = () => {
+    swal({
+      title: "¿Desea cambiar el estado del presupuesto?",
+      icon: "warning",
+      buttons: ["No", "Sí"],
+      dangerMode: true,
+    }).then((confirmed) => {
+      if (confirmed) {
+        ChangeStatus(estadoPres, selectedPresupuestoId, selectedClientIndex);
+      } else {
+        console.log("El usuario canceló");
+      }
+    });
   };
 
-  const handleOnPay = () => {
-    setOnPay(!onPay);
+  const ChangeStatus = async (
+    estadoPres,
+    selectedPresupuestoId,
+    selectedClientIndex
+  ) => {
+    if (selectedPresupuestoId && estadoPres) {
+      try {
+        await serverAPI.put(
+          `/pres/editPresupuesto/${selectedClientIndex}/${selectedPresupuestoId}`,
+          {
+            Estado: estadoPres,
+          }
+        );
+        SwAlertOk();
+        onPresEdit();
+      } catch (error) {
+        console.error(error);
+        SwAlertError();
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (estadoPres !== null && selectedPresupuestoId !== null) {
+      handleChangeStatus();
+    }
+  }, [estadoPres, selectedPresupuestoId]);
+
+  const SwAlertOk = () => {
+    swal({
+      title: "¡Éxito!",
+      text: "El estado del presupuesto se ha actualizado correctamente",
+      icon: "success",
+    });
+  };
+
+  const SwAlertError = () => {
+    swal({
+      title: "¡Error!",
+      text: "Hubo un error al actualizar los datos del presupuesto",
+      icon: "error",
+    });
   };
 
   return (
@@ -156,7 +214,24 @@ const PresupuestosList = ({ selectedClientIndex, onSubmitPres }) => {
                   )}
                 </TableCell>
                 <TableCell className="text-center">
-                  {presupuesto.Estado}
+                  <FormControl variant="standard" fullWidth>
+                    <Select
+                      label=""
+                      value={estadoPres || presupuesto.Estado}
+                      onChange={(e) => {
+                        setEstadoPres(e.target.value);
+                        setSelectedPresupuestoId(presupuesto._id);
+                      }}
+                    >
+                      <MenuItem value="">
+                        <em>Seleccione</em>
+                      </MenuItem>
+                      <MenuItem value="Activo">Activo</MenuItem>
+                      <MenuItem value="En proceso">En proceso</MenuItem>
+                      <MenuItem value="A cobrar">A cobrar</MenuItem>
+                      <MenuItem value="Cerrado">Cerrado</MenuItem>
+                    </Select>
+                  </FormControl>
                 </TableCell>
                 <TableCell className="text-center">
                   <DeleteButton

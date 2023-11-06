@@ -5,26 +5,22 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import fetchClients from "../../../hooks/fetchClients";
 import VerClienteButton from "../Buttons/VerClienteButton";
+import FormatCurrency from "../../../hooks/formatCurrency";
 
 const ClientCard = ({ onPresCreation, onClientCreation }) => {
   const [onSubmitPay, setOnSubmitPay] = useState(false);
   const [onSubmitPres, setOnSubmitPres] = useState(false);
   const [onClientDelete, setOnClientDelete] = useState(false);
+  const [onPresEdit, setOnPresEdit] = useState(false);
+  const formatCurrency = FormatCurrency();
   const clients = fetchClients(
     onPresCreation,
     onSubmitPay,
     onClientCreation,
     onClientDelete,
-    onSubmitPres
+    onSubmitPres,
+    onPresEdit
   );
-
-  const formatCurrency = (value) => {
-    return new Intl.NumberFormat("es-AR", {
-      style: "currency",
-      currency: "ARS",
-      minimumFractionDigits: 2,
-    }).format(value);
-  };
 
   const handleOnSubmitPay = () => {
     setOnSubmitPay(!onSubmitPay);
@@ -36,6 +32,10 @@ const ClientCard = ({ onPresCreation, onClientCreation }) => {
 
   const handleOnClientDelete = () => {
     setOnClientDelete(!onClientDelete);
+  };
+
+  const handleOnPresEdit = () => {
+    setOnPresEdit(!onPresEdit);
   };
 
   return (
@@ -96,6 +96,7 @@ const ClientCard = ({ onPresCreation, onClientCreation }) => {
                   onSubmitPay={handleOnSubmitPay}
                   onSubmitPres={handleOnSubmitPres}
                   onDeleteClient={handleOnClientDelete}
+                  onPresEdit={handleOnPresEdit}
                 />
               </Grid>
             </Grid>
