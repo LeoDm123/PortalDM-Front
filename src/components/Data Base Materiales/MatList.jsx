@@ -26,7 +26,7 @@ export default function MatList() {
     <Grid item xs={12} md={12} lg={12}>
       <React.Fragment>
         <div className="TitleButtonLayout">
-          <Title>Materiales para Puertas de Madera</Title>
+          <Title>Listado de Materiales</Title>
           <MatFilterButton onFilterChange={handleFilterChange} />
         </div>
         <Table size="medium">

@@ -6,91 +6,126 @@ import CloseButton from "../../../components/CloseButton";
 import swal from "sweetalert";
 
 const AgregarMat = ({ open, onClose }) => {
-  const [categoria, setCategoria] = useState("");
-  const [materials, setMaterials] = useState([]);
+  const [ClientName, setClientName] = useState("");
+  const [ClientApellido, setClientApellido] = useState("");
+  const [ClientIVACond, setClientIVACond] = useState("");
+  const [ClientDNI, setClientDNI] = useState("");
+  const [ClientAdress, setClientAdress] = useState("");
+  const [ClientTel, setClientTel] = useState("");
+  const [ClientEmail, setClientEmail] = useState("");
+  const [ClientCUIT, setClientCUIT] = useState("");
+  const [ClientStatus, setClientStatus] = useState("Activo");
 
-  const SwAlert = () => {
+  const crearCliente = async (
+    ClientName,
+    ClientApellido,
+    ClientIVACond,
+    ClientDNI,
+    ClientCUIT,
+    ClientAdress,
+    ClientTel,
+    ClientEmail,
+    ClientStatus
+  ) => {
+    try {
+      const resp = await serverAPI.post("/clients/crearCliente", {
+        ClientName,
+        ClientApellido,
+        ClientIVACond,
+        ClientDNI,
+        ClientCUIT,
+        ClientAdress,
+        ClientTel,
+        ClientEmail,
+        ClientStatus,
+      });
+
+      if (
+        resp.data.msg ===
+        "El DNI que intenta registrar ya se encuentra registrado"
+      ) {
+        SwAlertError();
+      } else {
+        console.log(resp);
+        SwAlertOk();
+        onClose();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const SwAlertOk = () => {
     swal({
       title: "¡Éxito!",
-      text: "El material se agregó correctamente",
+      text: "El cliente se agregó correctamente",
       icon: "success",
     });
   };
 
-  useEffect(() => {
-    // Retrieve existing materials from local storage and parse the JSON data
-    const storedMaterials = JSON.parse(localStorage.getItem("materials"));
-    // If there are existing materials, set them in the state
-    if (storedMaterials && Array.isArray(storedMaterials)) {
-      setMaterials(storedMaterials);
-    }
-  }, []);
+  const SwAlertError = () => {
+    swal({
+      title: "¡Error!",
+      text: "El cliente ya se encuentra registrado",
+      icon: "error",
+    });
+  };
+
+  const handleIVAChange = (e) => {
+    setClientIVACond(e.target.value);
+  };
+
+  const handleCUITChange = (e) => {
+    const inputNumber = e.target.value.replace(/\D/g, "");
+    const paddedNumber = inputNumber.padStart(11, "");
+    const formattedCuit = `${paddedNumber.substring(
+      0,
+      2
+    )}-${paddedNumber.substring(2, 10)}-${paddedNumber.charAt(10)}`;
+    setClientCUIT(formattedCuit);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // Retrieve the form values using the "name" attribute
-    const matDetail =
-      event.currentTarget.elements.namedItem("detailInput").value;
+    if (ClientEmail === "" || ClientName === "" || ClientIVACond === "") {
+      return console.log("todos los campos son obligatorios");
+    }
 
-    const matAncho = parseFloat(
-      event.currentTarget.elements.namedItem("anchoInput").value
+    console.log(
+      ClientName,
+      ClientApellido,
+      ClientIVACond,
+      ClientDNI,
+      ClientCUIT,
+      ClientAdress,
+      ClientTel,
+      ClientEmail,
+      ClientStatus
     );
 
-    const matAlto = parseFloat(
-      event.currentTarget.elements.namedItem("altoInput").value
+    crearCliente(
+      ClientName,
+      ClientApellido,
+      ClientIVACond,
+      ClientDNI,
+      ClientCUIT,
+      ClientAdress,
+      ClientTel,
+      ClientEmail,
+      ClientStatus
     );
 
-    const matLargo = parseFloat(
-      event.currentTarget.elements.namedItem("largoInput").value
-    );
+    setClientName("");
+    setClientApellido("");
+    setClientIVACond("");
+    setClientDNI("");
+    setClientEmail("");
+    setClientAdress("");
+    setClientTel("");
+    setClientCUIT("");
 
-    const matEspesor = parseFloat(
-      event.currentTarget.elements.namedItem("espesorInput").value
-    );
-
-    const matCategory =
-      event.currentTarget.elements.namedItem("catInput").value;
-
-    const matProveedor =
-      event.currentTarget.elements.namedItem("proveedorInput").value;
-
-    const matPrice = parseFloat(
-      event.currentTarget.elements.namedItem("priceInput").value
-    );
-
-    // Create a user object to save in local storage
-    const newMaterial = {
-      matDetail,
-      matAncho,
-      matAlto,
-      matLargo,
-      matEspesor,
-      matCategory,
-      matProveedor,
-      matPrice,
-    };
-
-    // Push the new material object into the existing materials array
-    const updatedMaterials = [...materials, newMaterial];
-
-    // Save the updated materials array to local storage
-    localStorage.setItem("materials", JSON.stringify(updatedMaterials));
-
-    // Clear the form after submission (optional)
-    event.currentTarget.reset();
-    setCategoria("");
-    // window.location.href = "/BaseDatosMats"; // If you redirect, the state will be reset anyway
-
-    // Optionally, you can update the state with the new materials
-    setMaterials(updatedMaterials);
-
-    // Alert
-    SwAlert();
-  };
-
-  const handleCatChange = (e) => {
-    setCategoria(e.target.value);
+    onClientCreation();
   };
 
   return (

@@ -17,6 +17,7 @@ const EditCliente = ({
   onClose,
   selectedClientIndex,
   onClientDelete,
+  onClientChange,
 }) => {
   const [ClientData, setClientData] = useState({});
   const [ClientName, setClientName] = useState("");
@@ -95,6 +96,7 @@ const EditCliente = ({
 
       SwAlertOk();
       onClose();
+      onClientChange();
     } catch (error) {
       console.error(error);
       SwAlertError();

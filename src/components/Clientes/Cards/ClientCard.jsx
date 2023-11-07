@@ -13,6 +13,7 @@ const ClientCard = ({ onPresCreation, onClientCreation }) => {
   const [onClientDelete, setOnClientDelete] = useState(false);
   const [onPresEdit, setOnPresEdit] = useState(false);
   const [onPresDelete, setOnPresDelete] = useState(false);
+  const [onClientChange, setOnClientChange] = useState(false);
   const formatCurrency = FormatCurrency();
   const clients = fetchClients(
     onPresCreation,
@@ -21,7 +22,8 @@ const ClientCard = ({ onPresCreation, onClientCreation }) => {
     onClientDelete,
     onSubmitPres,
     onPresEdit,
-    onPresDelete
+    onPresDelete,
+    onClientChange
   );
 
   const handleOnSubmitPay = () => {
@@ -42,6 +44,10 @@ const ClientCard = ({ onPresCreation, onClientCreation }) => {
 
   const handleOnPresDelete = () => {
     setOnPresDelete(!onPresDelete);
+  };
+
+  const handleOnClientChange = () => {
+    setOnClientChange(!onClientChange);
   };
 
   return (
@@ -104,6 +110,7 @@ const ClientCard = ({ onPresCreation, onClientCreation }) => {
                   onDeleteClient={handleOnClientDelete}
                   onPresEdit={handleOnPresEdit}
                   onPresDelete={handleOnPresDelete}
+                  onClientChange={handleOnClientChange}
                 />
               </Grid>
             </Grid>

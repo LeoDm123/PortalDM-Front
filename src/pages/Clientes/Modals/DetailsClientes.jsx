@@ -25,6 +25,7 @@ const DetailsClientes = ({
   onDeleteClient,
   onPresEdit,
   onPresDelete,
+  onClientChange,
 }) => {
   const [onSubmitPres, setOnSubmitPres] = useState(false);
   const [onSubmitPay, setOnSubmitPay] = useState(false);
@@ -39,10 +40,6 @@ const DetailsClientes = ({
   const handleOnSubmitPay = () => {
     setOnSubmitPay(!onSubmitPay);
     onPaySubmit();
-  };
-
-  const handleOnClientEdit = () => {
-    setOnClientEdit(!onClientEdit);
   };
 
   const handleOnClientDelete = () => {
@@ -130,7 +127,7 @@ const DetailsClientes = ({
                 </div>
                 <EditClienteButton
                   selectedClientIndex={selectedClientIndex}
-                  onClientChange={handleOnClientEdit}
+                  onClientChange={onClientChange}
                   onClientDelete={handleOnClientDelete}
                 />
               </Grid>
@@ -139,7 +136,7 @@ const DetailsClientes = ({
               </Grid>
               <ClientDataList
                 selectedClientIndex={selectedClientIndex}
-                onClientChange={handleOnClientEdit}
+                onClientChange={onClientChange}
               />
             </Paper>
 

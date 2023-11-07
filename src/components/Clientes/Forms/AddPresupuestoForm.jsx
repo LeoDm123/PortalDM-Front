@@ -129,7 +129,19 @@ const AddPresupuesto = ({
               required
               label="Codigo de Presupuesto"
             />
-            <FormControl className="form-floating w-100 ms-2">
+            <TextField
+              type="text"
+              className="form-control w-100 ms-2 mt-3"
+              name="precio"
+              placeholder="Codigo de Presupuesto"
+              value={precio}
+              onChange={(e) => setPrecio(e.target.value)}
+              label="Precio c/ Descuento"
+            />
+          </div>
+
+          <div className="d-flex w-100">
+            <FormControl className="form-floating w-100 me-3">
               <InputLabel htmlFor="factCondicion">
                 Condición de facturación:{" "}
                 {factCondicion ? factCondicion : "Seleccionar"}
@@ -153,18 +165,7 @@ const AddPresupuesto = ({
                 <MenuItem value="0%">0%</MenuItem>
               </Select>
             </FormControl>
-          </div>
 
-          <div className="d-flex w-100">
-            <TextField
-              type="text"
-              className="form-control w-100 me-3 mt-3"
-              name="precio"
-              placeholder="Codigo de Presupuesto"
-              value={precio}
-              onChange={(e) => setPrecio(e.target.value)}
-              label="Precio c/ Descuento"
-            />
             <TextField
               type="text"
               className="form-control mt-3 w-75 me-3"

@@ -12,6 +12,7 @@ export default function VerClienteButton({
   onDeleteClient,
   onPresEdit,
   onPresDelete,
+  onClientChange,
 }) {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [selectedClient, setSelectedClient] = useState("");
@@ -53,6 +54,7 @@ export default function VerClienteButton({
           onDeleteClient={onDeleteClient}
           onPresEdit={onPresEdit}
           onPresDelete={onPresDelete}
+          onClientChange={onClientChange}
         />
       </ButtonGroup>
     </div>
