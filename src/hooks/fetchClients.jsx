@@ -9,7 +9,8 @@ export default function fetchClients(
   onClientDelete,
   onPresEdit,
   onPresDelete,
-  onClientChange
+  onClientChange,
+  onPayDelete
 ) {
   const [clients, setClients] = useState([]);
 
@@ -35,6 +36,7 @@ export default function fetchClients(
     onPresEdit,
     onPresDelete,
     onClientChange,
+    onPayDelete,
   ]);
 
   return clients;

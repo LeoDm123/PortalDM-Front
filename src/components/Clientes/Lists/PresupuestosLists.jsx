@@ -18,6 +18,7 @@ const PresupuestosList = ({
   selectedClientIndex,
   onSubmitPres,
   onPresEdit,
+  onPresDelete,
 }) => {
   const clientByID = fetchClientByID(selectedClientIndex, onSubmitPres);
   const { deletePres, error } = useDeletePres(selectedClientIndex, clientByID);
@@ -35,6 +36,7 @@ const PresupuestosList = ({
     }).then((willCancel) => {
       if (willCancel) {
         deletePres(selectedClientIndex, presId);
+        onPresDelete();
       }
     });
   };

@@ -26,6 +26,7 @@ const DetailsClientes = ({
   onPresEdit,
   onPresDelete,
   onClientChange,
+  onPayDelete,
 }) => {
   const [onSubmitPres, setOnSubmitPres] = useState(false);
   const [onSubmitPay, setOnSubmitPay] = useState(false);
@@ -148,6 +149,7 @@ const DetailsClientes = ({
               <PagosList
                 selectedClientIndex={selectedClientIndex}
                 onSubmitPay={onSubmitPay}
+                onPayDelete={onPayDelete}
               />
             </Paper>
           </div>

@@ -11,24 +11,14 @@ import fetchClientByID from "../../../hooks/fetchClientByID";
 import DeletePago from "../../../hooks/deletePagoByID";
 import FormatCurrency from "../../../hooks/formatCurrency";
 
-const PagosList = ({ selectedClientIndex, onSubmitPay }) => {
-  const clientByID = fetchClientByID(selectedClientIndex, onSubmitPay);
+const PagosList = ({ selectedClientIndex, onSubmitPay, onPayDelete }) => {
+  const clientByID = fetchClientByID(
+    selectedClientIndex,
+    onSubmitPay,
+    onPayDelete
+  );
   const { deletePago, error } = DeletePago(selectedClientIndex);
-  const [sortedPagos, setSortedPagos] = useState([]);
   const formatCurrency = FormatCurrency();
-
-  useEffect(() => {
-    if (clientByID.Presupuestos) {
-      const sortedPagos = [];
-      clientByID.Presupuestos.forEach((presupuesto) => {
-        if (presupuesto.Pagos) {
-          sortedPagos.push(...presupuesto.Pagos);
-        }
-      });
-      sortedPagos.sort((a, b) => new Date(a.FechaPago) - new Date(b.FechaPago));
-      setSortedPagos(sortedPagos);
-    }
-  }, [clientByID]);
 
   const handleDeletePago = (presupuestoId, pagoId) => {
     swal({
@@ -40,19 +30,35 @@ const PagosList = ({ selectedClientIndex, onSubmitPay }) => {
     }).then((willCancel) => {
       if (willCancel) {
         deletePago(selectedClientIndex, presupuestoId, pagoId);
+        onPayDelete();
       }
     });
   };
 
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
-    const day = date.getDate() + 1;
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
+    if (isNaN(date)) {
+      return "Fecha inválida";
+    }
+
+    date.setUTCHours(0, 0, 0, 0);
+
+    const day = date.getUTCDate();
+    const month = date.getUTCMonth() + 1;
+    const year = date.getUTCFullYear();
     return `${day < 10 ? "0" : ""}${day}-${
       month < 10 ? "0" : ""
     }${month}-${year}`;
   };
+
+  const presupuestos = clientByID.Presupuestos ?? [];
+
+  const sortedPayments = presupuestos.map((presupuesto) => ({
+    ...presupuesto,
+    Pagos: [...presupuesto.Pagos].sort(
+      (pagoA, pagoB) => new Date(pagoA.FechaPago) - new Date(pagoB.FechaPago)
+    ),
+  }));
 
   return (
     <div>
@@ -91,35 +97,37 @@ const PagosList = ({ selectedClientIndex, onSubmitPay }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortedPagos.map((pago) => (
-              <TableRow key={pago._id}>
-                <TableCell className="text-center" sx={{ width: "12%" }}>
-                  {pago.PresupuestoCodigo}
-                </TableCell>
-                <TableCell className="text-center">
-                  {formatDate(pago.FechaPago)}
-                </TableCell>
-                <TableCell className="text-center">
-                  {formatCurrency(pago.PagoMonto)}
-                </TableCell>
-                <TableCell className="text-center">
-                  {pago.PagoConcepto}
-                </TableCell>
-                <TableCell className="text-center">
-                  {pago.PagoComprobante}
-                </TableCell>
-                <TableCell className="text-center" sx={{ width: "20%" }}>
-                  {pago.Comentarios}
-                </TableCell>
-                <TableCell className="text-center">
-                  <DeleteButton
-                    onDelete={() =>
-                      handleDeletePago(pago.PresupuestoId, pago._id)
-                    }
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
+            {sortedPayments.map((presupuesto, presupuestoIndex) =>
+              presupuesto.Pagos.map((pago, pagoIndex) => (
+                <TableRow key={pago._id}>
+                  <TableCell className="text-center" sx={{ width: "12%" }}>
+                    {pago.PresupuestoCodigo}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {formatDate(pago.FechaPago)}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {formatCurrency(pago.PagoMonto)}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {pago.PagoConcepto}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {pago.PagoComprobante}
+                  </TableCell>
+                  <TableCell className="text-center" sx={{ width: "20%" }}>
+                    {pago.Comentarios}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <DeleteButton
+                      onDelete={() =>
+                        handleDeletePago(presupuesto._id, pago._id)
+                      }
+                    />
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </Grid>
