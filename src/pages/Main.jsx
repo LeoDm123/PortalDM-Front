@@ -16,8 +16,8 @@ const Main = () => {
     <ThemeProvider theme={defaultTheme}>
       <Header
         content={
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
+          <Container maxWidth="xl" sx={{ mt: 2 }}>
+            <Grid container spacing={1}>
               {/* BOTONERA */}
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
@@ -46,7 +46,14 @@ const Main = () => {
               </Grid>
               {/* Recent Orders */}
               <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "100%",
+                  }}
+                >
                   <Orders />
                 </Paper>
               </Grid>

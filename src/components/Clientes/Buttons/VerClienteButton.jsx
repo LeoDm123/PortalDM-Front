@@ -39,7 +39,7 @@ export default function VerClienteButton({
         aria-label="split button"
         sx={{
           height: "30px",
-          width: "30px",
+          width: "100%",
         }}
         className="mt-2"
       >

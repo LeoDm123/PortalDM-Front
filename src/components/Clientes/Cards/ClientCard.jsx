@@ -76,7 +76,7 @@ const ClientCard = ({ onPresCreation, onClientCreation }) => {
             <Grid
               width={"100%"}
               sx={{
-                marginLeft: 2,
+                paddingX: 2,
                 marginBottom: 2,
                 display: "flex",
                 justifyContent: "space-between",
@@ -108,7 +108,7 @@ const ClientCard = ({ onPresCreation, onClientCreation }) => {
                 )}
               </Grid>
 
-              <Grid marginRight={6}>
+              <Grid marginRight={0}>
                 <VerClienteButton
                   selectedClientIndex={client._id}
                   onSubmitPay={handleOnSubmitPay}

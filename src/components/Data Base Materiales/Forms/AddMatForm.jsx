@@ -9,31 +9,25 @@ import {
   Grid,
 } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import { crearPago } from "../../../hooks/crearPago";
-import fetchClientByID from "../../../hooks/fetchClientByID";
+import { crearMaterial } from "../../../hooks/crearMaterial";
 
-const AddMatForm = ({ onClose, selectedClientIndex, onSubmitPay }) => {
+const AddMatForm = ({ onClose }) => {
+  const [Codigo, setCodigo] = useState("");
   const [Detalle, setDetalle] = useState("");
+  const [Unidad, setUnidad] = useState("");
   const [Categoria, setCategoria] = useState("");
   const [Ancho, setAncho] = useState(0);
   const [Alto, setAlto] = useState(0);
   const [Largo, setLargo] = useState(0);
   const [Espesor, setEspesor] = useState(0);
   const [Costo, setCosto] = useState(0);
+  const [StockInicial, setStockInicial] = useState(0);
+  const [StockSeguridad, setStockSeguridad] = useState(0);
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
-    const monto = parseFloat(PagoMonto);
-
-    if (
-      PresupuestoCodigo === "" ||
-      FechaPago === "" ||
-      PagoCondicion === "" ||
-      PagoConcepto === "" ||
-      isNaN(monto) ||
-      monto <= 0
-    ) {
+    if (Codigo === "" || Detalle === "" || Categoria === "" || Costo === "") {
       return swal({
         title: "¡Error!",
         text: "Todos los campos son obligatorios",
@@ -41,177 +35,170 @@ const AddMatForm = ({ onClose, selectedClientIndex, onSubmitPay }) => {
       });
     }
 
-    crearPago(
-      clientByID.ClientCUIT,
-      PresupuestoCodigo,
-      FechaPago,
-      PagoCondicion,
-      PagoConcepto,
-      PagoComprobante,
-      monto,
-      Comentarios,
-      onClose
+    crearMaterial(
+      Codigo,
+      Detalle,
+      Categoria,
+      Unidad,
+      Ancho,
+      Alto,
+      Largo,
+      Espesor,
+      Costo,
+      StockSeguridad,
+      StockInicial
     );
 
-    setClientCUIT("");
-    setPresupuestoCodigo("");
-    setFechaPago("");
-    setPagoCondicion("");
-    setPagoConcepto("");
-    setPagoComprobante("");
-    setPagoMonto(0);
-    setComentarios("");
-
-    onSubmitPay();
+    setCodigo("");
+    setDetalle("");
+    setCategoria("");
+    setAncho(0);
+    setAlto(0);
+    setLargo(0);
+    setEspesor(0);
+    setCosto(0);
+    setUnidad("");
+    setStockInicial(0);
+    setStockSeguridad(0);
   };
 
   return (
-    <form id="pagoForm" onSubmit={handleFormSubmit}>
+    <form id="matForm" onSubmit={handleFormSubmit}>
       <div className="d-flex justify-content-between mb-2">
-        <h1 className="h3">Agregar Pago</h1>
+        <h1 className="h3">Agregar Material</h1>
         <HighlightOffIcon onClick={onClose} fontSize="large" />
       </div>
 
       <Grid display={"flex"}>
         <TextField
           type="text"
-          className="form-control mt-3 w-75"
-          name="Cliente"
-          placeholder="Cliente"
-          value={`${clientByID.ClientName} ${clientByID.ClientApellido}`}
-          disabled
-          label="Cliente"
+          className="form-control mt-3 w-100"
+          name="Detalle"
+          placeholder="Detalle"
+          value={Detalle}
+          onChange={(e) => setDetalle(e.target.value)}
+          label="Detalle"
         />
-        <TextField
-          type="text"
-          className="form-control mt-3 w-75 ms-3"
-          name="CUIT"
-          placeholder="CUIT"
-          value={clientByID.ClientCUIT}
-          disabled
-          label="CUIT"
-        />
-      </Grid>
-
-      <Grid display={"flex"}>
-        <FormControl className="form-floating w-75">
-          <InputLabel htmlFor="PresupuestoCodigo">
-            Codigo de Presupuesto
-          </InputLabel>
+        <FormControl className="form-floating w-50 ms-3">
+          <InputLabel htmlFor="categoria">Unidad de Medida</InputLabel>
           <Select
-            className="form-select mt-3 w-100"
-            name="PresupuestoCodigo"
-            value={PresupuestoCodigo}
-            onChange={(e) => setPresupuestoCodigo(e.target.value)}
-            required
-            inputProps={{
-              name: "PresupuestoCodigo",
-              id: "PresupuestoCodigo",
-            }}
+            className="form-select my-3 w-100"
+            name="Unidad"
+            value={Unidad}
+            onChange={(e) => setUnidad(e.target.value)}
           >
-            <MenuItem value="" disabled>
-              Seleccionar código de presupuesto
-            </MenuItem>
-            {clientByID && clientByID.Presupuestos ? (
-              clientByID.Presupuestos.map((presupuesto, index) => (
-                <MenuItem key={index} value={presupuesto.PresupuestoCodigo}>
-                  {presupuesto.PresupuestoCodigo}
-                </MenuItem>
-              ))
-            ) : (
-              <MenuItem disabled>No presupuestos available</MenuItem>
-            )}
-          </Select>
-        </FormControl>
-        <TextField
-          type="date"
-          className="form-control w-75 mt-3 ms-3"
-          name="fecha"
-          value={FechaPago}
-          onChange={(e) => setFechaPago(e.target.value)}
-          label="Fecha del pago"
-        />
-      </Grid>
-
-      <Grid display={"flex"}>
-        <TextField
-          type="text"
-          className="form-control mt-3 w-75"
-          name="Monto"
-          placeholder="Monto"
-          value={PagoMonto}
-          onChange={(e) => setPagoMonto(e.target.value)}
-          label="Monto del pago"
-        />
-        <FormControl className="form-floating w-75 ms-3">
-          <InputLabel htmlFor="pagoCondicion">Condición de Pago</InputLabel>
-          <Select
-            className="form-select w-100 mt-3"
-            name="pagoCondicion"
-            value={PagoCondicion}
-            onChange={(e) => setPagoCondicion(e.target.value)}
-            required
-            inputProps={{
-              name: "pagoCondicion",
-              id: "pagoCondicion",
-            }}
-          >
-            <MenuItem value="" disabled>
-              Seleccionar condición de pago
-            </MenuItem>
-            <MenuItem value="Pago">Pago</MenuItem>
-            <MenuItem value="NC">Nota de Crédito</MenuItem>
-            <MenuItem value="ND">Nota de Débito</MenuItem>
+            <MenuItem value="">Seleccionar una unidad de medida</MenuItem>
+            <MenuItem value="ml">Metro Lineal [ml.]</MenuItem>
+            <MenuItem value="m2">Metro cuadrado [m2.]</MenuItem>
+            <MenuItem value="m3">Metro cúbico [m3.]</MenuItem>
+            <MenuItem value="u">Unidad [u.]</MenuItem>
           </Select>
         </FormControl>
       </Grid>
 
       <Grid display={"flex"}>
-        <FormControl className="form-floating w-75">
-          <InputLabel htmlFor="pagoConcepto">Concepto de Pago</InputLabel>
-          <Select
-            className="form-select w-100 mt-3"
-            name="pagoConcepto"
-            value={PagoConcepto}
-            onChange={(e) => setPagoConcepto(e.target.value)}
-            required
-            inputProps={{
-              name: "pagoConcepto",
-              id: "pagoConcepto",
-            }}
-          >
-            <MenuItem value="" disabled>
-              Seleccionar concepto de pago
-            </MenuItem>
-            <MenuItem value="Anticipo Parcial">Anticipo Parcial</MenuItem>
-            <MenuItem value="Anticipo Completo">Anticipo Completo</MenuItem>
-            <MenuItem value="Saldo Parcial">Saldo Parcial</MenuItem>
-            <MenuItem value="Saldo Completo">Saldo Completo</MenuItem>
-            <MenuItem value="Actualización">Actualización</MenuItem>
-            <MenuItem value="Extra">Extra</MenuItem>
-          </Select>
-        </FormControl>
         <TextField
           type="text"
-          className="form-control w-75 ms-3 mt-3"
-          name="Comprobante"
-          placeholder="Comprobante"
-          value={PagoComprobante}
-          onChange={(e) => setPagoComprobante(e.target.value)}
-          label="Numero del comprobante"
+          className="form-control mt-3 w-50"
+          name="Codigo"
+          placeholder="Codigo"
+          value={Codigo}
+          onChange={(e) => setCodigo(e.target.value)}
+          label="Codigo"
+        />
+        <FormControl className="form-floating w-50 ms-3">
+          <InputLabel htmlFor="categoria">Categoría:</InputLabel>
+          <Select
+            className="form-select my-3 w-100"
+            name="Categoria"
+            value={Categoria}
+            onChange={(e) => setCategoria(e.target.value)}
+          >
+            <MenuItem value="">Seleccionar una categoría de producto</MenuItem>
+            <MenuItem value="Perfileria">Perfilería de PVC</MenuItem>
+            <MenuItem value="MadMaciza">Madera Maciza y Alistonados</MenuItem>
+            <MenuItem value="PlacasMDF">Placas de MDF y Cantos</MenuItem>
+            <MenuItem value="DeckWPC">Deck y Revestimientos de WPC</MenuItem>
+            <MenuItem value="Lustre">Insumos de Lustre</MenuItem>
+            <MenuItem value="Varios">Insumos Varios</MenuItem>
+            <MenuItem value="HerrajesMad">
+              Herrajes para Aberturas de PVC
+            </MenuItem>
+            <MenuItem value="HerrajesPVC">
+              Herrajes para Puertas de Madera
+            </MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
+
+      <Grid display={"flex"}>
+        <TextField
+          type="text"
+          className="form-control my-3 me-3 w-25"
+          name="Ancho"
+          placeholder="Ancho"
+          value={Ancho}
+          onChange={(e) => setAncho(e.target.value)}
+          label="Ancho [mm]"
+        />
+        <TextField
+          type="text"
+          className="form-control my-3 me-3 w-25"
+          name="Alto"
+          placeholder="Alto"
+          value={Alto}
+          onChange={(e) => setAlto(e.target.value)}
+          label="Alto [mm]"
+        />
+        <TextField
+          type="text"
+          className="form-control mt-3 me-3 w-25"
+          name="Largo"
+          placeholder="Largo"
+          value={Largo}
+          onChange={(e) => setLargo(e.target.value)}
+          label="Largo [mm]"
+        />
+        <TextField
+          type="text"
+          className="form-control mt-3 w-25"
+          name="Espesor"
+          placeholder="Espesor"
+          value={Espesor}
+          onChange={(e) => setEspesor(e.target.value)}
+          label="Espesor [mm]"
         />
       </Grid>
 
-      <TextField
-        type="text"
-        className="form-control w-100 mt-3"
-        name="Comentarios"
-        placeholder="Comentarios"
-        value={Comentarios}
-        onChange={(e) => setComentarios(e.target.value)}
-        label="Comentarios"
-        multiline
-      />
+      <Grid display={"flex"} className="w-100">
+        <TextField
+          type="text"
+          className="form-control my-3 me-3 w-50"
+          name="StockInicial"
+          placeholder="StockInicial"
+          value={StockInicial}
+          onChange={(e) => setStockInicial(e.target.value)}
+          label="Stock Inicial"
+        />
+        <TextField
+          type="text"
+          className="form-control my-3 me-3 w-50"
+          name="StockSeguridad"
+          placeholder="StockSeguridad"
+          value={StockSeguridad}
+          onChange={(e) => setStockSeguridad(e.target.value)}
+          label="Stock de Seguridad"
+        />
+        <TextField
+          type="text"
+          className="form-control my-3 w-50"
+          name="Costo"
+          placeholder="Costo"
+          value={Costo}
+          onChange={(e) => setCosto(e.target.value)}
+          label="Costo Unitario"
+        />
+      </Grid>
 
       <Button
         variant="contained"
@@ -220,7 +207,7 @@ const AddMatForm = ({ onClose, selectedClientIndex, onSubmitPay }) => {
         type="submit"
         className="mt-4"
       >
-        Agregar Pago
+        Agregar Material
       </Button>
     </form>
   );

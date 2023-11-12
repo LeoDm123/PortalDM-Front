@@ -4,6 +4,7 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
+import Grid from "@mui/material/Grid";
 import TableRow from "@mui/material/TableRow";
 import Title from "../Title";
 
@@ -72,36 +73,38 @@ function preventDefault(event) {
 export default function Orders() {
   return (
     <React.Fragment>
-      <Title>Materiales Pendientes de Entrega</Title>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Codigo</TableCell>
-            <TableCell>Detalle</TableCell>
-            <TableCell>Cantidad</TableCell>
-            <TableCell>Fecha de pedido</TableCell>
-            <TableCell>Obra</TableCell>
-            <TableCell>Nro. de Pedido</TableCell>
-            <TableCell>Nro. de O.C.</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.codigo}</TableCell>
-              <TableCell>{row.detalle}</TableCell>
-              <TableCell>{row.cantidad}</TableCell>
-              <TableCell>{row.fecha}</TableCell>
-              <TableCell>{row.obra}</TableCell>
-              <TableCell>{row.pedido}</TableCell>
-              <TableCell>{row.orden}</TableCell>
+      <Grid sx={{ height: 400 }}>
+        <Title>Materiales Pendientes de Entrega</Title>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>Codigo</TableCell>
+              <TableCell>Detalle</TableCell>
+              <TableCell>Cantidad</TableCell>
+              <TableCell>Fecha de pedido</TableCell>
+              <TableCell>Obra</TableCell>
+              <TableCell>Nro. de Pedido</TableCell>
+              <TableCell>Nro. de O.C.</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        Ver pedidos
-      </Link>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.id}>
+                <TableCell>{row.codigo}</TableCell>
+                <TableCell>{row.detalle}</TableCell>
+                <TableCell>{row.cantidad}</TableCell>
+                <TableCell>{row.fecha}</TableCell>
+                <TableCell>{row.obra}</TableCell>
+                <TableCell>{row.pedido}</TableCell>
+                <TableCell>{row.orden}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
+          Ver pedidos
+        </Link>
+      </Grid>
     </React.Fragment>
   );
 }
