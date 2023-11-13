@@ -3,7 +3,7 @@ import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
 import AddMatForm from "../../../components/Data Base Materiales/Forms/AddMatForm";
 
-const AgregarMat = ({ open, onClose }) => {
+const AgregarMat = ({ open, onClose, onMatSubmit }) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Paper
@@ -16,7 +16,7 @@ const AgregarMat = ({ open, onClose }) => {
         }}
         className="CreateModal"
       >
-        <AddMatForm onClose={onClose} />
+        <AddMatForm onClose={onClose} onMatSubmit={onMatSubmit} />
       </Paper>
     </Modal>
   );

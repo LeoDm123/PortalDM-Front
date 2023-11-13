@@ -15,7 +15,7 @@ export default function VerClienteButton({
   onClientChange,
   onPayDelete,
 }) {
-  const [modalOpen, setModalOpen] = React.useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState("");
 
   const handleClick = () => {

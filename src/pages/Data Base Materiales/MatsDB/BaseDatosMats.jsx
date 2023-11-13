@@ -4,9 +4,9 @@ import Header from "../../../components/Menu/Header";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import MatList from "../../../components/Data Base Materiales/MatList";
+import MatList from "../../../components/Data Base Materiales/Lists/MatList";
 import "../../../App.css";
-import AddMatButton from "../../../components/Data Base Materiales/AddMatButton";
+import AddMatButton from "../../../components/Data Base Materiales/Buttons/AddMatButton";
 import ModifyMatButton from "../../../components/Data Base Materiales/ModifyMatButton";
 import { useNavigate } from "react-router-dom";
 
@@ -17,8 +17,16 @@ const BaseDatosMats = () => {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const [onMatSubmit, setOnMatSubmit] = useState(false);
+  const [onMatEdit, setOnMatEdit] = useState(false);
 
-  const navigate = useNavigate();
+  const handleOnMatSubmit = () => {
+    setOnMatSubmit(!onMatSubmit);
+  };
+
+  const handleOnMatEdit = () => {
+    setOnMatEdit(!onMatEdit);
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -27,7 +35,7 @@ const BaseDatosMats = () => {
           <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
             <Grid container>
               <div className="d-flex">
-                <AddMatButton />
+                <AddMatButton onMatSubmit={handleOnMatSubmit} />
                 <ModifyMatButton />
               </div>
               <Paper
@@ -39,7 +47,10 @@ const BaseDatosMats = () => {
                   width: "100%",
                 }}
               >
-                <MatList />
+                <MatList
+                  onMatSubmit={onMatSubmit}
+                  onMatChange={handleOnMatEdit}
+                />
               </Paper>
             </Grid>
           </Container>

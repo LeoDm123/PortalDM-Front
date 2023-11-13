@@ -11,7 +11,7 @@ import {
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { crearMaterial } from "../../../hooks/crearMaterial";
 
-const AddMatForm = ({ onClose }) => {
+const AddMatForm = ({ onClose, onMatSubmit }) => {
   const [Codigo, setCodigo] = useState("");
   const [Detalle, setDetalle] = useState("");
   const [Unidad, setUnidad] = useState("");
@@ -63,6 +63,8 @@ const AddMatForm = ({ onClose }) => {
     setStockInicial(0);
     setStockSeguridad(0);
     setProveedor("");
+    onMatSubmit();
+    onClose();
   };
 
   return (
@@ -118,16 +120,22 @@ const AddMatForm = ({ onClose }) => {
             onChange={(e) => setCategoria(e.target.value)}
           >
             <MenuItem value="">Seleccionar una categoría de producto</MenuItem>
-            <MenuItem value="Perfileria">Perfilería de PVC</MenuItem>
-            <MenuItem value="MadMaciza">Madera Maciza y Alistonados</MenuItem>
-            <MenuItem value="PlacasMDF">Placas de MDF y Cantos</MenuItem>
-            <MenuItem value="DeckWPC">Deck y Revestimientos de WPC</MenuItem>
-            <MenuItem value="Lustre">Insumos de Lustre</MenuItem>
-            <MenuItem value="Varios">Insumos Varios</MenuItem>
-            <MenuItem value="HerrajesMad">
+            <MenuItem value="Perfileria de PVC">Perfilería de PVC</MenuItem>
+            <MenuItem value="Madera Maciza y Alistonados">
+              Madera Maciza y Alistonados
+            </MenuItem>
+            <MenuItem value="Placas de MDF y Cantos">
+              Placas de MDF y Cantos
+            </MenuItem>
+            <MenuItem value="Deck y Revestimientos de WPC">
+              Deck y Revestimientos de WPC
+            </MenuItem>
+            <MenuItem value="Insumos de Lustre">Insumos de Lustre</MenuItem>
+            <MenuItem value="Insumos Varios">Insumos Varios</MenuItem>
+            <MenuItem value="Herrajes para Aberturas de PVC">
               Herrajes para Aberturas de PVC
             </MenuItem>
-            <MenuItem value="HerrajesPVC">
+            <MenuItem value="Herrajes para Puertas de Madera">
               Herrajes para Puertas de Madera
             </MenuItem>
           </Select>
@@ -141,15 +149,15 @@ const AddMatForm = ({ onClose }) => {
             onChange={(e) => setProveedor(e.target.value)}
           >
             <MenuItem value="">Seleccionar un Proveedor</MenuItem>
-            <MenuItem value="Rehau">Rehau S.A.</MenuItem>
-            <MenuItem value="Vidrial">Vidrial S.R.L</MenuItem>
-            <MenuItem value="Magnum">Magnum Herrajes</MenuItem>
-            <MenuItem value="GU">G.U. Herrajes</MenuItem>
+            <MenuItem value="Rehau S.A.">Rehau S.A.</MenuItem>
+            <MenuItem value="Vidrial S.R.L">Vidrial S.R.L</MenuItem>
+            <MenuItem value="Magnum Herrajes">Magnum Herrajes</MenuItem>
+            <MenuItem value="G.U. Herrajes">G.U. Herrajes</MenuItem>
             <MenuItem value="Madergold">Madergold</MenuItem>
             <MenuItem value="Maderplak">Maderplak</MenuItem>
             <MenuItem value="Vancar">Vancar</MenuItem>
             <MenuItem value="Würth">Würth</MenuItem>
-            <MenuItem value="Silva">Pinturería Silva</MenuItem>
+            <MenuItem value="Pinturería Silva">Pinturería Silva</MenuItem>
             <MenuItem value="Cromosol">Cromosol</MenuItem>
           </Select>
         </FormControl>

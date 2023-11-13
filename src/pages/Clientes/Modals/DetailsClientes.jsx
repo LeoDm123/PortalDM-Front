@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Title from "../../../components/Title";
-import Typography from "@mui/material/Typography";
 import CloseButton from "../../../components/CloseButton";
 import { DividerTitle } from "../../../components/Dividers";
-import swal from "sweetalert";
-import serverAPI from "../../../api/serverAPI";
 import EditClienteButton from "../../../components/Clientes/Buttons/EditClienteButton";
 import AddPresupuestoButton from "../../../components/Clientes/Buttons/AddPresupuestoButton";
 import AddPagoButton from "../../../components/Clientes/Buttons/AddPagoButton";
@@ -46,14 +43,6 @@ const DetailsClientes = ({
   const handleOnClientDelete = () => {
     setOnClientDelete(!onClientDelete);
     onDeleteClient();
-  };
-
-  const formatCurrency = (value) => {
-    return new Intl.NumberFormat("es-AR", {
-      style: "currency",
-      currency: "ARS",
-      minimumFractionDigits: 2,
-    }).format(value);
   };
 
   const defaultTheme = createTheme({
