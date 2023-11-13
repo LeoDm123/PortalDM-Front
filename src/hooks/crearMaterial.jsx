@@ -13,7 +13,8 @@ export const crearMaterial = async (
   Espesor,
   Costo,
   StockSeguridad,
-  StockInicial
+  StockInicial,
+  Proveedor
 ) => {
   try {
     const resp = await serverAPI.post("/mats/crearMaterial", {
@@ -28,6 +29,7 @@ export const crearMaterial = async (
       Costo,
       StockSeguridad,
       StockInicial,
+      Proveedor,
     });
 
     if (resp.data.msg === "Material ya se encuentra registrado") {

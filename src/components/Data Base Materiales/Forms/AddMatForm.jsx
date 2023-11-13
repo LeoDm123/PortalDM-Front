@@ -23,6 +23,7 @@ const AddMatForm = ({ onClose }) => {
   const [Costo, setCosto] = useState(0);
   const [StockInicial, setStockInicial] = useState(0);
   const [StockSeguridad, setStockSeguridad] = useState(0);
+  const [Proveedor, setProveedor] = useState("");
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -46,7 +47,8 @@ const AddMatForm = ({ onClose }) => {
       Espesor,
       Costo,
       StockSeguridad,
-      StockInicial
+      StockInicial,
+      Proveedor
     );
 
     setCodigo("");
@@ -60,6 +62,7 @@ const AddMatForm = ({ onClose }) => {
     setUnidad("");
     setStockInicial(0);
     setStockSeguridad(0);
+    setProveedor("");
   };
 
   return (
@@ -72,14 +75,14 @@ const AddMatForm = ({ onClose }) => {
       <Grid display={"flex"}>
         <TextField
           type="text"
-          className="form-control mt-3 w-100"
+          className="form-control mt-3 w-75"
           name="Detalle"
           placeholder="Detalle"
           value={Detalle}
           onChange={(e) => setDetalle(e.target.value)}
           label="Detalle"
         />
-        <FormControl className="form-floating w-50 ms-3">
+        <FormControl className="form-floating w-25 ms-3">
           <InputLabel htmlFor="categoria">Unidad de Medida</InputLabel>
           <Select
             className="form-select my-3 w-100"
@@ -127,6 +130,27 @@ const AddMatForm = ({ onClose }) => {
             <MenuItem value="HerrajesPVC">
               Herrajes para Puertas de Madera
             </MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl className="form-floating w-50 ms-3">
+          <InputLabel htmlFor="categoria">Proveedor</InputLabel>
+          <Select
+            className="form-select my-3 w-100"
+            name="Proveedor"
+            value={Proveedor}
+            onChange={(e) => setProveedor(e.target.value)}
+          >
+            <MenuItem value="">Seleccionar un Proveedor</MenuItem>
+            <MenuItem value="Rehau">Rehau S.A.</MenuItem>
+            <MenuItem value="Vidrial">Vidrial S.R.L</MenuItem>
+            <MenuItem value="Magnum">Magnum Herrajes</MenuItem>
+            <MenuItem value="GU">G.U. Herrajes</MenuItem>
+            <MenuItem value="Madergold">Madergold</MenuItem>
+            <MenuItem value="Maderplak">Maderplak</MenuItem>
+            <MenuItem value="Vancar">Vancar</MenuItem>
+            <MenuItem value="Würth">Würth</MenuItem>
+            <MenuItem value="Silva">Pinturería Silva</MenuItem>
+            <MenuItem value="Cromosol">Cromosol</MenuItem>
           </Select>
         </FormControl>
       </Grid>
