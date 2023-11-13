@@ -86,7 +86,7 @@ export default function MatList({ onMatSubmit, onMatChange }) {
                   />
                 </TableCell>
                 <TableCell className="text-center" sx={{ width: "5%" }}>
-                  <VerMatButton />
+                  <VerMatButton matID={materials._id} />
                 </TableCell>
                 <TableCell className="text-center" sx={{ width: "5%" }}>
                   <EditMatButton

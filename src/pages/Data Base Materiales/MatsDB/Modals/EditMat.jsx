@@ -119,7 +119,7 @@ const EditMaterial = ({ open, onClose, matID, onMatChange }) => {
         {matByID && (
           <form id="matForm" onSubmit={handleSubmit}>
             <div className="d-flex justify-content-between mb-2">
-              <h1 className="h3">Agregar Material</h1>
+              <h1 className="h3">Editar Material</h1>
               <HighlightOffIcon onClick={onClose} fontSize="large" />
             </div>
 
