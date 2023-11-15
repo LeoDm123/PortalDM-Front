@@ -27,18 +27,18 @@ const MatDetails = ({ open, onClose, matID }) => {
       typeof matByID === "object" &&
       Object.keys(matByID).length > 0
     ) {
-      setCodigo(matByID.Codigo);
-      setDetalle(matByID.Detalle);
-      setCategoria(matByID.Categoria);
-      setAncho(matByID.Ancho);
-      setAlto(matByID.Alto);
-      setLargo(matByID.Largo);
-      setEspesor(matByID.Espesor);
-      setCosto(matByID.Costo);
-      setUnidad(matByID.Unidad);
-      setStockInicial(matByID.StockInicial);
-      setStockSeguridad(matByID.StockSeguridad);
-      setProveedor(matByID.Proveedor);
+      setCodigo(matByID.Codigo ?? 0);
+      setDetalle(matByID.Detalle ?? "");
+      setCategoria(matByID.Categoria ?? "");
+      setAncho(matByID.Ancho ?? 0);
+      setAlto(matByID.Alto ?? 0);
+      setLargo(matByID.Largo ?? 0);
+      setEspesor(matByID.Espesor ?? 0);
+      setCosto(matByID.Costo ?? 0);
+      setUnidad(matByID.Unidad ?? "");
+      setStockInicial(matByID.StockInicial ?? 0);
+      setStockSeguridad(matByID.StockSeguridad ?? 0);
+      setProveedor(matByID.Proveedor ?? "");
     }
   }, [matID, matByID]);
 

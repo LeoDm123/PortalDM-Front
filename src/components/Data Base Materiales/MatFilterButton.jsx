@@ -11,12 +11,15 @@ import { useNavigate } from "react-router-dom";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
 const options = [
-  "Placas de MDF y Cantos",
+  "Perfileria de PVC",
   "Madera Maciza y Alistonados",
+  "Placas de MDF y Cantos",
   "Deck y Revestimientos de WPC",
   "Insumos de Lustre",
   "Insumos Varios",
-  "Mostrar Todos",
+  "Herrajes para Aberturas de PVC",
+  "Herrajes para Puertas de Madera",
+  "Mostar Todos",
 ];
 
 export default function MatFilterButton({ onFilterChange }) {

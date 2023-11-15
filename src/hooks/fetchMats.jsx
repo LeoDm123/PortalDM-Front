@@ -4,8 +4,6 @@ import serverAPI from "../api/serverAPI";
 export default function fetchMats(onMatSubmit, onMatEdit) {
   const [Materiales, setMateriales] = useState([]);
 
-  console.log(onMatSubmit);
-
   useEffect(() => {
     const fetchMats = async () => {
       try {

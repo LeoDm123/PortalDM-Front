@@ -11,7 +11,6 @@ import Grid from "@mui/material/Grid";
 import Title from "../../Title";
 import UploadComponent from "../UploadComponent";
 import FormatCurrency from "../../../hooks/formatCurrency";
-
 import { crearMaterial } from "../../../hooks/crearMaterial";
 
 const AgregarMatList = ({ open, onClose, onMatSubmit }) => {
@@ -58,7 +57,6 @@ const AgregarMatList = ({ open, onClose, onMatSubmit }) => {
     }
 
     setUploadedData(dataToUpload);
-    console.log("UploadedData", uploadedData);
   };
 
   const handleConfirmUpload = async () => {

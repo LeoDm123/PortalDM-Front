@@ -33,6 +33,11 @@ export default function MatList({ onMatSubmit, onMatChange }) {
     });
   };
 
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    fetchMats(undefined, undefined, category); // Fetch with the selected category
+  };
+
   return (
     <Grid item xs={12} md={12} lg={12}>
       <React.Fragment>
