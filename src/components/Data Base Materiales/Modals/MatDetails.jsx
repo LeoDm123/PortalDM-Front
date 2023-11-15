@@ -4,7 +4,7 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import fetchMatByID from "../../../../hooks/fetchMatByID";
+import fetchMatByID from "../../../hooks/fetchMatByID";
 
 const MatDetails = ({ open, onClose, matID }) => {
   const [Codigo, setCodigo] = useState("");

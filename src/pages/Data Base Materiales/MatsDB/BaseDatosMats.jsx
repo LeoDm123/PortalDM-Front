@@ -7,9 +7,7 @@ import Paper from "@mui/material/Paper";
 import MatList from "../../../components/Data Base Materiales/Lists/MatList";
 import "../../../App.css";
 import AddMatButton from "../../../components/Data Base Materiales/Buttons/AddMatButton";
-import ModifyMatButton from "../../../components/Data Base Materiales/ModifyMatButton";
-import { useNavigate } from "react-router-dom";
-
+import AddMatListButton from "../../../components/Data Base Materiales/Buttons/AddMatListButton";
 const defaultTheme = createTheme();
 
 const BaseDatosMats = () => {
@@ -36,14 +34,14 @@ const BaseDatosMats = () => {
             <Grid container>
               <div className="d-flex">
                 <AddMatButton onMatSubmit={handleOnMatSubmit} />
-                <ModifyMatButton />
+                <AddMatListButton />
               </div>
               <Paper
                 sx={{
                   p: 2,
                   display: "flex",
                   flexDirection: "column",
-                  height: 550,
+                  height: 560,
                   width: "100%",
                 }}
               >

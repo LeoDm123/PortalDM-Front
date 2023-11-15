@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
-import AddMatForm from "../../../components/Data Base Materiales/Forms/AddMatForm";
+import AddMatForm from "../Forms/AddMatForm";
 
 const AgregarMat = ({ open, onClose, onMatSubmit }) => {
   return (

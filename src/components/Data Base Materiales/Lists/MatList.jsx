@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Link from "@mui/material/Link";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -14,7 +13,6 @@ import fetchMats from "../../../hooks/fetchMats";
 import DeleteMat from "../../../hooks/deleteMatByID";
 import VerMatButton from "../Buttons/VerMatButton";
 import EditMatButton from "../Buttons/EditMatButton";
-import EditMaterial from "../../../pages/Data Base Materiales/MatsDB/Modals/EditMat";
 
 export default function MatList({ onMatSubmit, onMatChange }) {
   const Materiales = fetchMats(onMatSubmit, onMatChange);
@@ -42,62 +40,81 @@ export default function MatList({ onMatSubmit, onMatChange }) {
           <Title>Listado de Materiales</Title>
           <MatFilterButton />
         </div>
-        <Table size="medium">
-          <TableHead>
-            <TableRow>
-              <TableCell className="text-center fw-bold">Código</TableCell>
-              <TableCell className="text-center fw-bold">Detalle</TableCell>
-              <TableCell className="text-center fw-bold">Categoría</TableCell>
-              <TableCell className="text-center fw-bold">Proveedor</TableCell>
+        <Grid
+          sx={{
+            height: 480,
+            overflow: "auto",
+            scrollbarWidth: "thin",
+            scrollbarColor: "dark",
+            "&::-webkit-scrollbar": {
+              width: "8px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: "lightgray",
+              borderRadius: "5px",
+            },
+          }}
+        >
+          <Table stickyHeader size="medium">
+            <TableHead>
+              <TableRow>
+                <TableCell className="text-center fw-bold">Código</TableCell>
+                <TableCell className="text-center fw-bold">Detalle</TableCell>
+                <TableCell className="text-center fw-bold">Categoría</TableCell>
+                <TableCell className="text-center fw-bold">Proveedor</TableCell>
 
-              <TableCell className="text-center fw-bold">
-                Stock de Seguridad
-              </TableCell>
-              <TableCell className="text-center fw-bold">
-                Stock Actual
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {Materiales.map((materials) => (
-              <TableRow key={materials.id}>
-                <TableCell className="text-center">
-                  {materials.Codigo}
+                <TableCell className="text-center fw-bold">
+                  Stock de Seguridad
                 </TableCell>
-                <TableCell className="text-center">
-                  {materials.Detalle}
+                <TableCell className="text-center fw-bold">
+                  Stock Actual
                 </TableCell>
-                <TableCell className="text-center">
-                  {materials.Categoria}
-                </TableCell>
-                <TableCell className="text-center">
-                  {materials.Proveedor}
-                </TableCell>
-
-                <TableCell className="text-center" sx={{ width: "10%" }}>
-                  {materials.StockSeguridad}
-                </TableCell>
-                <TableCell className="text-center" sx={{ width: "10%" }}>
-                  {materials.StockInicial}
-                </TableCell>
-                <TableCell className="text-center" sx={{ width: "5%" }}>
-                  <DeleteButton
-                    onDelete={() => handleDeleteMat(materials._id)}
-                  />
-                </TableCell>
-                <TableCell className="text-center" sx={{ width: "5%" }}>
-                  <VerMatButton matID={materials._id} />
-                </TableCell>
-                <TableCell className="text-center" sx={{ width: "5%" }}>
-                  <EditMatButton
-                    matID={materials._id}
-                    onMatChange={onMatChange}
-                  />
-                </TableCell>
+                <TableCell className="text-center fw-bold"></TableCell>
+                <TableCell className="text-center fw-bold"></TableCell>
+                <TableCell className="text-center fw-bold"></TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHead>
+            <TableBody>
+              {Materiales.map((materials) => (
+                <TableRow key={materials.id}>
+                  <TableCell className="text-center">
+                    {materials.Codigo}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {materials.Detalle}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {materials.Categoria}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {materials.Proveedor}
+                  </TableCell>
+
+                  <TableCell className="text-center" sx={{ width: "10%" }}>
+                    {materials.StockSeguridad}
+                  </TableCell>
+                  <TableCell className="text-center" sx={{ width: "10%" }}>
+                    {materials.StockInicial}
+                  </TableCell>
+                  <TableCell className="text-center" sx={{ width: "5%" }}>
+                    <DeleteButton
+                      onDelete={() => handleDeleteMat(materials._id)}
+                    />
+                  </TableCell>
+                  <TableCell className="text-center" sx={{ width: "5%" }}>
+                    <VerMatButton matID={materials._id} />
+                  </TableCell>
+                  <TableCell className="text-center" sx={{ width: "5%" }}>
+                    <EditMatButton
+                      matID={materials._id}
+                      onMatChange={onMatChange}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Grid>
       </React.Fragment>
     </Grid>
   );

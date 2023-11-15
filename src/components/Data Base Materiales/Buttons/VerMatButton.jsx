@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import MatDetails from "../../../pages/Data Base Materiales/MatsDB/Modals/MatDetails";
+import MatDetails from "../Modals/MatDetails";
 
 const VerMatButton = ({ matID }) => {
   const [modalOpen, setModalOpen] = useState(false);

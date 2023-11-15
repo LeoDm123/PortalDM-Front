@@ -12,7 +12,6 @@ import PresupuestoExtras from "./pages/Presupuestos/PresupuestoExtras";
 import PresupuestoDeck from "./pages/Presupuestos/PresupuestoDeck";
 //Paginas de Base de Datos de Materiales
 import BaseDatosMats from "./pages/Data Base Materiales/MatsDB/BaseDatosMats";
-import AgregarMat from "./pages/Data Base Materiales/MatsDB/AgregarMat";
 import ModificarMat from "./pages/Data Base Materiales/MatsDB/ModificarMat";
 import DBPuertasPlacas from "./pages/Data Base Materiales/DBPuertasPlacas";
 import DBManoObra from "./pages/Data Base Materiales/DBManoObra";
@@ -39,7 +38,6 @@ function App() {
         <Route path="/PresupuestoExtras" element={<PresupuestoExtras />} />
         {/* BASE DE DATOS DE MATERIALES */}
         <Route path="/BaseDatosMats" element={<BaseDatosMats />} />
-        <Route path="/AgregarMat" element={<AgregarMat />} />
         <Route path="/ModificarMat" element={<ModificarMat />} />
         <Route path="/DBPuertasPlacas" element={<DBPuertasPlacas />} />
         <Route path="/DBManoObra" element={<DBManoObra />} />

@@ -1,9 +1,8 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-import AgregarMat from "../../../pages/Data Base Materiales/MatsDB/AgregarMat";
+import AgregarMat from "../Modals/AgregarMat";
 
 export default function AddMatButton({ onMatSubmit }) {
   const [modalOpen, setModalOpen] = React.useState(false);
