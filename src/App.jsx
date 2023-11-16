@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 //Paginas Generales
 import Landing from "./pages/Landing";
@@ -26,7 +26,7 @@ import ClientesDB from "./pages/Clientes/ClientesDB";
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/Register" element={<Register />} />
@@ -50,7 +50,7 @@ function App() {
         <Route path="/GestionarClientes" element={<GestionarClientes />} />
         <Route path="/ClientesDB" element={<ClientesDB />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 
