@@ -14,6 +14,7 @@ import loginImg from "../assets/login/Img3.jpg";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import serverAPI from "../api/serverAPI";
+import { useNavigate } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
@@ -22,6 +23,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const startLogin = async (email, password) => {
     try {
@@ -33,7 +35,7 @@ const LoginForm = () => {
       });
 
       if (resp.data.msg === "Usuario logueado") {
-        window.location.href = "/Main";
+        navigate("/Main");
       } else {
         console.log(resp.data.msg);
         setError(resp.data.msg);
@@ -48,7 +50,6 @@ const LoginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Aquí van las validaciones
     if (email === "" || password === "") {
       return console.log("todos los campos son obligatorios");
     }
