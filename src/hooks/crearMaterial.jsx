@@ -54,7 +54,7 @@ const SwAlertOk = () => {
 const SwAlertError = () => {
   swal({
     title: "¡Error!",
-    text: "El código del cliente no ha sido encontrado",
+    text: "El material que desea registrar, ya se encuentra registrado",
     icon: "error",
   });
 };

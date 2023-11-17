@@ -27,7 +27,7 @@ function Register() {
 
     // Clear the form after submission (optional)
     event.currentTarget.reset();
-    window.location.href = "/";
+    // window.location.href = "/";
   };
 
   return (

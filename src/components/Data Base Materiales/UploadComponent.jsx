@@ -23,7 +23,10 @@ const UploadComponent = ({ onFileUpload, onClose }) => {
         const workbook = XLSX.read(data, { type: "array" });
         const sheetName = workbook.SheetNames[0];
         const sheet = workbook.Sheets[sheetName];
-        const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+        const jsonData = XLSX.utils.sheet_to_json(sheet, {
+          header: 1,
+          range: 1,
+        });
         onFileUpload(jsonData);
       };
       reader.readAsArrayBuffer(file);

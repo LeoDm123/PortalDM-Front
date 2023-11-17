@@ -17,6 +17,7 @@ import EditMatButton from "../Buttons/EditMatButton";
 export default function MatList({ onMatSubmit, onMatChange }) {
   const Materiales = fetchMats(onMatSubmit, onMatChange);
   const { deleteMat, error } = DeleteMat();
+  const [selectedCategory, setSelectedCategory] = useState("Mostrar Todos");
 
   const handleDeleteMat = (matId) => {
     swal({
@@ -35,7 +36,7 @@ export default function MatList({ onMatSubmit, onMatChange }) {
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
-    fetchMats(undefined, undefined, category); // Fetch with the selected category
+    fetchMats(undefined, undefined, category);
   };
 
   return (
@@ -43,7 +44,7 @@ export default function MatList({ onMatSubmit, onMatChange }) {
       <React.Fragment>
         <div className="TitleButtonLayout">
           <Title>Listado de Materiales</Title>
-          <MatFilterButton />
+          <MatFilterButton onFilterChange={handleCategoryChange} />
         </div>
         <Grid
           sx={{
@@ -80,7 +81,12 @@ export default function MatList({ onMatSubmit, onMatChange }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Materiales.map((materials) => (
+              {Materiales.filter(
+                (material) =>
+                  selectedCategory === "" ||
+                  selectedCategory === "Mostrar Todos" ||
+                  material.Categoria === selectedCategory
+              ).map((materials) => (
                 <TableRow key={materials.id}>
                   <TableCell className="text-center">
                     {materials.Codigo}

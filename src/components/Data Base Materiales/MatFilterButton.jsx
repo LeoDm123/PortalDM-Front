@@ -19,7 +19,7 @@ const options = [
   "Insumos Varios",
   "Herrajes para Aberturas de PVC",
   "Herrajes para Puertas de Madera",
-  "Mostar Todos",
+  "Mostrar Todos",
 ];
 
 export default function MatFilterButton({ onFilterChange }) {
@@ -30,7 +30,7 @@ export default function MatFilterButton({ onFilterChange }) {
 
   const FilteredCategory = (index) => {
     setSelectedIndex(index);
-    if (index === 5) {
+    if (index === 8) {
       onFilterChange("");
     } else {
       onFilterChange(options[index]);
@@ -39,6 +39,8 @@ export default function MatFilterButton({ onFilterChange }) {
   };
 
   const handleMenuItemClick = (event, index) => {
+    setSelectedIndex(index);
+    console.log("Index", index);
     FilteredCategory(index);
     setOpen(false);
   };
@@ -69,7 +71,7 @@ export default function MatFilterButton({ onFilterChange }) {
       </ButtonGroup>
       <Popper
         sx={{
-          zIndex: 1,
+          zIndex: 1000,
         }}
         open={open}
         anchorEl={anchorRef.current}
@@ -91,7 +93,7 @@ export default function MatFilterButton({ onFilterChange }) {
                   {options.map((option, index) => (
                     <MenuItem
                       key={option}
-                      disabled={index === null}
+                      disabled={index === -1}
                       selected={index === selectedIndex}
                       onClick={(event) => handleMenuItemClick(event, index)}
                     >
