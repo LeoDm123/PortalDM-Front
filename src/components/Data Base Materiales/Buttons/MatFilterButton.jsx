@@ -7,7 +7,6 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
-import { useNavigate } from "react-router-dom";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
 const options = [
@@ -23,7 +22,6 @@ const options = [
 ];
 
 export default function MatFilterButton({ onFilterChange }) {
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -53,13 +51,13 @@ export default function MatFilterButton({ onFilterChange }) {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-
     setOpen(false);
   };
 
   return (
     <React.Fragment>
       <ButtonGroup
+        size="small"
         className="me-5"
         variant="contained"
         ref={anchorRef}

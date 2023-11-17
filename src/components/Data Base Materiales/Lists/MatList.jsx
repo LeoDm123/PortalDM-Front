@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,32 +7,13 @@ import TableRow from "@mui/material/TableRow";
 import Title from "../../Title";
 import "../../../App.css";
 import Grid from "@mui/material/Grid";
-import MatFilterButton from "../MatFilterButton";
-import DeleteButton from "../../DeleteButton";
+import MatFilterButton from "../Buttons/MatFilterButton";
 import fetchMats from "../../../hooks/fetchMats";
-import DeleteMat from "../../../hooks/deleteMatByID";
-import VerMatButton from "../Buttons/VerMatButton";
-import EditMatButton from "../Buttons/EditMatButton";
+import MatsOptionsButton from "../Buttons/MatOptionsButton";
 
 export default function MatList({ onMatSubmit, onMatChange }) {
   const Materiales = fetchMats(onMatSubmit, onMatChange);
-  const { deleteMat, error } = DeleteMat();
   const [selectedCategory, setSelectedCategory] = useState("Mostrar Todos");
-
-  const handleDeleteMat = (matId) => {
-    swal({
-      title: "¿Desea eliminar el material?",
-      text: "Una vez eliminado no podrá ser recuperado",
-      icon: "warning",
-      buttons: ["No", "Sí"],
-      dangerMode: true,
-    }).then((willCancel) => {
-      if (willCancel) {
-        deleteMat(matId);
-        fetchMats();
-      }
-    });
-  };
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
@@ -88,16 +69,16 @@ export default function MatList({ onMatSubmit, onMatChange }) {
                   material.Categoria === selectedCategory
               ).map((materials) => (
                 <TableRow key={materials.id}>
-                  <TableCell className="text-center">
+                  <TableCell className="text-center" sx={{ width: "5%" }}>
                     {materials.Codigo}
                   </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell className="text-center" sx={{ width: "40%" }}>
                     {materials.Detalle}
                   </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell className="text-center" sx={{ width: "15%" }}>
                     {materials.Categoria}
                   </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell className="text-center" sx={{ width: "15%" }}>
                     {materials.Proveedor}
                   </TableCell>
 
@@ -107,16 +88,8 @@ export default function MatList({ onMatSubmit, onMatChange }) {
                   <TableCell className="text-center" sx={{ width: "10%" }}>
                     {materials.StockInicial}
                   </TableCell>
-                  <TableCell className="text-center" sx={{ width: "5%" }}>
-                    <DeleteButton
-                      onDelete={() => handleDeleteMat(materials._id)}
-                    />
-                  </TableCell>
-                  <TableCell className="text-center" sx={{ width: "5%" }}>
-                    <VerMatButton matID={materials._id} />
-                  </TableCell>
-                  <TableCell className="text-center" sx={{ width: "5%" }}>
-                    <EditMatButton
+                  <TableCell colSpan={2} sx={{ width: "5%" }}>
+                    <MatsOptionsButton
                       matID={materials._id}
                       onMatChange={onMatChange}
                     />

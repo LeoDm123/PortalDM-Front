@@ -3,6 +3,7 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import EditMaterial from "../Modals/EditMat";
+import Button from "@mui/material/Button";
 
 const EditMatButton = ({ matID, onMatChange }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -19,17 +20,15 @@ const EditMatButton = ({ matID, onMatChange }) => {
 
   return (
     <div>
-      <ButtonGroup variant="outlined" aria-label="delete">
-        <IconButton onClick={handleClick}>
-          <EditIcon />
-        </IconButton>
-        <EditMaterial
-          open={modalOpen}
-          onClose={handleCloseModal}
-          matID={selectedMat}
-          onMatChange={onMatChange}
-        />
-      </ButtonGroup>
+      <Button onClick={handleClick} startIcon={<EditIcon />}>
+        Editar
+      </Button>
+      <EditMaterial
+        open={modalOpen}
+        onClose={handleCloseModal}
+        matID={selectedMat}
+        onMatChange={onMatChange}
+      />
     </div>
   );
 };

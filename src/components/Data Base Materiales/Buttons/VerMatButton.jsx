@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import MatDetails from "../Modals/MatDetails";
 
@@ -20,16 +18,14 @@ const VerMatButton = ({ matID }) => {
 
   return (
     <div>
-      <ButtonGroup variant="outlined" aria-label="delete">
-        <IconButton onClick={handleClick}>
-          <VisibilityIcon />
-        </IconButton>
-        <MatDetails
-          open={modalOpen}
-          onClose={handleCloseModal}
-          matID={selectedMat}
-        />
-      </ButtonGroup>
+      <Button onClick={handleClick} startIcon={<VisibilityIcon />}>
+        Detalles
+      </Button>
+      <MatDetails
+        open={modalOpen}
+        onClose={handleCloseModal}
+        matID={selectedMat}
+      />
     </div>
   );
 };
