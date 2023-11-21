@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
+import Grid from "@mui/material/Grid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DetailsClientes from "../../../pages/Clientes/Modals/DetailsClientes";
 
@@ -33,9 +33,10 @@ export default function VerClienteButton({
   }, [handleClick]);
 
   return (
-    <div>
-      <ButtonGroup
-        variant="contained"
+    <Grid>
+      <Button
+        onClick={handleClick}
+        variant="text"
         aria-label="split button"
         sx={{
           height: "30px",
@@ -43,22 +44,20 @@ export default function VerClienteButton({
         }}
         className="mt-2"
       >
-        <Button onClick={handleClick}>
-          <VisibilityIcon />
-        </Button>
-        <DetailsClientes
-          open={modalOpen}
-          onClose={handleCloseModal}
-          selectedClientIndex={selectedClient}
-          onPaySubmit={onSubmitPay}
-          onPresSubmit={onSubmitPres}
-          onDeleteClient={onDeleteClient}
-          onPresEdit={onPresEdit}
-          onPresDelete={onPresDelete}
-          onClientChange={onClientChange}
-          onPayDelete={onPayDelete}
-        />
-      </ButtonGroup>
-    </div>
+        <VisibilityIcon />
+      </Button>
+      <DetailsClientes
+        open={modalOpen}
+        onClose={handleCloseModal}
+        selectedClientIndex={selectedClient}
+        onPaySubmit={onSubmitPay}
+        onPresSubmit={onSubmitPres}
+        onDeleteClient={onDeleteClient}
+        onPresEdit={onPresEdit}
+        onPresDelete={onPresDelete}
+        onClientChange={onClientChange}
+        onPayDelete={onPayDelete}
+      />
+    </Grid>
   );
 }

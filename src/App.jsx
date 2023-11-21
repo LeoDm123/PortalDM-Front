@@ -17,9 +17,7 @@ import DBPuertasPlacas from "./pages/Data Base Materiales/DBPuertasPlacas";
 import DBManoObra from "./pages/Data Base Materiales/DBManoObra";
 import DBInfoProduccion from "./pages/Data Base Materiales/ProdInfoDB/DBInfoProduccion";
 //Paginas de Pedidos
-import PedidoPerfiles from "./pages/Pedidos/PedidoPerfiles";
-import PedidoHerrajes from "./pages/Pedidos/PedidoHerrajes";
-import PedidoVidrios from "./pages/Pedidos/PedidoVidrios";
+import PedidosMats from "./pages/Pedidos/PedidosMats";
 //Paginas de Gestion de Clientes
 import GestionarClientes from "./pages/Clientes/GestionarClientes";
 import ClientesDB from "./pages/Clientes/ClientesDB";
@@ -43,9 +41,7 @@ function App() {
         <Route path="/DBManoObra" element={<DBManoObra />} />
         <Route path="/DBInfoProduccion" element={<DBInfoProduccion />} />
         {/* PEDIDOS */}
-        <Route path="/PedidoPerfiles" element={<PedidoPerfiles />} />
-        <Route path="/PedidoHerrajes" element={<PedidoHerrajes />} />
-        <Route path="/PedidoVidrios" element={<PedidoVidrios />} />
+        <Route path="/PedidosMats" element={<PedidosMats />} />
         {/* GESTION DE CLIENTES */}
         <Route path="/GestionarClientes" element={<GestionarClientes />} />
         <Route path="/ClientesDB" element={<ClientesDB />} />

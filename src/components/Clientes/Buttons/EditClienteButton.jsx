@@ -1,7 +1,6 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import EditIcon from "@mui/icons-material/Edit";
 import EditCliente from "../../../pages/Clientes/Modals/EditCliente";
 
@@ -22,25 +21,22 @@ export default function EditClienteButton({
 
   return (
     <Grid>
-      <ButtonGroup
-        variant="contained"
+      <Button
+        onClick={handleClick}
+        variant="text"
         aria-label="split button"
-        sx={{
-          height: "30px",
-          width: "30px",
-        }}
+        size="small"
+        className="ps-5"
       >
-        <Button onClick={handleClick}>
-          <EditIcon />
-        </Button>
-        <EditCliente
-          open={modalOpen}
-          onClose={handleCloseModal}
-          selectedClientIndex={selectedClientIndex}
-          onClientChange={onClientChange}
-          onClientDelete={onClientDelete}
-        />
-      </ButtonGroup>
+        <EditIcon />
+      </Button>
+      <EditCliente
+        open={modalOpen}
+        onClose={handleCloseModal}
+        selectedClientIndex={selectedClientIndex}
+        onClientChange={onClientChange}
+        onClientDelete={onClientDelete}
+      />
     </Grid>
   );
 }
