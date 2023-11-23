@@ -7,14 +7,16 @@ import "../../App.css";
 import Header from "../../components/Menu/Header";
 import AddPedidoButton from "../../components/Pedidos/Buttons/AddPedidoButton";
 import PedidosPerfilesList from "../../components/Pedidos/Lists/PedidoPerfilesList";
+import fetchPedidos from "../../hooks/fetchPedidos";
 
 const defaultTheme = createTheme();
 
 const PedidosMats = () => {
   const [onSubmit, setOnSubmit] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setOnSubmit(!onSubmit);
+    await fetchPedidos();
   };
 
   return (

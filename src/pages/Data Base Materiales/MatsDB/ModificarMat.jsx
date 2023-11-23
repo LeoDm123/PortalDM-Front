@@ -8,11 +8,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Title from "../../../components/Title";
 import "../../../App.css";
-import ModifyIconButton from "../../../components/Data Base Materiales/ModifyIconButton";
-import SaveChangesButton from "../../../components/Data Base Materiales/SaveChangesButton";
 import GoBackButton from "../../../components/GoBackButton";
 import CloseButton from "../../../components/CloseButton";
-import DeleteButton from "../../../components/DeleteButton";
 
 const ModificarMat = ({ open, onClose }) => {
   const [searchTerm, setSearchTerm] = useState("");

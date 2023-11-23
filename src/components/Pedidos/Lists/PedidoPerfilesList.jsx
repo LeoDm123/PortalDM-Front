@@ -14,6 +14,10 @@ import fetchPedidos from "../../../hooks/fetchPedidos";
 import RecibirPedidoButton from "../Buttons/RecibirPerfilesButton";
 import InfoPerfilesButton from "../Buttons/InfoPerfilesButton";
 import "../../../App.css";
+import DeletePedidoButton from "../Buttons/DeletePedidoButton";
+import formatDate from "../../../hooks/formatDate";
+import DeletePedido from "../../../hooks/deletePedido";
+import swal from "sweetalert";
 
 const formatNumber = (number) => {
   const parsedNumber = parseFloat(number);
@@ -202,6 +206,8 @@ const NestedList = ({ history, pedidoId, onMatSubmit }) => {
 const PedidosPerfilesList = ({ onSubmit }) => {
   const [openRows, setOpenRows] = useState([]);
   const [onMatSubmit, setOnMatSubmit] = useState(false);
+  const FormatDate = formatDate();
+  const { deletePedido, error } = DeletePedido();
 
   const handleMatSubmit = () => {
     setOnMatSubmit(!onMatSubmit);
@@ -214,6 +220,25 @@ const PedidosPerfilesList = ({ onSubmit }) => {
   };
 
   const Pedidos = fetchPedidos(onSubmit, onMatSubmit);
+
+  const handleDeletePedido = async (pedidoId) => {
+    handleDeleteCliente(pedidoId);
+    await fetchPedidos(onSubmit, onMatSubmit);
+  };
+
+  const handleDeleteCliente = (pedidoId) => {
+    swal({
+      title: "¿Desea eliminar el pedido?",
+      text: "Una vez eliminado no podrá ser recuperado",
+      icon: "warning",
+      buttons: ["No", "Sí"],
+      dangerMode: true,
+    }).then((willCancel) => {
+      if (willCancel) {
+        deletePedido(pedidoId);
+      }
+    });
+  };
 
   return (
     <div>
@@ -264,10 +289,7 @@ const PedidosPerfilesList = ({ onSubmit }) => {
               >
                 N° Orden de Compra
               </TableCell>
-              <TableCell
-                sx={{ backgroundColor: "#E1E3E1" }}
-                className="text-center fw-bold"
-              ></TableCell>
+              <TableCell sx={{ backgroundColor: "#E1E3E1" }}></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -275,25 +297,32 @@ const PedidosPerfilesList = ({ onSubmit }) => {
               <React.Fragment key={index}>
                 <TableRow>
                   <TableCell className="text-center">{pedido.Obra}</TableCell>
-                  <TableCell className="text-center">{pedido.Fecha}</TableCell>
+                  <TableCell className="text-center">
+                    {FormatDate(pedido.Fecha)}
+                  </TableCell>
                   <TableCell className="text-center">
                     {pedido.NroPedido}
                   </TableCell>
                   <TableCell className="text-center">
                     {pedido.OrdenCompra}
                   </TableCell>
-                  <TableCell>
-                    <IconButton
-                      aria-label="expand row"
-                      size="small"
-                      onClick={() => handleRowToggle(index)}
-                    >
-                      {openRows[index] ? (
-                        <KeyboardArrowUpIcon />
-                      ) : (
-                        <KeyboardArrowDownIcon />
-                      )}
-                    </IconButton>
+                  <TableCell sx={{ width: "5%" }}>
+                    <Grid display={"flex"}>
+                      <IconButton
+                        aria-label="expand row"
+                        size="small"
+                        onClick={() => handleRowToggle(index)}
+                      >
+                        {openRows[index] ? (
+                          <KeyboardArrowUpIcon />
+                        ) : (
+                          <KeyboardArrowDownIcon />
+                        )}
+                      </IconButton>
+                      <DeletePedidoButton
+                        onDelete={() => handleDeletePedido(pedido._id)}
+                      />
+                    </Grid>
                   </TableCell>
                 </TableRow>
                 <TableRow>
