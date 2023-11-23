@@ -4,7 +4,11 @@ import Grid from "@mui/material/Grid";
 import InventoryOutlinedIcon from "@mui/icons-material/InventoryOutlined";
 import RecibirPedidoPerfiles from "../../../pages/Pedidos/Modals/RecibirPedidoPerfiles";
 
-export default function RecibirPedidoButton({ pedidoId, codigoMat }) {
+export default function RecibirPerfilesButton({
+  pedidoId,
+  codigoMat,
+  onMatSubmit,
+}) {
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -23,6 +27,7 @@ export default function RecibirPedidoButton({ pedidoId, codigoMat }) {
       <RecibirPedidoPerfiles
         pedidoId={pedidoId}
         codigoMat={codigoMat}
+        onSubmit={onMatSubmit}
         open={modalOpen}
         onClose={handleCloseModal}
       />

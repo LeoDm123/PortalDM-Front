@@ -5,7 +5,12 @@ import serverAPI from "../../../api/serverAPI";
 import Title from "../../Title";
 import getCurretDate from "../../../hooks/getCurrentDate";
 
-const RecibirPedidoPerfilesForm = ({ onClose, pedidoId, codigoMat }) => {
+const RecibirPedidoPerfilesForm = ({
+  onClose,
+  pedidoId,
+  codigoMat,
+  onSubmit,
+}) => {
   const Today = getCurretDate();
   const [MaterialData, setMaterialData] = useState({});
   const [Codigo, setCodigo] = useState("");
@@ -16,7 +21,6 @@ const RecibirPedidoPerfilesForm = ({ onClose, pedidoId, codigoMat }) => {
   const [CantRecibida, setCantRecibida] = useState("");
   const [FechaRecep, setFechaRecep] = useState(Today);
   const [NroRemito, setNroRemito] = useState("");
-  const [onMatRecep, setOnMatRecep] = useState(false);
 
   console.log("pedidoId:", pedidoId);
   console.log("codigoMat:", codigoMat);
@@ -34,7 +38,7 @@ const RecibirPedidoPerfilesForm = ({ onClose, pedidoId, codigoMat }) => {
 
   useEffect(() => {
     fetchMaterialData();
-  }, [onMatRecep]);
+  }, []);
 
   useEffect(() => {
     if (codigoMat !== null && MaterialData) {
@@ -49,10 +53,6 @@ const RecibirPedidoPerfilesForm = ({ onClose, pedidoId, codigoMat }) => {
       setNroRemito(selectedMaterial.NroRemito);
     }
   }, [codigoMat, MaterialData]);
-
-  const handleRecept = () => {
-    setOnMatRecep(!onMatRecep);
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -70,7 +70,7 @@ const RecibirPedidoPerfilesForm = ({ onClose, pedidoId, codigoMat }) => {
 
       SwAlertOk();
       onClose();
-      handleRecept();
+      onSubmit();
     } catch (error) {
       console.error(error);
       SwAlertError();

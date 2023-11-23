@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -11,7 +11,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Collapse from "@mui/material/Collapse";
 import Box from "@mui/material/Box";
 import fetchPedidos from "../../../hooks/fetchPedidos";
-import RecibirPedidoButton from "../Buttons/RecibirPedidoButton";
+import RecibirPedidoButton from "../Buttons/RecibirPerfilesButton";
 import InfoPerfilesButton from "../Buttons/InfoPerfilesButton";
 import "../../../App.css";
 
@@ -42,7 +42,7 @@ const getStateColorClass = (product) => {
   }
 };
 
-const NestedList = ({ history, pedidoId }) => {
+const NestedList = ({ history, pedidoId, onMatSubmit }) => {
   const sumCantRecibida = history.reduce((total, product) => {
     const sumRecepciones = product.Recepciones
       ? product.Recepciones.reduce(
@@ -54,6 +54,14 @@ const NestedList = ({ history, pedidoId }) => {
 
     return total + sumRecepciones;
   }, 0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchPedidos();
+    };
+
+    fetchData();
+  }, [onMatSubmit]);
 
   return (
     <Grid
@@ -174,6 +182,7 @@ const NestedList = ({ history, pedidoId }) => {
                     <RecibirPedidoButton
                       pedidoId={pedidoId}
                       codigoMat={product.Codigo}
+                      onMatSubmit={onMatSubmit}
                     />
                     <InfoPerfilesButton
                       pedidoId={pedidoId}
@@ -191,14 +200,20 @@ const NestedList = ({ history, pedidoId }) => {
 };
 
 const PedidosPerfilesList = ({ onSubmit }) => {
-  const Pedidos = fetchPedidos(onSubmit);
   const [openRows, setOpenRows] = useState([]);
+  const [onMatSubmit, setOnMatSubmit] = useState(false);
+
+  const handleMatSubmit = () => {
+    setOnMatSubmit(!onMatSubmit);
+  };
 
   const handleRowToggle = (index) => {
     const newOpenRows = [...openRows];
     newOpenRows[index] = !newOpenRows[index];
     setOpenRows(newOpenRows);
   };
+
+  const Pedidos = fetchPedidos(onSubmit, onMatSubmit);
 
   return (
     <div>
@@ -290,6 +305,7 @@ const PedidosPerfilesList = ({ onSubmit }) => {
                       <NestedList
                         history={pedido.Materiales}
                         pedidoId={pedido._id}
+                        onMatSubmit={handleMatSubmit}
                       />
                     </Collapse>
                   </TableCell>

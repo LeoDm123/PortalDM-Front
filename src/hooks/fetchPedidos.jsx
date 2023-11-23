@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import serverAPI from "../api/serverAPI";
 
-export default function fetchPedidos({ onSubmit }) {
+export default function fetchPedidos(onSubmit, onMatSubmit) {
   const [pedidos, setPedidos] = useState([]);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function fetchPedidos({ onSubmit }) {
     };
 
     fetchPedidos();
-  }, [onSubmit]);
+  }, [onSubmit, onMatSubmit]);
 
   return pedidos;
 }

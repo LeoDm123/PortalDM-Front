@@ -3,7 +3,13 @@ import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
 import RecibirPedidoPerfilesForm from "../../../components/Pedidos/Forms/RecibirPedidoPerfilesForm";
 
-const RecibirPedidoPerfiles = ({ onClose, open, pedidoId, codigoMat }) => {
+const RecibirPedidoPerfiles = ({
+  onClose,
+  open,
+  pedidoId,
+  codigoMat,
+  onSubmit,
+}) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Paper
@@ -19,6 +25,7 @@ const RecibirPedidoPerfiles = ({ onClose, open, pedidoId, codigoMat }) => {
           pedidoId={pedidoId}
           codigoMat={codigoMat}
           onClose={onClose}
+          onSubmit={onSubmit}
         />
       </Paper>
     </Modal>

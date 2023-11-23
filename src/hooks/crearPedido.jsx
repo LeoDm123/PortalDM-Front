@@ -22,7 +22,6 @@ export const crearPedido = async (
       SwAlertError();
     } else {
       SwAlertOk();
-      onClose();
     }
   } catch (error) {
     console.error(error);
