@@ -75,7 +75,7 @@ const DetailsClientes = ({
           }}
           className="CreateModal"
         >
-          <div className="d-flex justify-content-between align-items-center">
+          <div className="d-flex justify-content-between align-items-center mb-2">
             <Grid
               sx={{
                 display: "flex",
@@ -109,7 +109,6 @@ const DetailsClientes = ({
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  paddingRight: 1,
                 }}
               >
                 <div className="d-flex justify-content-between">

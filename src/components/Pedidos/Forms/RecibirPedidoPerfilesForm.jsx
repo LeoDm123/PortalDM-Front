@@ -3,14 +3,10 @@ import { Button, TextField, Grid } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import serverAPI from "../../../api/serverAPI";
 import Title from "../../Title";
+import getCurretDate from "../../../hooks/getCurrentDate";
 
-const EditPedidoPerfilesForm = ({
-  onClose,
-  onSubmit,
-  pedidoId,
-  codigoMat,
-  handleFormSubmit,
-}) => {
+const RecibirPedidoPerfilesForm = ({ onClose, pedidoId, codigoMat }) => {
+  const Today = getCurretDate();
   const [MaterialData, setMaterialData] = useState({});
   const [Codigo, setCodigo] = useState("");
   const [Descripcion, setDescripcion] = useState("");
@@ -18,8 +14,9 @@ const EditPedidoPerfilesForm = ({
   const [CantEntrega, setCantEntrega] = useState("");
   const [Unidad, setUnidad] = useState("");
   const [CantRecibida, setCantRecibida] = useState("");
-  const [FechaRecep, setFechaRecep] = useState("");
+  const [FechaRecep, setFechaRecep] = useState(Today);
   const [NroRemito, setNroRemito] = useState("");
+  const [onMatRecep, setOnMatRecep] = useState(false);
 
   console.log("pedidoId:", pedidoId);
   console.log("codigoMat:", codigoMat);
@@ -37,7 +34,7 @@ const EditPedidoPerfilesForm = ({
 
   useEffect(() => {
     fetchMaterialData();
-  }, []);
+  }, [onMatRecep]);
 
   useEffect(() => {
     if (codigoMat !== null && MaterialData) {
@@ -48,13 +45,56 @@ const EditPedidoPerfilesForm = ({
       setCantEntrega(selectedMaterial.CantEntrega);
       setUnidad(selectedMaterial.Unidad);
       setCantRecibida(selectedMaterial.CantRecibida);
-      setFechaRecep(selectedMaterial.FechaRecep);
+      setFechaRecep(FechaRecep);
       setNroRemito(selectedMaterial.NroRemito);
     }
   }, [codigoMat, MaterialData]);
 
+  const handleRecept = () => {
+    setOnMatRecep(!onMatRecep);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (CantRecibida === "" || FechaRecep === "" || NroRemito === "") {
+      return console.log("Todos los campos son obligatorios");
+    }
+
+    try {
+      await serverAPI.put(`/pedido/recibirPedido/${pedidoId}/${codigoMat}`, {
+        CantRecibida,
+        FechaRecep,
+        NroRemito,
+      });
+
+      SwAlertOk();
+      onClose();
+      handleRecept();
+    } catch (error) {
+      console.error(error);
+      SwAlertError();
+    }
+  };
+
+  const SwAlertOk = () => {
+    swal({
+      title: "¡Éxito!",
+      text: "Los datos de recepción se han actualizado correctamente",
+      icon: "success",
+    });
+  };
+
+  const SwAlertError = () => {
+    swal({
+      title: "¡Error!",
+      text: "Hubo un error al actualizar los datos de recepción",
+      icon: "error",
+    });
+  };
+
   return (
-    <form id="matForm" onSubmit={handleFormSubmit}>
+    <form id="matForm" onSubmit={handleSubmit}>
       <div className="d-flex justify-content-between mb-2">
         <h1 className="h3">Recepción de Material</h1>
         <HighlightOffIcon onClick={onClose} fontSize="large" />
@@ -79,39 +119,6 @@ const EditPedidoPerfilesForm = ({
           value={Descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
           label="Descripcion"
-          disabled
-        />
-      </Grid>
-
-      <Grid display={"flex"}>
-        <TextField
-          type="text"
-          className="form-control mt-3 w-25"
-          name="CantPedida"
-          placeholder="Cant. Pedida"
-          value={CantPedida}
-          onChange={(e) => setCantPedida(e.target.value)}
-          label="Cant. Pedida"
-          disabled
-        />
-        <TextField
-          type="text"
-          className="form-control mt-3 w-25 ms-3"
-          name="CantEntrega"
-          placeholder="Cant. a Entregar"
-          value={CantEntrega}
-          onChange={(e) => setCantEntrega(e.target.value)}
-          label="Cant. a Entregar"
-          disabled
-        />
-        <TextField
-          type="text"
-          className="form-control mt-3 w-25 ms-3"
-          name="Unidad"
-          placeholder="Unidad de Medida"
-          value={Unidad}
-          onChange={(e) => setUnidad(e.target.value)}
-          label="Unidad de Medida"
           disabled
         />
       </Grid>
@@ -162,4 +169,4 @@ const EditPedidoPerfilesForm = ({
   );
 };
 
-export default EditPedidoPerfilesForm;
+export default RecibirPedidoPerfilesForm;

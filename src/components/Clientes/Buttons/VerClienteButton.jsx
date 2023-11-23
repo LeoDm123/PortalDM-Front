@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DetailsClientes from "../../../pages/Clientes/Modals/DetailsClientes";
@@ -34,18 +34,9 @@ export default function VerClienteButton({
 
   return (
     <Grid>
-      <Button
-        onClick={handleClick}
-        variant="text"
-        aria-label="split button"
-        sx={{
-          height: "30px",
-          width: "100%",
-        }}
-        className="mt-2"
-      >
+      <IconButton onClick={handleClick} size="small" sx={{ color: "#01662b" }}>
         <VisibilityIcon />
-      </Button>
+      </IconButton>
       <DetailsClientes
         open={modalOpen}
         onClose={handleCloseModal}

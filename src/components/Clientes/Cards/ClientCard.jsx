@@ -78,7 +78,7 @@ const ClientCard = ({ onPresCreation, onClientCreation }) => {
               width={"100%"}
               sx={{
                 paddingX: 2,
-                marginBottom: 2,
+                marginY: 1,
                 display: "flex",
                 justifyContent: "space-between",
               }}

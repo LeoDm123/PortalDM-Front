@@ -1,5 +1,5 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import EditIcon from "@mui/icons-material/Edit";
 import EditCliente from "../../../pages/Clientes/Modals/EditCliente";
@@ -21,15 +21,9 @@ export default function EditClienteButton({
 
   return (
     <Grid>
-      <Button
-        onClick={handleClick}
-        variant="text"
-        aria-label="split button"
-        size="small"
-        className="ps-5"
-      >
+      <IconButton onClick={handleClick} size="small" sx={{ color: "#01662b" }}>
         <EditIcon />
-      </Button>
+      </IconButton>
       <EditCliente
         open={modalOpen}
         onClose={handleCloseModal}

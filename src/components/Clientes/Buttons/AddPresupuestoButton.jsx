@@ -29,11 +29,7 @@ export default function AddPresupuestoButton({
   return (
     <Grid item xs={12} md={12} lg={12}>
       <React.Fragment>
-        <ButtonGroup
-          variant="contained"
-          aria-label="split button"
-          className="mb-3 ms-3"
-        >
+        <ButtonGroup variant="contained" aria-label="split button">
           <Button className="AddPresupuestoButton" onClick={handleClick}>
             Asociar Presupuesto
           </Button>

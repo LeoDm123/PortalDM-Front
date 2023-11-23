@@ -1,10 +1,10 @@
 import * as React from "react";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
-import InventoryOutlinedIcon from "@mui/icons-material/InventoryOutlined";
-import RecibirPedidoPerfiles from "../../../pages/Pedidos/Modals/RecibirPedidoPerfiles";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import InfoPerfilesPedidos from "../../../pages/Pedidos/Modals/InfoPerfilesPedidos";
 
-export default function RecibirPedidoButton({ pedidoId, codigoMat }) {
+export default function InfoPerfilesButton({ pedidoId, codigoMat }) {
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -17,10 +17,10 @@ export default function RecibirPedidoButton({ pedidoId, codigoMat }) {
 
   return (
     <Grid>
-      <IconButton onClick={handleClick} size="small" color="primary">
-        <InventoryOutlinedIcon />
+      <IconButton onClick={handleClick} color="primary" size="small">
+        <InfoOutlinedIcon />
       </IconButton>
-      <RecibirPedidoPerfiles
+      <InfoPerfilesPedidos
         pedidoId={pedidoId}
         codigoMat={codigoMat}
         open={modalOpen}

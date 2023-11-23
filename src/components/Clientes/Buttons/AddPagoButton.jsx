@@ -34,7 +34,7 @@ export default function AddPagoButton({
         <ButtonGroup
           variant="contained"
           aria-label="split button"
-          className="mb-3 ms-3"
+          className="ms-3"
         >
           <Button className="AddPresupuestoButton" onClick={handleClick}>
             Ingresar Pago

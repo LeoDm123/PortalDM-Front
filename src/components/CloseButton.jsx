@@ -1,18 +1,17 @@
 import React from "react";
-import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import CloseIcon from "@mui/icons-material/Close";
 
 const CloseButton = ({ handleClick }) => {
   return (
     <ButtonGroup
-      sx={{ borderRadius: 50 }}
+      sx={{ borderRadius: 50, backgroundColor: "#01662b" }}
       variant="contained"
-      aria-label="split button"
     >
-      <Button sx={{ borderRadius: 50 }} onClick={handleClick}>
+      <IconButton sx={{ color: "#fff" }} onClick={handleClick}>
         <CloseIcon />
-      </Button>
+      </IconButton>
     </ButtonGroup>
   );
 };

@@ -30,10 +30,6 @@ const PedidoPerfilesForm = ({ onClose, onSubmit }) => {
           CantEntrega,
           Descripcion,
           Unidad,
-          CantRecbida,
-          FechaRecep,
-          NroRemito,
-          Estado,
           Recepciones,
         ] = row;
 
@@ -43,10 +39,6 @@ const PedidoPerfilesForm = ({ onClose, onSubmit }) => {
           CantEntrega,
           Descripcion,
           Unidad,
-          CantRecbida: "",
-          FechaRecep: "",
-          NroRemito: "",
-          Estado: "En Transito",
           Recepciones: [],
         });
       }

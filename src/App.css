@@ -158,3 +158,19 @@ input::-webkit-inner-spin-button {
   justify-content: space-between;
   align-items: center;
 }
+
+.Incompleto {
+  color: #e53935 !important;
+}
+
+.Excedido {
+  color: #ffa000 !important;
+}
+
+.Completo {
+  color: #4caf50 !important;
+}
+
+.EnTransito {
+  color: gray !important;
+}
