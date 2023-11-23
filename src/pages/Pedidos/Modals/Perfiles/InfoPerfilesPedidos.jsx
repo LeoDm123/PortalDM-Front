@@ -1,15 +1,9 @@
 import React from "react";
 import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
-import RecibirPedidoPerfilesForm from "../../../components/Pedidos/Forms/RecibirPedidoPerfilesForm";
+import InfoPerfilesPedidosForm from "../../../../components/Pedidos/Forms/Perfiles/InfoPerfilesPedidosForm";
 
-const RecibirPedidoPerfiles = ({
-  onClose,
-  open,
-  pedidoId,
-  codigoMat,
-  onSubmit,
-}) => {
+const InfoPerfilesPedidos = ({ onClose, open, pedidoId, codigoMat }) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Paper
@@ -20,16 +14,16 @@ const RecibirPedidoPerfiles = ({
           left: "50%",
           transform: "translate(-50%, -50%)",
         }}
+        className="CreateModal"
       >
-        <RecibirPedidoPerfilesForm
+        <InfoPerfilesPedidosForm
           pedidoId={pedidoId}
           codigoMat={codigoMat}
           onClose={onClose}
-          onSubmit={onSubmit}
         />
       </Paper>
     </Modal>
   );
 };
 
-export default RecibirPedidoPerfiles;
+export default InfoPerfilesPedidos;

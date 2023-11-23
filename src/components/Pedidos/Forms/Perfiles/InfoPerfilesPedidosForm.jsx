@@ -6,9 +6,9 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import serverAPI from "../../../api/serverAPI";
-import Title from "../../Title";
-import formatDate from "../../../hooks/formatDate";
+import serverAPI from "../../../../api/serverAPI";
+import Title from "../../../Title";
+import formatDate from "../../../../hooks/formatDate";
 
 const InfoPerfilesPedidosForm = ({ onClose, pedidoId, codigoMat }) => {
   const [MaterialData, setMaterialData] = useState({});

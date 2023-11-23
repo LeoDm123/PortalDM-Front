@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
-import AddPedidoForm from "../../../components/Pedidos/Forms/PedidoPerfilesForm";
+import AddPedidoForm from "../../../components/Pedidos/Forms/Perfiles/PedidoPerfilesForm";
 
 const PedidoVidrios = ({ open, onClose }) => {
   return (

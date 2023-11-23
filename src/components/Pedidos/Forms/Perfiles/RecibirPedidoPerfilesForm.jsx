@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button, TextField, Grid } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import serverAPI from "../../../api/serverAPI";
-import Title from "../../Title";
-import getCurretDate from "../../../hooks/getCurrentDate";
+import serverAPI from "../../../../api/serverAPI";
+import Title from "../../../Title";
+import getCurretDate from "../../../../hooks/getCurrentDate";
 
 const RecibirPedidoPerfilesForm = ({
   onClose,

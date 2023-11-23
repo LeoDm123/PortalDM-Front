@@ -2,7 +2,7 @@ import * as React from "react";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import InfoPerfilesPedidos from "../../../pages/Pedidos/Modals/InfoPerfilesPedidos";
+import InfoPerfilesPedidos from "../../../../pages/Pedidos/Modals/Perfiles/InfoPerfilesPedidos";
 
 export default function InfoPerfilesButton({ pedidoId, codigoMat }) {
   const [modalOpen, setModalOpen] = React.useState(false);

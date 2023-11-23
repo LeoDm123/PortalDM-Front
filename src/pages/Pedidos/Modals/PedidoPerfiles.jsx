@@ -1,6 +1,6 @@
 import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
-import PedidoPerfilesForm from "../../../components/Pedidos/Forms/PedidoPerfilesForm";
+import PedidoPerfilesForm from "../../../components/Pedidos/Forms/Perfiles/PedidoPerfilesForm";
 
 const PedidoPerfiles = ({ open, onClose, onSubmit }) => {
   return (

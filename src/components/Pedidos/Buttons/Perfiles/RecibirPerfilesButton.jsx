@@ -2,7 +2,7 @@ import * as React from "react";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import InventoryOutlinedIcon from "@mui/icons-material/InventoryOutlined";
-import RecibirPedidoPerfiles from "../../../pages/Pedidos/Modals/RecibirPedidoPerfiles";
+import RecibirPedidoPerfiles from "../../../../pages/Pedidos/Modals/Perfiles/RecibirPedidoPerfiles";
 
 export default function RecibirPerfilesButton({
   pedidoId,

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Button, TextField, Grid } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import UploadPerfiles from "../UploadComponents/UploadPerfiles";
+import UploadPerfiles from "../../UploadComponents/UploadPerfiles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Title from "../../Title";
-import { crearPedido } from "../../../hooks/crearPedido";
+import Title from "../../../Title";
+import { crearPedido } from "../../../../hooks/crearPedido";
 
 const PedidoPerfilesForm = ({ onClose, onSubmit }) => {
   const [uploadedData, setUploadedData] = useState([]);

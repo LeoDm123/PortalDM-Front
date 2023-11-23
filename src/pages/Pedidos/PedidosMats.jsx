@@ -5,8 +5,8 @@ import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import "../../App.css";
 import Header from "../../components/Menu/Header";
-import AddPedidoButton from "../../components/Pedidos/Buttons/AddPedidoButton";
-import PedidosPerfilesList from "../../components/Pedidos/Lists/PedidoPerfilesList";
+import AddPedidoButton from "../../components/Pedidos/Buttons/Perfiles/AddPedidoButton";
+import PedidosPerfilesList from "../../components/Pedidos/Lists/Perfiles/PedidoPerfilesList";
 import fetchPedidos from "../../hooks/fetchPedidos";
 
 const defaultTheme = createTheme();
@@ -16,7 +16,6 @@ const PedidosMats = () => {
 
   const handleSubmit = async () => {
     setOnSubmit(!onSubmit);
-    await fetchPedidos();
   };
 
   return (
