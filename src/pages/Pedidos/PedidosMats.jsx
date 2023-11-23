@@ -32,7 +32,7 @@ const PedidosMats = () => {
                     display: "flex",
                     flexDirection: "column",
 
-                    height: 590,
+                    height: 580,
                     width: "100%",
                   }}
                 >

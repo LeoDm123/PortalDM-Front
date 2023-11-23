@@ -30,7 +30,7 @@ const ClientInfo = () => {
     >
       <Grid>
         <Typography sx={{ mt: 1 }} variant="h6">
-          Contabildad
+          Saldos de Cuentas
         </Typography>
         <DividerSecondary />
         <Typography sx={{ mt: 1, ml: 1 }} variant="h6" color="green">
@@ -42,7 +42,7 @@ const ClientInfo = () => {
       </Grid>
       <Grid sx={{ marginTop: 2 }}>
         <Typography sx={{ mt: 1 }} variant="h6">
-          Base de Datos
+          Clientes y Presupuestos
         </Typography>
         <DividerSecondary />
         <Typography

@@ -32,7 +32,7 @@ const UploadPerfiles = ({ onFileUpload, onClose }) => {
 
         // Filtrar solo las columnas B, C, D y E
         const filteredData = jsonData.map((row) => {
-          return [row[1], row[2], row[3], row[4]]; // Columnas B, C, D y E
+          return [row[1], row[2], row[3], row[4], row[6]]; // Columnas B, C, D y E
         });
 
         onFileUpload(filteredData);

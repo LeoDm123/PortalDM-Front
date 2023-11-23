@@ -16,7 +16,16 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import serverAPI from "../api/serverAPI";
 import { useNavigate } from "react-router-dom";
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+  palette: {
+    primary: {
+      main: "#01662b",
+    },
+    secondary: {
+      main: "#6a6a6a",
+    },
+  },
+});
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -142,7 +151,7 @@ const LoginForm = () => {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, color: "primary" }}
                 disabled={isLoading}
               >
                 {isLoading && (

@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import fetchClients from "../../../hooks/fetchClients";
 import VerClienteButton from "../Buttons/VerClienteButton";
 import FormatCurrency from "../../../hooks/formatCurrency";
+import { DividerTitle } from "../../Dividers";
 
 const ClientCard = ({ onPresCreation, onClientCreation }) => {
   const [onSubmitPay, setOnSubmitPay] = useState(false);
@@ -224,7 +225,8 @@ const ClientCard = ({ onPresCreation, onClientCreation }) => {
                   },
                 }}
               >
-                <Grid sx={{ display: "Flex", width: "100%" }}>
+                <DividerTitle />
+                <Grid sx={{ display: "Flex", width: "100%", marginTop: "2px" }}>
                   <CardContent sx={{ padding: 0, width: "100%" }}>
                     {client.Presupuestos.filter(
                       (presupuesto) =>

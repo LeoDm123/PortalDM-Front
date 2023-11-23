@@ -11,38 +11,131 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Collapse from "@mui/material/Collapse";
 import Box from "@mui/material/Box";
 import fetchPedidos from "../../../hooks/fetchPedidos";
+import RecibirPedidoButton from "../Buttons/RecibirPedidoButton";
 
-const NestedList = ({ history }) => (
-  <Box sx={{ margin: 1 }}>
-    <Table size="small" aria-label="purchases">
-      <TableHead>
-        <TableRow>
-          <TableCell>Codigo</TableCell>
-          <TableCell>Descripcion</TableCell>
-          <TableCell>Cant Pedida</TableCell>
-          <TableCell>Cant Envio</TableCell>
-          <TableCell>Cant Recibida</TableCell>
-          <TableCell>Fecha Recepción</TableCell>
-          <TableCell>N° Remito</TableCell>
-          <TableCell>Estado</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {history.map((product) => (
-          <TableRow key={product.Codigo}>
-            <TableCell>{product.Codigo}</TableCell>
-            <TableCell>{product.Descripcion}</TableCell>
-            <TableCell>{product.CantPedida}</TableCell>
-            <TableCell>{product.CantEntrega}</TableCell>
-            <TableCell>{product.CantRecibida}</TableCell>
-            <TableCell>{product.FechaRecepcion}</TableCell>
-            <TableCell>{product.NRemito}</TableCell>
-            <TableCell>{product.Estado}</TableCell>
+const formatNumber = (number) => {
+  const parsedNumber = parseFloat(number);
+  return isNaN(parsedNumber) ? number : parsedNumber.toFixed(2);
+};
+
+const NestedList = ({ history, pedidoId }) => (
+  <Grid
+    sx={{
+      mb: 1,
+      display: "flex",
+      flexDirection: "column",
+      height: 400,
+      overflow: "auto",
+      scrollbarWidth: "thin",
+      scrollbarColor: "dark",
+      "&::-webkit-scrollbar": {
+        width: "8px",
+      },
+      "&::-webkit-scrollbar-thumb": {
+        background: "lightgray",
+        borderRadius: "5px",
+      },
+    }}
+  >
+    <Box>
+      <Table stickyHeader size="small" aria-label="purchases">
+        <TableHead>
+          <TableRow sx={{ width: "100%" }}>
+            <TableCell
+              sx={{ backgroundColor: "#E1E3E1" }}
+              className="text-center fw-bold"
+            >
+              Codigo
+            </TableCell>
+            <TableCell
+              sx={{ backgroundColor: "#E1E3E1" }}
+              className="text-center fw-bold"
+            >
+              Descripcion
+            </TableCell>
+            <TableCell
+              sx={{ backgroundColor: "#E1E3E1" }}
+              className="text-center fw-bold"
+            >
+              Cant. Pedida
+            </TableCell>
+            <TableCell
+              sx={{ backgroundColor: "#E1E3E1" }}
+              className="text-center fw-bold"
+            >
+              Cant. Envio
+            </TableCell>
+            <TableCell
+              sx={{ backgroundColor: "#E1E3E1" }}
+              className="text-center fw-bold"
+            >
+              Cant. Recibida
+            </TableCell>
+            <TableCell
+              sx={{ backgroundColor: "#E1E3E1" }}
+              className="text-center fw-bold"
+            >
+              Fecha Recepción
+            </TableCell>
+            <TableCell
+              sx={{ backgroundColor: "#E1E3E1" }}
+              className="text-center fw-bold"
+            >
+              N° Remito
+            </TableCell>
+            <TableCell
+              sx={{ backgroundColor: "#E1E3E1" }}
+              className="text-center fw-bold"
+            >
+              Estado
+            </TableCell>
+            <TableCell
+              sx={{
+                backgroundColor: "#E1E3E1",
+                width: 2,
+                padding: 0,
+                margin: 0,
+              }}
+            ></TableCell>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  </Box>
+        </TableHead>
+        <TableBody>
+          {history.map((product) => (
+            <TableRow key={product.Codigo}>
+              <TableCell className="text-center">{product.Codigo}</TableCell>
+              <TableCell>{product.Descripcion}</TableCell>
+              <TableCell className="text-center">
+                {formatNumber(product.CantPedida)}
+              </TableCell>
+              <TableCell className="text-center">
+                {formatNumber(product.CantEntrega)}
+              </TableCell>
+              <TableCell className="text-center">
+                {formatNumber(product.CantRecibida)}
+              </TableCell>
+              <TableCell className="text-center">
+                {product.FechaRecepcion}
+              </TableCell>
+              <TableCell className="text-center">{product.NRemito}</TableCell>
+              <TableCell className="text-center">{product.Estado}</TableCell>
+              <TableCell
+                sx={{
+                  width: 2,
+                  padding: 0,
+                  margin: 0,
+                }}
+              >
+                <RecibirPedidoButton
+                  pedidoId={pedidoId}
+                  codigoMat={product.Codigo}
+                />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Box>
+  </Grid>
 );
 
 const PedidosPerfilesList = ({ onSubmit }) => {
@@ -59,13 +152,12 @@ const PedidosPerfilesList = ({ onSubmit }) => {
     <div>
       <Grid
         sx={{
-          pr: 2,
+          px: 1,
           py: 1,
           mb: 1,
           display: "flex",
           flexDirection: "column",
           height: 500,
-          marginLeft: 1,
           overflow: "auto",
           scrollbarWidth: "thin",
           scrollbarColor: "dark",
@@ -78,15 +170,37 @@ const PedidosPerfilesList = ({ onSubmit }) => {
           },
         }}
       >
-        <Table size="medium">
+        <Table stickyHeader size="medium">
           <TableHead>
             <TableRow>
-              <TableCell className="text-center fw-bold">Obra</TableCell>
-              <TableCell className="text-center fw-bold">Fecha</TableCell>
-              <TableCell className="text-center fw-bold">N° Pedido</TableCell>
-              <TableCell className="text-center fw-bold">
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
+                Obra
+              </TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
+                Fecha
+              </TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
+                N° Pedido
+              </TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
                 N° Orden de Compra
               </TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              ></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -118,10 +232,13 @@ const PedidosPerfilesList = ({ onSubmit }) => {
                 <TableRow>
                   <TableCell
                     style={{ paddingBottom: 0, paddingTop: 0 }}
-                    colSpan={4}
+                    colSpan={5}
                   >
                     <Collapse in={openRows[index]} timeout="auto" unmountOnExit>
-                      <NestedList history={pedido.Materiales} />
+                      <NestedList
+                        history={pedido.Materiales}
+                        pedidoId={pedido._id}
+                      />
                     </Collapse>
                   </TableCell>
                 </TableRow>

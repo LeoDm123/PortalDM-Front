@@ -104,13 +104,10 @@ const PresupuestosList = ({
     <div>
       <Grid
         sx={{
-          pr: 2,
-          py: 1,
           mb: 1,
           display: "flex",
           flexDirection: "column",
           height: 200,
-          marginLeft: 1,
           overflow: "auto",
           scrollbarWidth: "thin",
           scrollbarColor: "dark",
@@ -123,23 +120,73 @@ const PresupuestosList = ({
           },
         }}
       >
-        <Table size="medium">
+        <Table stickyHeader size="medium">
           <TableHead>
             <TableRow>
-              <TableCell className="text-center fw-bold">Codigo</TableCell>
-              <TableCell className="text-center fw-bold">Facturac.</TableCell>
-              <TableCell className="text-center fw-bold">Precio</TableCell>
-              <TableCell className="text-center fw-bold">IVA</TableCell>
-              <TableCell className="text-center fw-bold">Total</TableCell>
-              <TableCell className="text-center fw-bold">
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
+                Codigo
+              </TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
+                Facturac.
+              </TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
+                Precio
+              </TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
+                IVA
+              </TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
+                Total
+              </TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
                 Total Pagado
               </TableCell>
-              <TableCell className="text-center fw-bold">
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
                 Actualización
               </TableCell>
-              <TableCell className="text-center fw-bold">Extras</TableCell>
-              <TableCell className="text-center fw-bold">Saldo</TableCell>
-              <TableCell className="text-center fw-bold">Estado</TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
+                Extras
+              </TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
+                Saldo
+              </TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
+                Estado
+              </TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              ></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

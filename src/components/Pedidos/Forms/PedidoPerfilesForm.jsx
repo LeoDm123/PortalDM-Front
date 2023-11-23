@@ -29,10 +29,12 @@ const PedidoPerfilesForm = ({ onClose, onSubmit }) => {
           CantPedida,
           CantEntrega,
           Descripcion,
+          Unidad,
           CantRecbida,
           FechaRecep,
           NroRemito,
           Estado,
+          Recepciones,
         ] = row;
 
         dataToUpload.push({
@@ -40,10 +42,12 @@ const PedidoPerfilesForm = ({ onClose, onSubmit }) => {
           CantPedida,
           CantEntrega,
           Descripcion,
+          Unidad,
           CantRecbida: "",
           FechaRecep: "",
           NroRemito: "",
           Estado: "En Transito",
+          Recepciones: [],
         });
       }
     }
@@ -155,13 +159,16 @@ const PedidoPerfilesForm = ({ onClose, onSubmit }) => {
               <TableRow>
                 <TableCell className="text-center fw-bold">Código</TableCell>
                 <TableCell className="text-center fw-bold">
+                  Descripción
+                </TableCell>
+                <TableCell className="text-center fw-bold">
                   Cant. Pedida
                 </TableCell>
                 <TableCell className="text-center fw-bold">
                   Cant. a Entregar
                 </TableCell>
                 <TableCell className="text-center fw-bold">
-                  Descripción
+                  Unidad de Medida
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -173,13 +180,16 @@ const PedidoPerfilesForm = ({ onClose, onSubmit }) => {
                       {material.Codigo}
                     </TableCell>
                     <TableCell className="text-center">
+                      {material.Descripcion}
+                    </TableCell>
+                    <TableCell className="text-center">
                       {material.CantPedida}
                     </TableCell>
                     <TableCell className="text-center">
                       {material.CantEntrega}
                     </TableCell>
                     <TableCell className="text-center">
-                      {material.Descripcion}
+                      {material.Unidad}
                     </TableCell>
                   </TableRow>
                 ))}
