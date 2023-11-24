@@ -10,7 +10,7 @@ import serverAPI from "../../../../api/serverAPI";
 import Title from "../../../Title";
 import formatDate from "../../../../hooks/formatDate";
 
-const InfoPerfilesPedidosForm = ({ onClose, pedidoId, codigoMat }) => {
+const InfoHerrajesPedidosForm = ({ onClose, pedidoId, codigoMat }) => {
   const [MaterialData, setMaterialData] = useState({});
   const [Codigo, setCodigo] = useState("");
   const [Descripcion, setDescripcion] = useState("");
@@ -28,7 +28,7 @@ const InfoPerfilesPedidosForm = ({ onClose, pedidoId, codigoMat }) => {
   const fetchMaterialData = async () => {
     try {
       const resp = await serverAPI.get(
-        `/pedidoPerfiles/obtenerMaterialPorCodigo/${pedidoId}/${codigoMat}`
+        `/pedidoHerrajes/obtenerMaterialPorCodigo/${pedidoId}/${codigoMat}`
       );
       setMaterialData(resp.data);
     } catch (error) {
@@ -213,4 +213,4 @@ const InfoPerfilesPedidosForm = ({ onClose, pedidoId, codigoMat }) => {
   );
 };
 
-export default InfoPerfilesPedidosForm;
+export default InfoHerrajesPedidosForm;

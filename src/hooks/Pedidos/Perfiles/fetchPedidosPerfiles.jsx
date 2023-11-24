@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
-import serverAPI from "../api/serverAPI";
+import serverAPI from "../../../api/serverAPI";
 
-export default function useFetchPedidos(onSubmit, onMatSubmit, onDelete) {
-  const [pedidos, setPedidos] = useState([]);
+export default function useFetchPedidosPerfiles(
+  onSubmit,
+  onMatSubmit,
+  onDelete
+) {
+  const [pedidosPerfiles, setPedidos] = useState([]);
 
   useEffect(() => {
-    const fetchPedidos = async () => {
+    const fetchPedidosPerfiles = async () => {
       try {
-        const response = await serverAPI.get("/pedido/obtenerPedidos");
+        const response = await serverAPI.get("/pedidoPerfiles/obtenerPedidos");
         const sortedPedidos = response.data.slice();
         sortedPedidos.sort((a, b) => {
           const PedidoA = a.NroPedido;
@@ -23,8 +27,8 @@ export default function useFetchPedidos(onSubmit, onMatSubmit, onDelete) {
     console.log("fetchPedidos useEffect - onSubmit:", onSubmit);
     console.log("fetchPedidos useEffect - onMatSubmit:", onMatSubmit);
     console.log("fetchPedidos useEffect - onDelete:", onDelete);
-    fetchPedidos();
+    fetchPedidosPerfiles();
   }, [onSubmit, onMatSubmit, onDelete]);
 
-  return pedidos;
+  return pedidosPerfiles;
 }

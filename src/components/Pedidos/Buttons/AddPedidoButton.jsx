@@ -8,11 +8,11 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
-import PedidoPerfiles from "../../../../pages/Pedidos/Modals/Perfiles/PedidoPerfiles";
-import PedidoHerrajes from "../../../../pages/Pedidos/Modals/PedidoHerrajes";
-import PedidoVidrios from "../../../../pages/Pedidos/Modals/PedidoVidrios";
-import PedidoPlacasAlistonados from "../../../../pages/Pedidos/Modals/PedidoPlacasAlistonados";
-import PedidoVarios from "../../../../pages/Pedidos/Modals/PedidoVarios";
+import PedidoPerfiles from "../../../pages/Pedidos/Modals/Perfiles/PedidoPerfiles";
+import PedidoHerrajes from "../../../pages/Pedidos/Modals/Herrajes/PedidoHerrajes";
+import PedidoVidrios from "../../../pages/Pedidos/Modals/PedidoVidrios";
+import PedidoPlacasAlistonados from "../../../pages/Pedidos/Modals/PedidoPlacasAlistonados";
+import PedidoVarios from "../../../pages/Pedidos/Modals/PedidoVarios";
 
 const options = [
   "Pedido de Herrajes de Aberturas PVC",
@@ -47,7 +47,13 @@ export default function PresupuestosButton({ onSubmit }) {
   const renderModal = () => {
     switch (selectedIndex) {
       case 0:
-        return <PedidoHerrajes open={modalOpen} onClose={handleClose} />;
+        return (
+          <PedidoHerrajes
+            open={modalOpen}
+            onClose={handleClose}
+            onSubmit={onSubmit}
+          />
+        );
       case 1:
         return (
           <PedidoPerfiles

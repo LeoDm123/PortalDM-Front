@@ -1,5 +1,5 @@
 import swal from "sweetalert";
-import serverAPI from "../api/serverAPI";
+import serverAPI from "../../../api/serverAPI";
 
 export const crearPedido = async (
   Obra,
@@ -9,7 +9,7 @@ export const crearPedido = async (
   Materiales
 ) => {
   try {
-    const resp = await serverAPI.post("/pedido/crearPedido", {
+    const resp = await serverAPI.post("/pedidoHerrajes/crearPedido", {
       Obra,
       Fecha,
       NroPedido,

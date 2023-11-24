@@ -3,7 +3,7 @@ import * as XLSX from "xlsx";
 import { Button, TextField, Grid } from "@mui/material";
 import UploadMatButton from "../Buttons/UploadMatButton";
 
-const UploadPerfiles = ({ onFileUpload, onClose }) => {
+const UploadHerrajes = ({ onFileUpload, onClose }) => {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("");
 
@@ -20,19 +20,19 @@ const UploadPerfiles = ({ onFileUpload, onClose }) => {
         const data = new Uint8Array(e.target.result);
         const workbook = XLSX.read(data, { type: "array" });
 
-        // Selecciona la segunda hoja del libro (workbook.Sheets[1])
-        const sheetName = workbook.SheetNames[1];
+        // Selecciona la primera hoja del libro (workbook.Sheets[1])
+        const sheetName = workbook.SheetNames[0];
         const sheet = workbook.Sheets[sheetName];
 
-        // Convertir las filas desde la fila 11 hasta el final del archivo
+        // Convertir las filas desde la fila 7 hasta el final del archivo
         const jsonData = XLSX.utils.sheet_to_json(sheet, {
           header: 1,
-          range: 10, // Comienza desde la fila 11
+          range: 6, // Comienza desde la fila 7
         });
 
-        // Filtrar solo las columnas B, C, D, E y Gener
+        // Filtrar solo las columnas A, B y C
         const filteredData = jsonData.map((row) => {
-          return [row[1], row[2], row[3], row[4], row[6]]; // Columnas B, C, D y E
+          return [row[0], row[1], row[2]]; // Columnas A, B y C
         });
 
         onFileUpload(filteredData);
@@ -70,4 +70,4 @@ const UploadPerfiles = ({ onFileUpload, onClose }) => {
   );
 };
 
-export default UploadPerfiles;
+export default UploadHerrajes;

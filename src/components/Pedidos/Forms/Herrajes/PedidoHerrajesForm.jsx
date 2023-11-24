@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { Button, TextField, Grid } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import UploadPerfiles from "../../UploadComponents/UploadPerfiles";
+import UploadHerrajes from "../../UploadComponents/UploadHerrajes";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Title from "../../../Title";
-import { crearPedido } from "../../../../hooks/Pedidos/Perfiles/crearPedidoPerfiles";
+import { crearPedido } from "../../../../hooks/Pedidos/Herrajes/crearPedidoHerrajes";
 import getCurrentDate from "../../../../hooks/getCurrentDate";
 
-const PedidoPerfilesForm = ({ onClose, onSubmit }) => {
+const PedidoHerrajesForm = ({ onClose, onSubmit }) => {
   const Today = getCurrentDate();
   const [uploadedData, setUploadedData] = useState([]);
   const [NroPedido, setNroPedido] = useState("");
@@ -26,21 +26,13 @@ const PedidoPerfilesForm = ({ onClose, onSubmit }) => {
       if (
         row.some((cell) => cell !== undefined && cell !== null && cell !== "")
       ) {
-        const [
-          Codigo,
-          CantPedida,
-          CantEntrega,
-          Descripcion,
-          Unidad,
-          Recepciones,
-        ] = row;
+        const [Codigo, Descripcion, CantEntrega, Unidad, Recepciones] = row;
 
         dataToUpload.push({
           Codigo: String(Codigo),
-          CantPedida,
-          CantEntrega,
           Descripcion,
-          Unidad,
+          CantEntrega,
+          Unidad: "u",
           Recepciones: [],
         });
       }
@@ -76,7 +68,7 @@ const PedidoPerfilesForm = ({ onClose, onSubmit }) => {
       console.error("Error al crear el pedido:", error);
 
       console.error(
-        "Error al actualizar la base de datos o al crear pedidos de perfiles:",
+        "Error al actualizar la base de datos o al crear pedidos de herrajes:",
         error
       );
     }
@@ -85,7 +77,7 @@ const PedidoPerfilesForm = ({ onClose, onSubmit }) => {
   return (
     <form id="matForm" onSubmit={handleFormSubmit}>
       <div className="d-flex justify-content-between mb-2">
-        <h1 className="h3">Crear Pedido de Perfiles Nuevo</h1>
+        <h1 className="h3">Crear Pedido de Herrajes Nuevo</h1>
         <HighlightOffIcon onClick={onClose} fontSize="large" />
       </div>
 
@@ -130,7 +122,7 @@ const PedidoPerfilesForm = ({ onClose, onSubmit }) => {
           label="Nro. de Orden de Compra"
         />
       </Grid>
-      <UploadPerfiles onFileUpload={handleFileUpload} onClose={onClose} />
+      <UploadHerrajes onFileUpload={handleFileUpload} onClose={onClose} />
       <React.Fragment>
         <Title>Listado de Materiales a Cargar</Title>
         <Grid
@@ -156,9 +148,6 @@ const PedidoPerfilesForm = ({ onClose, onSubmit }) => {
                   Descripción
                 </TableCell>
                 <TableCell className="text-center fw-bold">
-                  Cant. Pedida
-                </TableCell>
-                <TableCell className="text-center fw-bold">
                   Cant. a Entregar
                 </TableCell>
                 <TableCell className="text-center fw-bold">
@@ -175,9 +164,6 @@ const PedidoPerfilesForm = ({ onClose, onSubmit }) => {
                     </TableCell>
                     <TableCell className="text-center">
                       {material.Descripcion}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      {material.CantPedida}
                     </TableCell>
                     <TableCell className="text-center">
                       {material.CantEntrega}
@@ -207,4 +193,4 @@ const PedidoPerfilesForm = ({ onClose, onSubmit }) => {
   );
 };
 
-export default PedidoPerfilesForm;
+export default PedidoHerrajesForm;

@@ -9,21 +9,21 @@ import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Collapse from "@mui/material/Collapse";
-import useFetchPedidosPerfiles from "../../../../hooks/Pedidos/Perfiles/fetchPedidosPerfiles";
+import useFetchPedidosHerrajes from "../../../../hooks/Pedidos/Herrajes/fetchPedidoHerrajes";
 import "../../../../App.css";
 import DeletePedidoButton from "../../Buttons/DeletePedidoButton";
 import formatDate from "../../../../hooks/formatDate";
-import DeletePedidoPerfiles from "../../../../hooks/Pedidos/Perfiles/deletePedidoPerfiles";
+import DeletePedidoHerrajes from "../../../../hooks/Pedidos/Herrajes/deletePedidoHerrajes";
 import swal from "sweetalert";
-import PerfilesNestedList from "./PerfilesNestedList";
+import HerrajesNestedList from "./HerrajesNestedList";
 
-const PedidosPerfilesList = ({ onSubmit }) => {
+const PedidosHerrajesList = ({ onSubmit }) => {
   console.log("PedidosPerfilesList rendered - onSubmit:", onSubmit);
   const [openRows, setOpenRows] = useState([]);
   const [onMatSubmit, setOnMatSubmit] = useState(false);
   const [onDelete, setOnDelete] = useState(false);
   const FormatDate = formatDate();
-  const { deletePedido, error } = DeletePedidoPerfiles();
+  const { deletePedido, error } = DeletePedidoHerrajes();
 
   const handleMatSubmit = () => {
     setOnMatSubmit(!onMatSubmit);
@@ -58,7 +58,7 @@ const PedidosPerfilesList = ({ onSubmit }) => {
     });
   };
 
-  const Pedidos = useFetchPedidosPerfiles(onSubmit, onMatSubmit, onDelete);
+  const Pedidos = useFetchPedidosHerrajes(onSubmit, onMatSubmit, onDelete);
 
   return (
     <div>
@@ -153,7 +153,7 @@ const PedidosPerfilesList = ({ onSubmit }) => {
                     colSpan={5}
                   >
                     <Collapse in={openRows[index]} timeout="auto" unmountOnExit>
-                      <PerfilesNestedList
+                      <HerrajesNestedList
                         history={pedido.Materiales}
                         pedidoId={pedido._id}
                         onMatSubmit={handleMatSubmit}
@@ -170,4 +170,4 @@ const PedidosPerfilesList = ({ onSubmit }) => {
   );
 };
 
-export default PedidosPerfilesList;
+export default PedidosHerrajesList;

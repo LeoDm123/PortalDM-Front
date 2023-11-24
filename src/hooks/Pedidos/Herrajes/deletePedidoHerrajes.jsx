@@ -1,15 +1,15 @@
 import { useState } from "react";
 import swal from "sweetalert";
-import serverAPI from "../api/serverAPI";
+import serverAPI from "../../../api/serverAPI";
 
-export default function DeletePedido() {
+export default function DeletePedidoHerrajes() {
   const [error, setError] = useState(null);
 
   const deletePedido = async (pedidoId) => {
     try {
       console.log("ID", pedidoId);
       const deleteResp = await serverAPI.delete(
-        `/pedido/deletePedido/${pedidoId}`
+        `/pedidoHerrajes/deletePedido/${pedidoId}`
       );
 
       console.log(deleteResp);

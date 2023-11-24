@@ -5,7 +5,7 @@ import serverAPI from "../../../../api/serverAPI";
 import Title from "../../../Title";
 import getCurretDate from "../../../../hooks/getCurrentDate";
 
-const RecibirPedidoPerfilesForm = ({
+const RecibirPedidoHerrajesForm = ({
   onClose,
   pedidoId,
   codigoMat,
@@ -28,7 +28,7 @@ const RecibirPedidoPerfilesForm = ({
   const fetchMaterialData = async () => {
     try {
       const resp = await serverAPI.get(
-        `/pedidoPerfiles/obtenerMaterialPorCodigo/${pedidoId}/${codigoMat}`
+        `/pedidoHerrajes/obtenerMaterialPorCodigo/${pedidoId}/${codigoMat}`
       );
       setMaterialData(resp.data);
     } catch (error) {
@@ -63,7 +63,7 @@ const RecibirPedidoPerfilesForm = ({
 
     try {
       await serverAPI.put(
-        `/pedidoPerfiles/recibirPedido/${pedidoId}/${codigoMat}`,
+        `/pedidoHerrajes/recibirPedido/${pedidoId}/${codigoMat}`,
         {
           CantRecibida,
           FechaRecep,
@@ -174,4 +174,4 @@ const RecibirPedidoPerfilesForm = ({
   );
 };
 
-export default RecibirPedidoPerfilesForm;
+export default RecibirPedidoHerrajesForm;

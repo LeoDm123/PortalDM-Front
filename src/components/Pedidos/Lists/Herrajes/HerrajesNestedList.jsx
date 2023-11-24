@@ -6,9 +6,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import fetchPedidosPerfiles from "../../../../hooks/Pedidos/Perfiles/fetchPedidosPerfiles";
-import RecibirPerfilesButton from "../../Buttons/Perfiles/RecibirPerfilesButton";
-import InfoPerfilesButton from "../../Buttons/Perfiles/InfoPerfilesButton";
+import fetchPedidosHerrajes from "../../../../hooks/Pedidos/Herrajes/fetchPedidoHerrajes";
+import RecibirHerrajesButton from "../../Buttons/Herrajes/RecibirHerrajesButton";
+import InfoHerrajesButton from "../../Buttons/Herrajes/InfoHerrajesButton";
 import "../../../../App.css";
 
 const formatNumber = (number) => {
@@ -38,7 +38,7 @@ const getStateColorClass = (product) => {
   }
 };
 
-const PerfilesNestedList = ({ history, pedidoId, onMatSubmit }) => {
+const HerrajesNestedList = ({ history, pedidoId, onMatSubmit }) => {
   const sumCantRecibida = history.reduce((total, product) => {
     const sumRecepciones = product.Recepciones
       ? product.Recepciones.reduce(
@@ -53,7 +53,7 @@ const PerfilesNestedList = ({ history, pedidoId, onMatSubmit }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetchPedidosPerfiles();
+      await fetchPedidosHerrajes();
     };
 
     fetchData();
@@ -94,7 +94,6 @@ const PerfilesNestedList = ({ history, pedidoId, onMatSubmit }) => {
               >
                 Descripcion
               </TableCell>
-
               <TableCell
                 sx={{ backgroundColor: "#E1E3E1" }}
                 className="text-center fw-bold"
@@ -179,12 +178,12 @@ const PerfilesNestedList = ({ history, pedidoId, onMatSubmit }) => {
                   }}
                 >
                   <Grid display={"flex"}>
-                    <RecibirPerfilesButton
+                    <RecibirHerrajesButton
                       pedidoId={pedidoId}
                       codigoMat={product.Codigo}
                       onMatSubmit={onMatSubmit}
                     />
-                    <InfoPerfilesButton
+                    <InfoHerrajesButton
                       pedidoId={pedidoId}
                       codigoMat={product.Codigo}
                     />
@@ -199,4 +198,4 @@ const PerfilesNestedList = ({ history, pedidoId, onMatSubmit }) => {
   );
 };
 
-export default PerfilesNestedList;
+export default HerrajesNestedList;
