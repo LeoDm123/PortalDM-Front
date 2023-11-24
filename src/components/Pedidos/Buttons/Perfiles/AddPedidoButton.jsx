@@ -8,7 +8,7 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
-import PedidoPerfiles from "../../../../pages/Pedidos/Modals/PedidoPerfiles";
+import PedidoPerfiles from "../../../../pages/Pedidos/Modals/Perfiles/PedidoPerfiles";
 import PedidoHerrajes from "../../../../pages/Pedidos/Modals/PedidoHerrajes";
 import PedidoVidrios from "../../../../pages/Pedidos/Modals/PedidoVidrios";
 import PedidoPlacasAlistonados from "../../../../pages/Pedidos/Modals/PedidoPlacasAlistonados";

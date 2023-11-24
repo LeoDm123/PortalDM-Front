@@ -73,7 +73,8 @@ const RecibirPedidoPerfilesForm = ({
       onSubmit();
     } catch (error) {
       console.error(error);
-      SwAlertError();
+      const errorMessage = error.response.data.message || "Error desconocido";
+      SwAlertError(errorMessage);
     }
   };
 
@@ -85,10 +86,10 @@ const RecibirPedidoPerfilesForm = ({
     });
   };
 
-  const SwAlertError = () => {
+  const SwAlertError = (errorMessage) => {
     swal({
       title: "¡Error!",
-      text: "Hubo un error al actualizar los datos de recepción",
+      text: errorMessage,
       icon: "error",
     });
   };
@@ -138,14 +139,15 @@ const RecibirPedidoPerfilesForm = ({
           label="Fecha Recepción"
         />
         <TextField
-          type="text"
+          type="number"
           className="form-control w-25 ms-3"
           name="CantRecibida"
           placeholder="Cant. Recibida"
           value={CantRecibida}
-          onChange={(e) => setCantRecibida(e.target.value)}
+          onChange={(e) => setCantRecibida(parseFloat(e.target.value))}
           label="Cant. Recibida"
         />
+
         <TextField
           type="text"
           className="form-control w-25 ms-3"

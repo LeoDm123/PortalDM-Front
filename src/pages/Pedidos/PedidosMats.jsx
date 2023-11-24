@@ -7,7 +7,6 @@ import "../../App.css";
 import Header from "../../components/Menu/Header";
 import AddPedidoButton from "../../components/Pedidos/Buttons/Perfiles/AddPedidoButton";
 import PedidosPerfilesList from "../../components/Pedidos/Lists/Perfiles/PedidoPerfilesList";
-import fetchPedidos from "../../hooks/fetchPedidos";
 
 const defaultTheme = createTheme();
 

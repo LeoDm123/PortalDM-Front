@@ -1,13 +1,10 @@
 import { useState, useEffect } from "react";
 import serverAPI from "../api/serverAPI";
 
-export default function fetchPedidos(onSubmit, onMatSubmit, onDelete) {
+export default function useFetchPedidos(onSubmit, onMatSubmit, onDelete) {
   const [pedidos, setPedidos] = useState([]);
 
   useEffect(() => {
-    console.log("fetchPedidos useEffect - onSubmit:", onSubmit);
-    console.log("fetchPedidos useEffect - onMatSubmit:", onMatSubmit);
-    console.log("fetchPedidos useEffect - onDelete:", onDelete);
     const fetchPedidos = async () => {
       try {
         const response = await serverAPI.get("/pedido/obtenerPedidos");
@@ -23,6 +20,9 @@ export default function fetchPedidos(onSubmit, onMatSubmit, onDelete) {
       }
     };
 
+    console.log("fetchPedidos useEffect - onSubmit:", onSubmit);
+    console.log("fetchPedidos useEffect - onMatSubmit:", onMatSubmit);
+    console.log("fetchPedidos useEffect - onDelete:", onDelete);
     fetchPedidos();
   }, [onSubmit, onMatSubmit, onDelete]);
 

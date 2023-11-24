@@ -35,7 +35,7 @@ const AgregarMatList = ({ open, onClose, onMatSubmit }) => {
           Espesor,
           Costo,
           StockSeguridad,
-          StockInicial,
+          Stock,
           Proveedor,
         ] = row;
 
@@ -50,7 +50,7 @@ const AgregarMatList = ({ open, onClose, onMatSubmit }) => {
           Espesor,
           Costo,
           StockSeguridad,
-          StockInicial,
+          Stock,
           Proveedor,
         });
       }
@@ -64,18 +64,18 @@ const AgregarMatList = ({ open, onClose, onMatSubmit }) => {
     try {
       for (const material of uploadedData) {
         await crearMaterial(
-          material.Codigo,
-          material.Detalle,
-          material.Categoria,
-          material.Unidad,
-          material.Ancho,
-          material.Alto,
-          material.Largo,
-          material.Espesor,
-          material.Costo,
-          material.StockSeguridad,
-          material.StockInicial,
-          material.Proveedor
+          material.Codigo || "",
+          material.Detalle || "",
+          material.Categoria || "",
+          material.Unidad || "",
+          material.Ancho || 0,
+          material.Alto || 0,
+          material.Largo || 0,
+          material.Espesor || 0,
+          material.Costo || 0,
+          material.StockSeguridad || 0,
+          material.Stock || 0,
+          material.Proveedor || ""
         );
       }
 
@@ -199,7 +199,7 @@ const AgregarMatList = ({ open, onClose, onMatSubmit }) => {
                           {material.StockSeguridad}
                         </TableCell>
                         <TableCell className="text-center" sx={{ width: "5%" }}>
-                          {material.StockInicial}
+                          {material.Stock}
                         </TableCell>
                         <TableCell className="text-center">
                           {material.Proveedor}
@@ -211,7 +211,11 @@ const AgregarMatList = ({ open, onClose, onMatSubmit }) => {
               </Table>
             </Grid>
 
-            <Button onClick={handleConfirmUpload} sx={{ marginTop: 2 }}>
+            <Button
+              variant="contained"
+              onClick={handleConfirmUpload}
+              sx={{ marginTop: 2, float: "right" }} // Alinea el botón a la derecha
+            >
               Confirmar Carga
             </Button>
           </React.Fragment>

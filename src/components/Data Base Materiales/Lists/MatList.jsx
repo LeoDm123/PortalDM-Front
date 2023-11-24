@@ -86,8 +86,13 @@ export default function MatList({ onMatSubmit, onMatChange }) {
                     {materials.StockSeguridad}
                   </TableCell>
                   <TableCell className="text-center" sx={{ width: "10%" }}>
-                    {materials.StockInicial}
+                    {materials.Stock !== 0
+                      ? `${parseFloat(materials.Stock).toFixed(2)} ${
+                          materials.Unidad
+                        }`
+                      : materials.Stock}
                   </TableCell>
+
                   <TableCell colSpan={2} sx={{ width: "5%" }}>
                     <MatsOptionsButton
                       matID={materials._id}

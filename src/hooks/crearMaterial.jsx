@@ -13,7 +13,7 @@ export const crearMaterial = async (
   Espesor,
   Costo,
   StockSeguridad,
-  StockInicial,
+  Stock,
   Proveedor
 ) => {
   try {
@@ -28,7 +28,7 @@ export const crearMaterial = async (
       Espesor,
       Costo,
       StockSeguridad,
-      StockInicial,
+      Stock,
       Proveedor,
     });
 

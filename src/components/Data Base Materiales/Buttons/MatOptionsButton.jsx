@@ -91,9 +91,7 @@ export default function MatsOptionsButton({ matID, onMatChange }) {
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
                   <MenuItem>
-                    <DeleteMatButton
-                      onDelete={() => handleDeleteMat(materials._id)}
-                    />
+                    <DeleteMatButton onDelete={() => handleDeleteMat(matID)} />
                   </MenuItem>
                   <MenuItem>
                     <VerMatButton matID={matID} />

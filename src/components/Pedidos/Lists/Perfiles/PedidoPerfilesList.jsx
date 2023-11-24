@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Collapse from "@mui/material/Collapse";
-import fetchPedidos from "../../../../hooks/fetchPedidos";
+import useFetchPedidos from "../../../../hooks/fetchPedidos";
 import "../../../../App.css";
 import DeletePedidoButton from "../../Buttons/Perfiles/DeletePedidoButton";
 import formatDate from "../../../../hooks/formatDate";
@@ -41,7 +41,6 @@ const PedidosPerfilesList = ({ onSubmit }) => {
 
   const handleDeletePedido = async (pedidoId) => {
     handleDeleteCliente(pedidoId);
-    handleDelete();
   };
 
   const handleDeleteCliente = (pedidoId) => {
@@ -54,11 +53,12 @@ const PedidosPerfilesList = ({ onSubmit }) => {
     }).then((willCancel) => {
       if (willCancel) {
         deletePedido(pedidoId);
+        handleDelete();
       }
     });
   };
 
-  const Pedidos = fetchPedidos(onSubmit, onMatSubmit, onDelete);
+  const Pedidos = useFetchPedidos(onSubmit, onMatSubmit, onDelete);
 
   return (
     <div>
@@ -86,30 +86,32 @@ const PedidosPerfilesList = ({ onSubmit }) => {
           <TableHead>
             <TableRow>
               <TableCell
-                sx={{ backgroundColor: "#E1E3E1" }}
+                sx={{ backgroundColor: "#E1E3E1", width: "25%" }}
                 className="text-center fw-bold"
               >
                 Obra
               </TableCell>
               <TableCell
-                sx={{ backgroundColor: "#E1E3E1" }}
+                sx={{ backgroundColor: "#E1E3E1", width: "15%" }}
                 className="text-center fw-bold"
               >
                 Fecha
               </TableCell>
               <TableCell
-                sx={{ backgroundColor: "#E1E3E1" }}
+                sx={{ backgroundColor: "#E1E3E1", width: "25%" }}
                 className="text-center fw-bold"
               >
                 N° Pedido
               </TableCell>
               <TableCell
-                sx={{ backgroundColor: "#E1E3E1" }}
+                sx={{ backgroundColor: "#E1E3E1", width: "25%" }}
                 className="text-center fw-bold"
               >
                 N° Orden de Compra
               </TableCell>
-              <TableCell sx={{ backgroundColor: "#E1E3E1" }}></TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1", width: "10%" }}
+              ></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

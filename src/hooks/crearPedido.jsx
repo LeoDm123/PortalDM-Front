@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import swal from "sweetalert";
 import serverAPI from "../api/serverAPI";
 

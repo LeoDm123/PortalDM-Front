@@ -42,28 +42,30 @@ const UploadPerfiles = ({ onFileUpload, onClose }) => {
   };
 
   return (
-    <Grid>
-      <div className="d-flex justify-content-between mb-2"></div>
-      <Grid
-        display={"Flex"}
-        sx={{ width: "100%", alignItems: "center", marginTop: 3 }}
+    <Grid
+      display={"Flex"}
+      sx={{
+        width: "100%",
+        alignItems: "center",
+        marginTop: 2,
+        marginBottom: 2,
+      }}
+    >
+      <UploadMatButton onChange={handleFileChange} />
+      <TextField
+        value={fileName}
+        sx={{ width: "51.62%", marginX: 2 }}
+        variant="outlined"
+        size="small"
+      />
+      <Button
+        variant="contained"
+        color="primary"
+        sx={{ height: "100%" }}
+        onClick={handleFileUpload}
       >
-        <UploadMatButton onChange={handleFileChange} />
-        <TextField
-          value={fileName}
-          sx={{ width: "48%", marginX: 2 }}
-          variant="outlined"
-          size="small"
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ height: "100%" }}
-          onClick={handleFileUpload}
-        >
-          Cargar a Pedido
-        </Button>
-      </Grid>
+        Cargar a Pedido
+      </Button>
     </Grid>
   );
 };

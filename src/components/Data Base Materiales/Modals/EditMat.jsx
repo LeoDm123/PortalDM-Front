@@ -23,7 +23,7 @@ const EditMaterial = ({ open, onClose, matID, onMatChange }) => {
   const [Largo, setLargo] = useState(0);
   const [Espesor, setEspesor] = useState(0);
   const [Costo, setCosto] = useState(0);
-  const [StockInicial, setStockInicial] = useState(0);
+  const [Stock, setStock] = useState(0);
   const [StockSeguridad, setStockSeguridad] = useState(0);
   const [Proveedor, setProveedor] = useState("");
   const matByID = fetchMatByID(matID);
@@ -43,7 +43,7 @@ const EditMaterial = ({ open, onClose, matID, onMatChange }) => {
       setEspesor(matByID.Espesor ?? 0);
       setCosto(matByID.Costo ?? 0);
       setUnidad(matByID.Unidad ?? "");
-      setStockInicial(matByID.StockInicial ?? 0);
+      setStock(matByID.Stock ?? 0);
       setStockSeguridad(matByID.StockSeguridad ?? 0);
       setProveedor(matByID.Proveedor ?? "");
     }
@@ -72,7 +72,7 @@ const EditMaterial = ({ open, onClose, matID, onMatChange }) => {
         Espesor,
         Costo,
         StockSeguridad,
-        StockInicial,
+        Stock,
         Proveedor,
       });
 
@@ -258,11 +258,11 @@ const EditMaterial = ({ open, onClose, matID, onMatChange }) => {
               <TextField
                 type="text"
                 className="form-control my-3 me-3 w-50"
-                name="StockInicial"
-                placeholder="StockInicial"
-                value={StockInicial}
-                onChange={(e) => setStockInicial(e.target.value)}
-                label="Stock Inicial"
+                name="Stock"
+                placeholder="Stock"
+                value={Stock}
+                onChange={(e) => setStock(parseFloat(e.target.value))}
+                label="Stock"
               />
               <TextField
                 type="text"

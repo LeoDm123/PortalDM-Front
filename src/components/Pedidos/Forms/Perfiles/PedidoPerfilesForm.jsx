@@ -9,12 +9,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Title from "../../../Title";
 import { crearPedido } from "../../../../hooks/crearPedido";
+import getCurrentDate from "../../../../hooks/getCurrentDate";
 
 const PedidoPerfilesForm = ({ onClose, onSubmit }) => {
+  const Today = getCurrentDate();
   const [uploadedData, setUploadedData] = useState([]);
   const [NroPedido, setNroPedido] = useState("");
   const [Obra, setObra] = useState("");
-  const [Fecha, setFecha] = useState("");
+  const [Fecha, setFecha] = useState(Today);
   const [OrdenCompra, setOrdenCompra] = useState("");
 
   const handleFileUpload = async (jsonData) => {
@@ -68,8 +70,8 @@ const PedidoPerfilesForm = ({ onClose, onSubmit }) => {
       setFecha("");
       setNroPedido("");
       setOrdenCompra("");
-      onSubmit();
       onClose();
+      onSubmit();
     } catch (error) {
       console.error("Error al crear el pedido:", error);
 
@@ -197,6 +199,7 @@ const PedidoPerfilesForm = ({ onClose, onSubmit }) => {
         size="medium"
         type="submit"
         className="mt-4"
+        sx={{ float: "right" }}
       >
         Crear Pedido
       </Button>

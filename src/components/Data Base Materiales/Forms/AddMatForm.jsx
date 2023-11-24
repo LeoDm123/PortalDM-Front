@@ -21,8 +21,8 @@ const AddMatForm = ({ onClose, onMatSubmit }) => {
   const [Largo, setLargo] = useState(0);
   const [Espesor, setEspesor] = useState(0);
   const [Costo, setCosto] = useState(0);
-  const [StockInicial, setStockInicial] = useState(0);
-  const [StockSeguridad, setStockSeguridad] = useState(0);
+  const [Stock, setStock] = useState("");
+  const [StockSeguridad, setStockSeguridad] = useState("");
   const [Proveedor, setProveedor] = useState("");
 
   const handleFormSubmit = (event) => {
@@ -47,7 +47,7 @@ const AddMatForm = ({ onClose, onMatSubmit }) => {
       Espesor,
       Costo,
       StockSeguridad,
-      StockInicial,
+      Stock,
       Proveedor
     );
 
@@ -60,7 +60,7 @@ const AddMatForm = ({ onClose, onMatSubmit }) => {
     setEspesor(0);
     setCosto(0);
     setUnidad("");
-    setStockInicial(0);
+    setStock(0);
     setStockSeguridad(0);
     setProveedor("");
     onMatSubmit();
@@ -206,11 +206,11 @@ const AddMatForm = ({ onClose, onMatSubmit }) => {
         <TextField
           type="text"
           className="form-control my-3 me-3 w-50"
-          name="StockInicial"
-          placeholder="StockInicial"
-          value={StockInicial}
-          onChange={(e) => setStockInicial(e.target.value)}
-          label="Stock Inicial"
+          name="Stock"
+          placeholder="Stock"
+          value={Stock}
+          onChange={(e) => setStock(e.target.value)}
+          label="Stock"
         />
         <TextField
           type="text"
