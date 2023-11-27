@@ -37,6 +37,7 @@ const AgregarMatList = ({ open, onClose, onMatSubmit }) => {
           StockSeguridad,
           Stock,
           Proveedor,
+          InvLog,
         ] = row;
 
         dataToUpload.push({
@@ -52,6 +53,7 @@ const AgregarMatList = ({ open, onClose, onMatSubmit }) => {
           StockSeguridad,
           Stock,
           Proveedor,
+          InvLog: [],
         });
       }
     }
@@ -75,7 +77,8 @@ const AgregarMatList = ({ open, onClose, onMatSubmit }) => {
           material.Costo || 0,
           material.StockSeguridad || 0,
           material.Stock || 0,
-          material.Proveedor || ""
+          material.Proveedor || "",
+          material.InvLog || []
         );
       }
 

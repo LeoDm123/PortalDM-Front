@@ -4,6 +4,7 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import serverAPI from "../../../../api/serverAPI";
 import Title from "../../../Title";
 import getCurretDate from "../../../../hooks/getCurrentDate";
+import { crearLog } from "../../../../hooks/Inventario/crearLog";
 
 const RecibirPedidoHerrajesForm = ({
   onClose,
@@ -21,9 +22,7 @@ const RecibirPedidoHerrajesForm = ({
   const [CantRecibida, setCantRecibida] = useState("");
   const [FechaRecep, setFechaRecep] = useState(Today);
   const [NroRemito, setNroRemito] = useState("");
-
-  console.log("pedidoId:", pedidoId);
-  console.log("codigoMat:", codigoMat);
+  const [TipoMov, setTipoMov] = useState("Ingreso");
 
   const fetchMaterialData = async () => {
     try {
@@ -61,6 +60,8 @@ const RecibirPedidoHerrajesForm = ({
       return console.log("Todos los campos son obligatorios");
     }
 
+    const RemitoLog = "Remito N°: " + NroRemito;
+
     try {
       await serverAPI.put(
         `/pedidoHerrajes/recibirPedido/${pedidoId}/${codigoMat}`,
@@ -68,8 +69,13 @@ const RecibirPedidoHerrajesForm = ({
           CantRecibida,
           FechaRecep,
           NroRemito,
+          Unidad,
+          TipoMov,
+          RemitoLog,
         }
       );
+
+      crearLog(Codigo, FechaRecep, TipoMov, CantRecibida, Unidad, RemitoLog);
 
       SwAlertOk();
       onClose();

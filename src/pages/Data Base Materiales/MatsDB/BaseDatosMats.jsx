@@ -8,6 +8,7 @@ import MatList from "../../../components/Data Base Materiales/Lists/MatList";
 import "../../../App.css";
 import AddMatButton from "../../../components/Data Base Materiales/Buttons/AddMatButton";
 import AddMatListButton from "../../../components/Data Base Materiales/Buttons/AddMatListButton";
+import InventarioLogButton from "../../../components/Data Base Materiales/Buttons/InventarioLogButton";
 const defaultTheme = createTheme();
 
 const BaseDatosMats = () => {
@@ -35,6 +36,7 @@ const BaseDatosMats = () => {
               <div className="d-flex">
                 <AddMatButton onMatSubmit={handleOnMatSubmit} />
                 <AddMatListButton />
+                <InventarioLogButton />
               </div>
               <Paper
                 sx={{

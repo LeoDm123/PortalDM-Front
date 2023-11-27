@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
+import Box from "@mui/material/Box";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
+import Title from "../../Title";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import fetchMatByID from "../../../hooks/fetchMatByID";
+import formatDate from "../../../hooks/formatDate";
 
 const MatDetails = ({ open, onClose, matID }) => {
   const [Codigo, setCodigo] = useState("");
@@ -19,11 +27,15 @@ const MatDetails = ({ open, onClose, matID }) => {
   const [StockInicial, setStockInicial] = useState(0);
   const [StockSeguridad, setStockSeguridad] = useState(0);
   const [Proveedor, setProveedor] = useState("");
+  const [InvLog, setInvLog] = useState([]);
   const matByID = fetchMatByID(matID);
+  const FormatDate = formatDate();
+  const [StockActualizado, setStockActualizado] = useState(0);
 
   useEffect(() => {
     if (
-      matID !== null &&
+      matID &&
+      matByID &&
       typeof matByID === "object" &&
       Object.keys(matByID).length > 0
     ) {
@@ -39,8 +51,24 @@ const MatDetails = ({ open, onClose, matID }) => {
       setStockInicial(matByID.StockInicial ?? 0);
       setStockSeguridad(matByID.StockSeguridad ?? 0);
       setProveedor(matByID.Proveedor ?? "");
+      setInvLog(matByID.InvLog ?? []);
     }
   }, [matID, matByID]);
+
+  useEffect(() => {
+    if (matByID && matByID.InvLog && Array.isArray(matByID.InvLog)) {
+      const stockIngresos = matByID.InvLog.filter(
+        (log) => log.TipoMov === "Ingreso"
+      ).reduce((total, log) => total + log.CantRecibida, 0);
+
+      const stockEgresos = matByID.InvLog.filter(
+        (log) => log.TipoMov === "Egreso"
+      ).reduce((total, log) => total + log.CantRecibida, 0);
+
+      const StockActualizado = matByID.Stock + stockIngresos - stockEgresos;
+      setStockActualizado(StockActualizado);
+    }
+  }, [matByID]);
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -56,7 +84,7 @@ const MatDetails = ({ open, onClose, matID }) => {
       >
         {matByID && (
           <Grid>
-            <div className="d-flex justify-content-between mb-2">
+            <div className="d-flex justify-content-between">
               <h1 className="h3">Detalles de material</h1>
               <HighlightOffIcon onClick={onClose} fontSize="large" />
             </div>
@@ -154,7 +182,7 @@ const MatDetails = ({ open, onClose, matID }) => {
             <Grid display={"flex"} className="w-100">
               <TextField
                 type="text"
-                className="form-control my-3 me-3 w-50"
+                className="form-control mt-3 me-3 w-50"
                 name="StockInicial"
                 placeholder="StockInicial"
                 value={StockInicial}
@@ -163,7 +191,7 @@ const MatDetails = ({ open, onClose, matID }) => {
               />
               <TextField
                 type="text"
-                className="form-control my-3 me-3 w-50"
+                className="form-control mt-3 me-3 w-50"
                 name="StockSeguridad"
                 placeholder="StockSeguridad"
                 value={StockSeguridad}
@@ -172,7 +200,7 @@ const MatDetails = ({ open, onClose, matID }) => {
               />
               <TextField
                 type="text"
-                className="form-control my-3 w-50"
+                className="form-control mt-3 w-50"
                 name="Costo"
                 placeholder="Costo"
                 value={Costo}
@@ -182,6 +210,123 @@ const MatDetails = ({ open, onClose, matID }) => {
             </Grid>
           </Grid>
         )}
+
+        <Grid className="mt-1">
+          <Title>Movimientos de Inventario</Title>
+        </Grid>
+
+        <Grid
+          sx={{
+            mb: 1,
+            display: "flex",
+            flexDirection: "column",
+            height: 160,
+            overflow: "auto",
+            scrollbarWidth: "thin",
+            scrollbarColor: "dark",
+            "&::-webkit-scrollbar": {
+              width: "8px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: "lightgray",
+              borderRadius: "5px",
+            },
+          }}
+        >
+          <Box>
+            <Table stickyHeader size="small" aria-label="purchases">
+              <TableHead>
+                <TableRow sx={{ width: "100%" }}>
+                  <TableCell
+                    sx={{ backgroundColor: "#E1E3E1" }}
+                    className="text-center fw-bold"
+                  >
+                    Fecha
+                  </TableCell>
+                  <TableCell
+                    sx={{ backgroundColor: "#E1E3E1" }}
+                    className="text-center fw-bold"
+                  >
+                    Cantidad
+                  </TableCell>
+                  <TableCell
+                    sx={{ backgroundColor: "#E1E3E1" }}
+                    className="text-center fw-bold"
+                  >
+                    Unidad de Medida
+                  </TableCell>
+                  <TableCell
+                    sx={{ backgroundColor: "#E1E3E1" }}
+                    className="text-center fw-bold"
+                  >
+                    Tipo de Movimiento
+                  </TableCell>
+                  <TableCell
+                    sx={{ backgroundColor: "#E1E3E1" }}
+                    className="text-center fw-bold"
+                  >
+                    Detalle
+                  </TableCell>
+                  <TableCell
+                    sx={{ backgroundColor: "#E1E3E1" }}
+                    className="text-center fw-bold"
+                  >
+                    Stock
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {matByID && matByID.InvLog && Array.isArray(matByID.InvLog) ? (
+                  matByID.InvLog.map((log, index) => {
+                    const stockIngresos = matByID.InvLog.filter(
+                      (entry) => entry.TipoMov === "Ingreso"
+                    )
+                      .slice(0, index + 1)
+                      .reduce((total, entry) => total + entry.CantRecibida, 0);
+
+                    const stockEgresos = matByID.InvLog.filter(
+                      (entry) => entry.TipoMov === "Egreso"
+                    )
+                      .slice(0, index + 1)
+                      .reduce((total, entry) => total + entry.CantRecibida, 0);
+
+                    const stockActualizado =
+                      matByID.Stock + stockIngresos - stockEgresos;
+
+                    return (
+                      <TableRow key={index}>
+                        <TableCell className="text-center">
+                          {FormatDate(log.FechaRecep)}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          {log.CantRecibida}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          {log.Unidad}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          {log.TipoMov}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          {log.RemitoLog}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          {stockActualizado}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={6} className="text-center">
+                      No data available
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </Box>
+        </Grid>
       </Paper>
     </Modal>
   );

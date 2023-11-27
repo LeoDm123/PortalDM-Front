@@ -24,6 +24,7 @@ const AddMatForm = ({ onClose, onMatSubmit }) => {
   const [Stock, setStock] = useState("");
   const [StockSeguridad, setStockSeguridad] = useState("");
   const [Proveedor, setProveedor] = useState("");
+  const [InvLog, setInvLog] = useState([]);
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -48,7 +49,8 @@ const AddMatForm = ({ onClose, onMatSubmit }) => {
       Costo,
       StockSeguridad,
       Stock,
-      Proveedor
+      Proveedor,
+      InvLog
     );
 
     setCodigo("");

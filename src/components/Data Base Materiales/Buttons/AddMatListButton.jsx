@@ -19,7 +19,7 @@ export default function AddMatListButton({ onMatSubmit }) {
   return (
     <Grid>
       <Button
-        className="AddButton mb-3 ms-3"
+        className="AddButton mb-3 mx-3"
         onClick={handleClick}
         sx={{ width: 320 }}
         variant="contained"
