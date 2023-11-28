@@ -4,6 +4,7 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import serverAPI from "../../../../api/serverAPI";
 import Title from "../../../Title";
 import getCurretDate from "../../../../hooks/getCurrentDate";
+import { crearLog } from "../../../../hooks/Inventario/crearLog";
 
 const RecibirPedidoPerfilesForm = ({
   onClose,
@@ -13,6 +14,7 @@ const RecibirPedidoPerfilesForm = ({
 }) => {
   const Today = getCurretDate();
   const [MaterialData, setMaterialData] = useState({});
+  const [PedidoData, setPedidoData] = useState({});
   const [Codigo, setCodigo] = useState("");
   const [Descripcion, setDescripcion] = useState("");
   const [CantPedida, setCantPedida] = useState("");
@@ -21,9 +23,7 @@ const RecibirPedidoPerfilesForm = ({
   const [CantRecibida, setCantRecibida] = useState("");
   const [FechaRecep, setFechaRecep] = useState(Today);
   const [NroRemito, setNroRemito] = useState("");
-
-  console.log("pedidoId:", pedidoId);
-  console.log("codigoMat:", codigoMat);
+  const [TipoMov, setTipoMov] = useState("Ingreso");
 
   const fetchMaterialData = async () => {
     try {
@@ -36,8 +36,20 @@ const RecibirPedidoPerfilesForm = ({
     }
   };
 
+  const fetchPedidoData = async () => {
+    try {
+      const resp = await serverAPI.get(
+        `/pedidoPerfiles/obtenerPedidoPorId/${pedidoId}`
+      );
+      setPedidoData(resp.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   useEffect(() => {
     fetchMaterialData();
+    fetchPedidoData();
   }, []);
 
   useEffect(() => {
@@ -61,14 +73,33 @@ const RecibirPedidoPerfilesForm = ({
       return console.log("Todos los campos son obligatorios");
     }
 
+    const nroPedido = PedidoData.NroPedido;
+
+    const RemitoLog = "Remito N°: " + NroRemito;
+
     try {
       await serverAPI.put(
         `/pedidoPerfiles/recibirPedido/${pedidoId}/${codigoMat}`,
         {
           CantRecibida,
           FechaRecep,
+          nroPedido,
           NroRemito,
+          Unidad,
+          TipoMov,
+          RemitoLog,
         }
+      );
+
+      crearLog(
+        Codigo,
+        Descripcion,
+        FechaRecep,
+        nroPedido,
+        TipoMov,
+        CantRecibida,
+        Unidad,
+        RemitoLog
       );
 
       SwAlertOk();

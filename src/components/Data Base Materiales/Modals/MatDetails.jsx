@@ -250,16 +250,22 @@ const MatDetails = ({ open, onClose, matID }) => {
                     Cantidad
                   </TableCell>
                   <TableCell
-                    sx={{ backgroundColor: "#E1E3E1" }}
+                    sx={{ backgroundColor: "#E1E3E1", width: "5%" }}
                     className="text-center fw-bold"
                   >
-                    Unidad de Medida
+                    Unidad
                   </TableCell>
                   <TableCell
                     sx={{ backgroundColor: "#E1E3E1" }}
                     className="text-center fw-bold"
                   >
-                    Tipo de Movimiento
+                    Ingreso/Egreso
+                  </TableCell>
+                  <TableCell
+                    sx={{ backgroundColor: "#E1E3E1" }}
+                    className="text-center fw-bold"
+                  >
+                    N° de Pedido
                   </TableCell>
                   <TableCell
                     sx={{ backgroundColor: "#E1E3E1" }}
@@ -268,7 +274,7 @@ const MatDetails = ({ open, onClose, matID }) => {
                     Detalle
                   </TableCell>
                   <TableCell
-                    sx={{ backgroundColor: "#E1E3E1" }}
+                    sx={{ backgroundColor: "#E1E3E1", width: "5%" }}
                     className="text-center fw-bold"
                   >
                     Stock
@@ -290,8 +296,7 @@ const MatDetails = ({ open, onClose, matID }) => {
                       .slice(0, index + 1)
                       .reduce((total, entry) => total + entry.CantRecibida, 0);
 
-                    const stockActualizado =
-                      matByID.Stock + stockIngresos - stockEgresos;
+                    const stockActualizado = stockIngresos - stockEgresos;
 
                     return (
                       <TableRow key={index}>
@@ -308,10 +313,13 @@ const MatDetails = ({ open, onClose, matID }) => {
                           {log.TipoMov}
                         </TableCell>
                         <TableCell className="text-center">
+                          {log.nroPedido}
+                        </TableCell>
+                        <TableCell className="text-center">
                           {log.RemitoLog}
                         </TableCell>
                         <TableCell className="text-center">
-                          {stockActualizado}
+                          {stockActualizado.toFixed(2)}
                         </TableCell>
                       </TableRow>
                     );

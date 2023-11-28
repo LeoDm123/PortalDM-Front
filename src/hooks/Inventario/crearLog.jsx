@@ -3,7 +3,9 @@ import serverAPI from "../../api/serverAPI";
 
 export const crearLog = async (
   Codigo,
+  Descripcion,
   Fecha,
+  NroPedido,
   TipoMov,
   Cantidad,
   Unidad,
@@ -12,7 +14,9 @@ export const crearLog = async (
   try {
     const resp = await serverAPI.post("/inv/crearLog", {
       Codigo,
+      Descripcion,
       Fecha,
+      NroPedido,
       TipoMov,
       Cantidad,
       Unidad,

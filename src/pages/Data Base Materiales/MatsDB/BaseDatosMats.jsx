@@ -35,7 +35,7 @@ const BaseDatosMats = () => {
             <Grid container>
               <div className="d-flex">
                 <AddMatButton onMatSubmit={handleOnMatSubmit} />
-                <AddMatListButton />
+                <AddMatListButton onMatSubmit={handleOnMatSubmit} />
                 <InventarioLogButton />
               </div>
               <Paper

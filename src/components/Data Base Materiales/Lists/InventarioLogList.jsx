@@ -9,7 +9,7 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import serverAPI from "../../../api/serverAPI";
 import formatDate from "../../../hooks/formatDate";
 
-const InventarioLogForm = ({ onClose }) => {
+const InventarioLogList = ({ onClose }) => {
   const [LogData, setLogData] = useState([]);
   const [onMatRecep, setOnMatRecep] = useState(false);
 
@@ -40,7 +40,7 @@ const InventarioLogForm = ({ onClose }) => {
           mb: 1,
           display: "flex",
           flexDirection: "column",
-          height: 400,
+          height: 800,
           overflow: "auto",
           scrollbarWidth: "thin",
           scrollbarColor: "dark",
@@ -67,6 +67,18 @@ const InventarioLogForm = ({ onClose }) => {
                   sx={{ backgroundColor: "#E1E3E1" }}
                   className="text-center fw-bold"
                 >
+                  Codigo
+                </TableCell>
+                <TableCell
+                  sx={{ backgroundColor: "#E1E3E1" }}
+                  className="text-center fw-bold"
+                >
+                  Descripción
+                </TableCell>
+                <TableCell
+                  sx={{ backgroundColor: "#E1E3E1" }}
+                  className="text-center fw-bold"
+                >
                   Cantidad
                 </TableCell>
                 <TableCell
@@ -85,6 +97,12 @@ const InventarioLogForm = ({ onClose }) => {
                   sx={{ backgroundColor: "#E1E3E1" }}
                   className="text-center fw-bold"
                 >
+                  N° de Pedido
+                </TableCell>
+                <TableCell
+                  sx={{ backgroundColor: "#E1E3E1" }}
+                  className="text-center fw-bold"
+                >
                   Detalle
                 </TableCell>
               </TableRow>
@@ -96,11 +114,18 @@ const InventarioLogForm = ({ onClose }) => {
                     <TableCell className="text-center">
                       {FormatDate(log.Fecha)}
                     </TableCell>
+                    <TableCell className="text-center">{log.Codigo}</TableCell>
+                    <TableCell className="text-center">
+                      {log.Descripcion}
+                    </TableCell>
                     <TableCell className="text-center">
                       {log.Cantidad}
                     </TableCell>
                     <TableCell className="text-center">{log.Unidad}</TableCell>
                     <TableCell className="text-center">{log.TipoMov}</TableCell>
+                    <TableCell className="text-center">
+                      {log.NroPedido}
+                    </TableCell>
                     <TableCell className="text-center">{log.Detalle}</TableCell>
                   </TableRow>
                 ))}
@@ -112,4 +137,4 @@ const InventarioLogForm = ({ onClose }) => {
   );
 };
 
-export default InventarioLogForm;
+export default InventarioLogList;

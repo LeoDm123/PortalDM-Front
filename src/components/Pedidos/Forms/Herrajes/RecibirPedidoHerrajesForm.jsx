@@ -14,6 +14,7 @@ const RecibirPedidoHerrajesForm = ({
 }) => {
   const Today = getCurretDate();
   const [MaterialData, setMaterialData] = useState({});
+  const [PedidoData, setPedidoData] = useState({});
   const [Codigo, setCodigo] = useState("");
   const [Descripcion, setDescripcion] = useState("");
   const [CantPedida, setCantPedida] = useState("");
@@ -35,8 +36,20 @@ const RecibirPedidoHerrajesForm = ({
     }
   };
 
+  const fetchPedidoData = async () => {
+    try {
+      const resp = await serverAPI.get(
+        `/pedidoHerrajes/obtenerPedidoPorId/${pedidoId}`
+      );
+      setPedidoData(resp.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   useEffect(() => {
     fetchMaterialData();
+    fetchPedidoData();
   }, []);
 
   useEffect(() => {
@@ -60,6 +73,8 @@ const RecibirPedidoHerrajesForm = ({
       return console.log("Todos los campos son obligatorios");
     }
 
+    const nroPedido = PedidoData.NroPedido;
+
     const RemitoLog = "Remito N°: " + NroRemito;
 
     try {
@@ -68,6 +83,7 @@ const RecibirPedidoHerrajesForm = ({
         {
           CantRecibida,
           FechaRecep,
+          nroPedido,
           NroRemito,
           Unidad,
           TipoMov,
@@ -75,7 +91,16 @@ const RecibirPedidoHerrajesForm = ({
         }
       );
 
-      crearLog(Codigo, FechaRecep, TipoMov, CantRecibida, Unidad, RemitoLog);
+      crearLog(
+        Codigo,
+        Descripcion,
+        FechaRecep,
+        nroPedido,
+        TipoMov,
+        CantRecibida,
+        Unidad,
+        RemitoLog
+      );
 
       SwAlertOk();
       onClose();

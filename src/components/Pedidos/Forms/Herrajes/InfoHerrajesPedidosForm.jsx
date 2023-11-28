@@ -145,7 +145,7 @@ const InfoHerrajesPedidosForm = ({ onClose, pedidoId, codigoMat }) => {
           mb: 1,
           display: "flex",
           flexDirection: "column",
-          height: 400,
+          height: 300,
           overflow: "auto",
           scrollbarWidth: "thin",
           scrollbarColor: "dark",
