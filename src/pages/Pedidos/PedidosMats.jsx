@@ -10,6 +10,7 @@ import Header from "../../components/Menu/Header";
 import AddPedidoButton from "../../components/Pedidos/Buttons/AddPedidoButton";
 import PedidosPerfilesList from "../../components/Pedidos/Lists/Perfiles/PedidoPerfilesList";
 import PedidosHerrajesList from "../../components/Pedidos/Lists/Herrajes/PedidoHerrajesList";
+import PedidosVidriosList from "../../components/Pedidos/Lists/Vidrios/PedidoVidriosList";
 import Title from "../../components/Title";
 import { DividerTitle } from "../../components/Dividers";
 
@@ -30,7 +31,7 @@ const PedidosMats = () => {
   const optionComponents = {
     perfiles: <PedidosPerfilesList onSubmit={onSubmit} />,
     herrajes: <PedidosHerrajesList onSubmit={onSubmit} />,
-    vidrios: <></>,
+    vidrios: <PedidosVidriosList onSubmit={onSubmit} />,
   };
 
   return (

@@ -10,7 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import PedidoPerfiles from "../../../pages/Pedidos/Modals/Perfiles/PedidoPerfiles";
 import PedidoHerrajes from "../../../pages/Pedidos/Modals/Herrajes/PedidoHerrajes";
-import PedidoVidrios from "../../../pages/Pedidos/Modals/PedidoVidrios";
+import PedidoVidrios from "../../../pages/Pedidos/Modals/Vidrios/PedidoVidrios";
 import PedidoPlacasAlistonados from "../../../pages/Pedidos/Modals/PedidoPlacasAlistonados";
 import PedidoVarios from "../../../pages/Pedidos/Modals/PedidoVarios";
 
