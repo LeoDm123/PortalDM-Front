@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
-import AddPedidoForm from "../../../components/Pedidos/Forms/Perfiles/PedidoPerfilesForm";
+import PedidoMaderaForm from "../../../../components/Pedidos/Forms/Madera/PedidoMaderaForm";
 
-const PedidoPlacasAlistonados = ({ open, onClose }) => {
+const PedidoMadera = ({ open, onClose, onSubmit }) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Paper
@@ -16,9 +15,11 @@ const PedidoPlacasAlistonados = ({ open, onClose }) => {
           transform: "translate(-50%, -50%)",
         }}
         className="CreateModal"
-      ></Paper>
+      >
+        <PedidoMaderaForm onClose={onClose} onSubmit={onSubmit} />
+      </Paper>
     </Modal>
   );
 };
 
-export default PedidoPlacasAlistonados;
+export default PedidoMadera;

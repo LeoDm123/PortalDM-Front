@@ -48,19 +48,28 @@ function MainListItems() {
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton
+            sx={{ pl: 4 }}
+            onClick={() => navigate("/PedidosMats")}
+          >
             <ListItemIcon>
               <PowerInputIcon />
             </ListItemIcon>
             <ListItemText primary="Perfiles" />
           </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton
+            sx={{ pl: 4 }}
+            onClick={() => navigate("/PedidosMats")}
+          >
             <ListItemIcon>
               <RoomPreferencesIcon />
             </ListItemIcon>
             <ListItemText primary="Herrajes" />
           </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton
+            sx={{ pl: 4 }}
+            onClick={() => navigate("/PedidosMats")}
+          >
             <ListItemIcon>
               <WindowIcon />
             </ListItemIcon>
@@ -68,7 +77,7 @@ function MainListItems() {
           </ListItemButton>
         </List>
       </Collapse>
-      <ListItemButton>
+      <ListItemButton onClick={() => navigate("/GestionarClientes")}>
         <ListItemIcon>
           <PeopleIcon />
         </ListItemIcon>
@@ -80,7 +89,7 @@ function MainListItems() {
         </ListItemIcon>
         <ListItemText primary="Informes" />
       </ListItemButton>
-      <ListItemButton>
+      <ListItemButton onClick={() => navigate("/BaseDatosMats")}>
         <ListItemIcon>
           <InventoryIcon />
         </ListItemIcon>

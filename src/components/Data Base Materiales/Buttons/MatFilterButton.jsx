@@ -10,7 +10,7 @@ import MenuList from "@mui/material/MenuList";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
 const options = [
-  "Perfileria de PVC",
+  "Perfilería de PVC",
   "Madera Maciza y Alistonados",
   "Placas de MDF y Cantos",
   "Deck y Revestimientos de WPC",

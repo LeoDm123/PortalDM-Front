@@ -12,10 +12,6 @@ import PresupuestoExtras from "./pages/Presupuestos/PresupuestoExtras";
 import PresupuestoDeck from "./pages/Presupuestos/PresupuestoDeck";
 //Paginas de Base de Datos de Materiales
 import BaseDatosMats from "./pages/Data Base Materiales/MatsDB/BaseDatosMats";
-import ModificarMat from "./pages/Data Base Materiales/MatsDB/ModificarMat";
-import DBPuertasPlacas from "./pages/Data Base Materiales/DBPuertasPlacas";
-import DBManoObra from "./pages/Data Base Materiales/DBManoObra";
-import DBInfoProduccion from "./pages/Data Base Materiales/ProdInfoDB/DBInfoProduccion";
 //Paginas de Pedidos
 import PedidosMats from "./pages/Pedidos/PedidosMats";
 //Paginas de Gestion de Clientes
@@ -36,10 +32,6 @@ function App() {
         <Route path="/PresupuestoExtras" element={<PresupuestoExtras />} />
         {/* BASE DE DATOS DE MATERIALES */}
         <Route path="/BaseDatosMats" element={<BaseDatosMats />} />
-        <Route path="/ModificarMat" element={<ModificarMat />} />
-        <Route path="/DBPuertasPlacas" element={<DBPuertasPlacas />} />
-        <Route path="/DBManoObra" element={<DBManoObra />} />
-        <Route path="/DBInfoProduccion" element={<DBInfoProduccion />} />
         {/* PEDIDOS */}
         <Route path="/PedidosMats" element={<PedidosMats />} />
         {/* GESTION DE CLIENTES */}

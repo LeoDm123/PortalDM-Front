@@ -10,7 +10,7 @@ import serverAPI from "../../../../api/serverAPI";
 import Title from "../../../Title";
 import formatDate from "../../../../hooks/formatDate";
 
-const InfoVidriosPedidosForm = ({ onClose, pedidoId, codigoMat }) => {
+const InfoMaderaPedidosForm = ({ onClose, pedidoId, codigoMat }) => {
   const [MaterialData, setMaterialData] = useState({});
   const [Codigo, setCodigo] = useState("");
   const [Descripcion, setDescripcion] = useState("");
@@ -30,7 +30,7 @@ const InfoVidriosPedidosForm = ({ onClose, pedidoId, codigoMat }) => {
   const fetchMaterialData = async () => {
     try {
       const resp = await serverAPI.get(
-        `/pedidoVidrios/obtenerMaterialPorCodigo/${pedidoId}/${codigoMat}`
+        `/pedidoMadera/obtenerMaterialPorCodigo/${pedidoId}/${codigoMat}`
       );
       setMaterialData(resp.data);
     } catch (error) {
@@ -190,4 +190,4 @@ const InfoVidriosPedidosForm = ({ onClose, pedidoId, codigoMat }) => {
   );
 };
 
-export default InfoVidriosPedidosForm;
+export default InfoMaderaPedidosForm;

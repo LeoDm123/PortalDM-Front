@@ -1,22 +1,23 @@
 import React, { useState } from "react";
 import { Button, TextField, Grid } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import UploadVidrios from "../../UploadComponents/UploadVidrios";
+import UploadMadera from "../../UploadComponents/UploadMadera";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Title from "../../../Title";
-import { crearPedido } from "../../../../hooks/Pedidos/Vidrios/crearPedidoVidrios";
+import { crearPedido } from "../../../../hooks/Pedidos/Madera/crearPedidoMadera";
 import getCurrentDate from "../../../../hooks/getCurrentDate";
 
-const PedidoVidriosForm = ({ onClose, onSubmit }) => {
+const PedidoMaderaForm = ({ onClose, onSubmit }) => {
   const Today = getCurrentDate();
   const [uploadedData, setUploadedData] = useState([]);
   const [NroPedido, setNroPedido] = useState("");
   const [Obra, setObra] = useState("");
   const [Cliente, setCliente] = useState("");
+  const [Proveedor, setProveedor] = useState("");
   const [Fecha, setFecha] = useState(Today);
 
   const handleFileUpload = async (jsonData) => {
@@ -26,16 +27,23 @@ const PedidoVidriosForm = ({ onClose, onSubmit }) => {
       if (
         row.some((cell) => cell !== undefined && cell !== null && cell !== "")
       ) {
-        const [Tipologia, Ancho, Alto, Cantidad, Composicion, Recepciones] =
-          row;
-
-        dataToUpload.push({
-          Codigo: Tipologia + "-" + Ancho + "-" + Alto,
-          Tipologia,
+        const [
+          Codigo,
+          Descripcion,
           Ancho,
           Alto,
+          Espesor,
           Cantidad,
-          Composicion,
+          Recepciones,
+        ] = row;
+
+        dataToUpload.push({
+          Codigo,
+          Descripcion,
+          Ancho,
+          Alto,
+          Espesor,
+          Cantidad,
           Recepciones: [],
         });
       }
@@ -47,7 +55,7 @@ const PedidoVidriosForm = ({ onClose, onSubmit }) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    if (Obra === "" || NroPedido === "" || Fecha === "") {
+    if (Obra === "" || NroPedido === "" || Proveedor === "" || Fecha === "") {
       return swal({
         title: "¡Error!",
         text: "Todos los campos son obligatorios",
@@ -56,7 +64,7 @@ const PedidoVidriosForm = ({ onClose, onSubmit }) => {
     }
 
     try {
-      crearPedido(Cliente, Obra, Fecha, NroPedido, uploadedData);
+      crearPedido(Cliente, Obra, Fecha, NroPedido, Proveedor, uploadedData);
 
       console.log("Todos los materiales han sido cargados con éxito.");
 
@@ -65,13 +73,14 @@ const PedidoVidriosForm = ({ onClose, onSubmit }) => {
       setObra("");
       setFecha("");
       setNroPedido("");
+      setProveedor("");
       onClose();
       onSubmit();
     } catch (error) {
       console.error("Error al crear el pedido:", error);
 
       console.error(
-        "Error al actualizar la base de datos o al crear pedidos de vidrios:",
+        "Error al actualizar la base de datos o al crear pedidos de madera:",
         error
       );
     }
@@ -80,7 +89,7 @@ const PedidoVidriosForm = ({ onClose, onSubmit }) => {
   return (
     <form id="matForm" onSubmit={handleFormSubmit}>
       <div className="d-flex justify-content-between mb-2">
-        <h1 className="h3">Crear Pedido de Vidrios Nuevo</h1>
+        <h1 className="h3">Crear Pedido de Madera Nuevo</h1>
         <HighlightOffIcon onClick={onClose} fontSize="large" />
       </div>
 
@@ -115,7 +124,15 @@ const PedidoVidriosForm = ({ onClose, onSubmit }) => {
           onChange={(e) => setNroPedido(e.target.value)}
           label="Nro. de Pedido"
         />
-
+        <TextField
+          type="text"
+          className="form-control mt-3 pe-3 w-50"
+          name="Proveedor"
+          placeholder="Proveedor"
+          value={Proveedor}
+          onChange={(e) => setProveedor(e.target.value)}
+          label="Proveedor"
+        />
         <TextField
           type="date"
           className="form-control mt-3 w-25"
@@ -126,7 +143,7 @@ const PedidoVidriosForm = ({ onClose, onSubmit }) => {
           label="Fecha de Pedido"
         />
       </Grid>
-      <UploadVidrios onFileUpload={handleFileUpload} onClose={onClose} />
+      <UploadMadera onFileUpload={handleFileUpload} onClose={onClose} />
       <React.Fragment>
         <Title>Listado de Materiales a Cargar</Title>
         <Grid
@@ -147,16 +164,29 @@ const PedidoVidriosForm = ({ onClose, onSubmit }) => {
           <Table stickyHeader size="small">
             <TableHead>
               <TableRow>
-                <TableCell className="text-center fw-bold">Tipología</TableCell>
-                <TableCell className="text-center fw-bold">
-                  Ancho [mm.]
+                <TableCell
+                  className="text-center fw-bold"
+                  sx={{ width: "10%" }}
+                >
+                  Código
                 </TableCell>
-                <TableCell className="text-center fw-bold">
-                  Alto [mm.]
+                <TableCell
+                  className="text-center fw-bold"
+                  sx={{ width: "25%" }}
+                >
+                  Descripción
                 </TableCell>
-                <TableCell className="text-center fw-bold">Cantidad</TableCell>
-                <TableCell className="text-center fw-bold">
-                  Composición
+                <TableCell className="text-center fw-bold" sx={{ width: "8%" }}>
+                  Ancho
+                </TableCell>
+                <TableCell className="text-center fw-bold" sx={{ width: "8%" }}>
+                  Alto
+                </TableCell>
+                <TableCell className="text-center fw-bold" sx={{ width: "2%" }}>
+                  Espesor
+                </TableCell>
+                <TableCell className="text-center fw-bold" sx={{ width: "2%" }}>
+                  Cantidad
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -165,19 +195,22 @@ const PedidoVidriosForm = ({ onClose, onSubmit }) => {
                 {uploadedData.map((material, index) => (
                   <TableRow key={index}>
                     <TableCell className="text-center" sx={{ width: "10%" }}>
-                      {material.Tipologia}
+                      {material.Codigo}
                     </TableCell>
                     <TableCell className="text-center">
-                      {material.Ancho}
+                      {material.Descripcion}
                     </TableCell>
                     <TableCell className="text-center">
-                      {material.Alto}
+                      {material.Ancho + " mm."}
                     </TableCell>
                     <TableCell className="text-center">
-                      {material.Cantidad}
+                      {material.Alto + " mm."}
                     </TableCell>
                     <TableCell className="text-center">
-                      {material.Composicion}
+                      {material.Espesor + " mm."}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {material.Cantidad + " u."}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -201,4 +234,4 @@ const PedidoVidriosForm = ({ onClose, onSubmit }) => {
   );
 };
 
-export default PedidoVidriosForm;
+export default PedidoMaderaForm;

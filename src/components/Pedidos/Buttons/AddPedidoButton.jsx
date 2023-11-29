@@ -11,13 +11,13 @@ import MenuList from "@mui/material/MenuList";
 import PedidoPerfiles from "../../../pages/Pedidos/Modals/Perfiles/PedidoPerfiles";
 import PedidoHerrajes from "../../../pages/Pedidos/Modals/Herrajes/PedidoHerrajes";
 import PedidoVidrios from "../../../pages/Pedidos/Modals/Vidrios/PedidoVidrios";
-import PedidoPlacasAlistonados from "../../../pages/Pedidos/Modals/PedidoPlacasAlistonados";
+import PedidoMadera from "../../../pages/Pedidos/Modals/Madera/PedidoMadera";
 import PedidoVarios from "../../../pages/Pedidos/Modals/PedidoVarios";
 
 const options = [
   "Pedido de Herrajes de Aberturas PVC",
   "Pedido de Perfiles de PVC",
-  "Pedido de Placas y Alistonados",
+  "Pedido de Insumos Puertas de Madera",
   "Pedido de Vidrios",
   "Pedido de Insumos Varios",
 ];
@@ -63,9 +63,7 @@ export default function PresupuestosButton({ onSubmit }) {
           />
         );
       case 2:
-        return (
-          <PedidoPlacasAlistonados open={modalOpen} onClose={handleClose} />
-        );
+        return <PedidoMadera open={modalOpen} onClose={handleClose} />;
       case 3:
         return <PedidoVidrios open={modalOpen} onClose={handleClose} />;
       case 4:
