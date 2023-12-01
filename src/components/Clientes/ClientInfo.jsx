@@ -1,9 +1,9 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import fetchClients from "../../hooks/fetchClients";
-import SaldosTotales from "../../hooks/saldoActivo";
-import PresupuestosTotales from "../../hooks/presupuestosActivos";
+import fetchClients from "../../hooks/Clientes/fetchClients";
+import SaldosTotales from "../../hooks/Clientes/saldoActivo";
+import PresupuestosTotales from "../../hooks/Clientes/Presupuestos/presupuestosActivos";
 import FormatCurrency from "../../hooks/formatCurrency";
 import { DividerSecondary } from "../Dividers";
 

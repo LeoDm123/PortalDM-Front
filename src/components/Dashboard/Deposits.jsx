@@ -2,7 +2,7 @@ import * as React from "react";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import Title from "../Title";
-import SaldosTotales from "../../hooks/saldoActivo";
+import SaldosTotales from "../../hooks/Clientes/saldoActivo";
 import FormatCurrency from "../../hooks/formatCurrency";
 import { useNavigate } from "react-router-dom";
 

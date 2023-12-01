@@ -1,7 +1,7 @@
 import { useState } from "react";
 import swal from "sweetalert";
-import fetchClientByID from "./fetchClientByID";
-import serverAPI from "../api/serverAPI";
+import fetchClientByID from "../fetchClientByID";
+import serverAPI from "../../../api/serverAPI";
 
 export default function useDeletePres(selectedClientIndex) {
   const [error, setError] = useState(null);

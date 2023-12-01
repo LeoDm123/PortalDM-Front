@@ -10,8 +10,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
 import serverAPI from "../../../api/serverAPI";
 import DeleteButton from "../../../components/DeleteButton";
-import fetchClientByID from "../../../hooks/fetchClientByID";
-import useDeletePres from "../../../hooks/deletePresByID";
+import fetchClientByID from "../../../hooks/Clientes/fetchClientByID";
+import useDeletePres from "../../../hooks/Clientes/Presupuestos/deletePresByID";
 import FormatCurrency from "../../../hooks/formatCurrency";
 
 const PresupuestosList = ({

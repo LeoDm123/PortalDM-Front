@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import fetchClients from "./fetchClients";
+import fetchClients from "../fetchClients";
 
 const PresupuestosTotales = () => {
   const ClientsData = fetchClients();

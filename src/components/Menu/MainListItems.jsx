@@ -16,6 +16,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import WindowIcon from "@mui/icons-material/Window";
 import Collapse from "@mui/material/Collapse";
 import PowerInputIcon from "@mui/icons-material/PowerInput";
+import SettingsIcon from "@mui/icons-material/Settings";
 import { useNavigate } from "react-router-dom";
 
 function MainListItems() {
@@ -100,6 +101,12 @@ function MainListItems() {
           <RequestQuoteIcon />
         </ListItemIcon>
         <ListItemText primary="Presupuestos" />
+      </ListItemButton>
+      <ListItemButton onClick={() => navigate("/Config")}>
+        <ListItemIcon>
+          <SettingsIcon />
+        </ListItemIcon>
+        <ListItemText primary="Configuración" />
       </ListItemButton>
     </List>
   );

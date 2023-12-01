@@ -4,6 +4,7 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import TextField from "@mui/material/TextField";
 import Title from "../../Title";
 import "../../../App.css";
 import Grid from "@mui/material/Grid";
@@ -14,10 +15,12 @@ import MatsOptionsButton from "../Buttons/MatOptionsButton";
 export default function MatList({ onMatSubmit, onMatChange }) {
   const Materiales = fetchMats(onMatSubmit, onMatChange);
   const [selectedCategory, setSelectedCategory] = useState("Mostrar Todos");
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const handleCategoryChange = (category) => {
+  const handleCategoryChange = (category, search) => {
     setSelectedCategory(category);
-    fetchMats(undefined, undefined, category);
+    setSearchTerm(search);
+    fetchMats(undefined, undefined, category, search);
   };
 
   return (
@@ -31,7 +34,19 @@ export default function MatList({ onMatSubmit, onMatChange }) {
         >
           <Grid sx={{ display: "flex", justifyContent: "space-between" }}>
             <Title>Listado de Materiales</Title>
-            <MatFilterButton onFilterChange={handleCategoryChange} />
+            <Grid>
+              <TextField
+                type="text"
+                className="me-3"
+                variant="standard"
+                placeholder="Buscar por código..."
+                value={searchTerm}
+                onChange={(e) =>
+                  handleCategoryChange(selectedCategory, e.target.value)
+                }
+              />
+              <MatFilterButton onFilterChange={handleCategoryChange} />
+            </Grid>
           </Grid>
         </Grid>
         <Grid
@@ -98,9 +113,13 @@ export default function MatList({ onMatSubmit, onMatChange }) {
             <TableBody>
               {Materiales.filter(
                 (material) =>
-                  selectedCategory === "" ||
-                  selectedCategory === "Mostrar Todos" ||
-                  material.Categoria === selectedCategory
+                  (selectedCategory === "" ||
+                    selectedCategory === "Mostrar Todos" ||
+                    material.Categoria === selectedCategory) &&
+                  (searchTerm === "" ||
+                    material.Codigo.toLowerCase().includes(
+                      searchTerm.toLowerCase()
+                    ))
               ).map((materials) => (
                 <TableRow key={materials.id}>
                   <TableCell className="text-center" sx={{ width: "5%" }}>

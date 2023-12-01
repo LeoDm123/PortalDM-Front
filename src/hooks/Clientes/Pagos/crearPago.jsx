@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import swal from "sweetalert";
-import serverAPI from "../api/serverAPI";
+import serverAPI from "../../../api/serverAPI";
 
 export const crearPago = async (
   ClientCUIT,

@@ -9,8 +9,8 @@ import {
   Grid,
 } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import { crearPago } from "../../../hooks/crearPago";
-import fetchClientByID from "../../../hooks/fetchClientByID";
+import { crearPago } from "../../../hooks/Clientes/Pagos/crearPago";
+import fetchClientByID from "../../../hooks/Clientes/fetchClientByID";
 
 const AddPagoForm = ({ onClose, selectedClientIndex, onSubmitPay }) => {
   const [PresupuestoCodigo, setPresupuestoCodigo] = useState("");

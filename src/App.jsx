@@ -17,6 +17,8 @@ import PedidosMats from "./pages/Pedidos/PedidosMats";
 //Paginas de Gestion de Clientes
 import GestionarClientes from "./pages/Clientes/GestionarClientes";
 import ClientesDB from "./pages/Clientes/ClientesDB";
+//Paginas de Configuración
+import Config from "./pages/Config";
 
 function App() {
   return (
@@ -37,6 +39,8 @@ function App() {
         {/* GESTION DE CLIENTES */}
         <Route path="/GestionarClientes" element={<GestionarClientes />} />
         <Route path="/ClientesDB" element={<ClientesDB />} />
+        {/* CONFIGURACION */}
+        <Route path="/Config" element={<Config />} />
       </Routes>
     </BrowserRouter>
   );

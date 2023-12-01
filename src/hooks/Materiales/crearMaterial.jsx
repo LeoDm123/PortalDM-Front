@@ -2,7 +2,21 @@ import { useState, useEffect } from "react";
 import swal from "sweetalert";
 import serverAPI from "../../api/serverAPI";
 
-export const crearMaterial = async (Cantidad, TipoMov) => {
+export const crearMaterial = async (
+  Codigo,
+  Descripcion,
+  Categoria,
+  Unidad,
+  Ancho,
+  Alto,
+  Largo,
+  Espesor,
+  Costo,
+  StockSeguridad,
+  Stock,
+  Proveedor,
+  InvLog
+) => {
   try {
     const resp = await serverAPI.post("/mats/crearMaterial/", {
       Codigo,

@@ -11,7 +11,7 @@ import MenuList from "@mui/material/MenuList";
 import EditMatButton from "./EditMatButton";
 import VerMatButton from "./VerMatButton";
 import DeleteMatButton from "./DeleteMatButton";
-import DeleteMat from "../../../hooks/deleteMatByID";
+import DeleteMat from "../../../hooks/Materiales/deleteMatByID";
 
 export default function MatsOptionsButton({ matID, onMatChange }) {
   const [open, setOpen] = React.useState(false);

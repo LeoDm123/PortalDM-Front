@@ -1,6 +1,6 @@
 import { useState } from "react";
 import swal from "sweetalert";
-import serverAPI from "../api/serverAPI";
+import serverAPI from "../../../api/serverAPI";
 
 export default function DeletePago() {
   const [error, setError] = useState(null);

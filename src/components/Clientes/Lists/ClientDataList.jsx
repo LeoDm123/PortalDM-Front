@@ -1,5 +1,5 @@
 import React from "react";
-import fetchClientByID from "../../../hooks/fetchClientByID";
+import fetchClientByID from "../../../hooks/Clientes/fetchClientByID";
 
 const ClientDataList = ({
   open,

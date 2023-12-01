@@ -1,5 +1,5 @@
 import swal from "sweetalert";
-import serverAPI from "../api/serverAPI";
+import serverAPI from "../../../api/serverAPI";
 
 export const crearPresupuesto = async (
   PresupuestoCodigo,

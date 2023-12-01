@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import fetchClients from "../../../hooks/fetchClients";
+import fetchClients from "../../../hooks/Clientes/fetchClients";
 import VerClienteButton from "../Buttons/VerClienteButton";
 import FormatCurrency from "../../../hooks/formatCurrency";
 import { DividerTitle } from "../../Dividers";

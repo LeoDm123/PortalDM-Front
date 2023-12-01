@@ -11,8 +11,8 @@ import {
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import fetchClientByID from "../../../hooks/fetchClientByID";
-import { crearPresupuesto } from "../../../hooks/crearPres";
+import fetchClientByID from "../../../hooks/Clientes/fetchClientByID";
+import { crearPresupuesto } from "../../../hooks/Clientes/Presupuestos/crearPres";
 
 const AddPresupuesto = ({
   open,

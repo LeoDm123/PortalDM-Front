@@ -7,8 +7,8 @@ import TableRow from "@mui/material/TableRow";
 import Grid from "@mui/material/Grid";
 import swal from "sweetalert";
 import DeleteButton from "../../../components/DeleteButton";
-import fetchClientByID from "../../../hooks/fetchClientByID";
-import DeletePago from "../../../hooks/deletePagoByID";
+import fetchClientByID from "../../../hooks/Clientes/fetchClientByID";
+import DeletePago from "../../../hooks/Clientes/Pagos/deletePagoByID";
 import FormatCurrency from "../../../hooks/formatCurrency";
 
 const PagosList = ({ selectedClientIndex, onSubmitPay, onPayDelete }) => {
