@@ -9,21 +9,21 @@ import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Collapse from "@mui/material/Collapse";
-import useFetchPedidosVidrios from "../../../../hooks/Pedidos/Vidrios/fetchPedidoVidrios";
+import useFetchPedidosVarios from "../../../../hooks/Pedidos/Varios/fetchPedidoVarios";
 import "../../../../App.css";
 import DeletePedidoButton from "../../Buttons/DeletePedidoButton";
 import formatDate from "../../../../hooks/formatDate";
-import DeletePedidoVidrios from "../../../../hooks/Pedidos/Vidrios/deletePedidoVidrios";
+import DeletePedidoVarios from "../../../../hooks/Pedidos/Varios/deletePedidoVarios";
 import swal from "sweetalert";
-import VidriosNestedList from "./VidriosNestedList";
+import VariosNestedList from "./VariosNestedList";
 
-const PedidosVidriosList = ({ onSubmit }) => {
+const PedidosVariosList = ({ onSubmit }) => {
   console.log("PedidosPerfilesList rendered - onSubmit:", onSubmit);
   const [openRows, setOpenRows] = useState([]);
   const [onMatSubmit, setOnMatSubmit] = useState(false);
   const [onDelete, setOnDelete] = useState(false);
   const FormatDate = formatDate();
-  const { deletePedido, error } = DeletePedidoVidrios();
+  const { deletePedido, error } = DeletePedidoVarios();
   const [onEstadoChange, setOnEstadoChange] = useState(false);
 
   const handleEstadoChange = () => {
@@ -63,7 +63,7 @@ const PedidosVidriosList = ({ onSubmit }) => {
     });
   };
 
-  const Pedidos = useFetchPedidosVidrios(onSubmit, onMatSubmit, onDelete);
+  const Pedidos = useFetchPedidosVarios(onSubmit, onMatSubmit, onDelete);
 
   return (
     <div>
@@ -91,13 +91,13 @@ const PedidosVidriosList = ({ onSubmit }) => {
           <TableHead>
             <TableRow>
               <TableCell
-                sx={{ backgroundColor: "#E1E3E1", width: "25%" }}
+                sx={{ backgroundColor: "#E1E3E1", width: "20%" }}
                 className="text-center fw-bold"
               >
                 Cliente
               </TableCell>
               <TableCell
-                sx={{ backgroundColor: "#E1E3E1", width: "25%" }}
+                sx={{ backgroundColor: "#E1E3E1", width: "20%" }}
                 className="text-center fw-bold"
               >
                 Obra
@@ -109,13 +109,19 @@ const PedidosVidriosList = ({ onSubmit }) => {
                 Fecha
               </TableCell>
               <TableCell
-                sx={{ backgroundColor: "#E1E3E1", width: "25%" }}
+                sx={{ backgroundColor: "#E1E3E1", width: "20%" }}
                 className="text-center fw-bold"
               >
                 N° Pedido
               </TableCell>
               <TableCell
-                sx={{ backgroundColor: "#E1E3E1", width: "25%" }}
+                sx={{ backgroundColor: "#E1E3E1", width: "20%" }}
+                className="text-center fw-bold"
+              >
+                Proveedor
+              </TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1", width: "20%" }}
                 className="text-center fw-bold"
               >
                 Estado
@@ -138,6 +144,9 @@ const PedidosVidriosList = ({ onSubmit }) => {
                   </TableCell>
                   <TableCell className="text-center">
                     {pedido.NroPedido}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {pedido.Proveedor}
                   </TableCell>
                   <TableCell
                     className={`text-center ${
@@ -170,11 +179,11 @@ const PedidosVidriosList = ({ onSubmit }) => {
                 <TableRow>
                   <TableCell
                     style={{ paddingBottom: 0, paddingTop: 0 }}
-                    colSpan={6}
+                    colSpan={7}
                   >
                     <Collapse in={openRows[index]} timeout="auto" unmountOnExit>
-                      <VidriosNestedList
-                        history={pedido.Vidrios}
+                      <VariosNestedList
+                        history={pedido.Materiales}
                         pedidoId={pedido._id}
                         onMatSubmit={handleMatSubmit}
                         onEstadoChange={handleEstadoChange}
@@ -191,4 +200,4 @@ const PedidosVidriosList = ({ onSubmit }) => {
   );
 };
 
-export default PedidosVidriosList;
+export default PedidosVariosList;

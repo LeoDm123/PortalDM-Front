@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import fetchPedidosPerfiles from "../../../../hooks/Pedidos/Perfiles/fetchPedidosPerfiles";
 import RecibirPerfilesButton from "../../Buttons/Perfiles/RecibirPerfilesButton";
 import InfoPerfilesButton from "../../Buttons/Perfiles/InfoPerfilesButton";
+import serverAPI from "../../../../api/serverAPI";
 import "../../../../App.css";
 
 const formatNumber = (number) => {
@@ -38,7 +39,12 @@ const getStateColorClass = (product) => {
   }
 };
 
-const PerfilesNestedList = ({ history, pedidoId, onMatSubmit }) => {
+const PerfilesNestedList = ({
+  history,
+  pedidoId,
+  onMatSubmit,
+  onEstadoChange,
+}) => {
   const sumCantRecibida = history.reduce((total, product) => {
     const sumRecepciones = product.Recepciones
       ? product.Recepciones.reduce(
@@ -58,6 +64,32 @@ const PerfilesNestedList = ({ history, pedidoId, onMatSubmit }) => {
 
     fetchData();
   }, [onMatSubmit]);
+
+  const isPedidoComplete = history.every((product) => {
+    const state = getStateColorClass(product);
+    return state === "Completo" || state === "Excedido";
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (isPedidoComplete) {
+          const response = await serverAPI.put(
+            `/pedidoPerfiles/editEstado/${pedidoId}`,
+            {
+              estado: "Cerrado",
+            }
+          );
+          onEstadoChange();
+          console.log("Pedido is complete!", response.data);
+        }
+      } catch (error) {
+        console.error("Error updating estado:", error);
+      }
+    };
+
+    fetchData();
+  }, [isPedidoComplete, pedidoId]);
 
   return (
     <Grid

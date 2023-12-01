@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
-import AddPedidoForm from "../../../components/Pedidos/Forms/Perfiles/PedidoPerfilesForm";
+import PedidoVariosForm from "../../../../components/Pedidos/Forms/Varios/PedidoVariosForm";
 
-const PedidoVarios = ({ open, onClose }) => {
+const PedidoVarios = ({ open, onClose, onSubmit }) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Paper
@@ -16,7 +15,9 @@ const PedidoVarios = ({ open, onClose }) => {
           transform: "translate(-50%, -50%)",
         }}
         className="CreateModal"
-      ></Paper>
+      >
+        <PedidoVariosForm onClose={onClose} onSubmit={onSubmit} />
+      </Paper>
     </Modal>
   );
 };

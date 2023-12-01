@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import serverAPI from "../../../api/serverAPI";
 
-export default function useFetchPedidosMadera(
+export default function useFetchPedidosVarios(
   onSubmit,
   onMatSubmit,
   onDelete,
   onEstadoChange
 ) {
-  const [pedidosMadera, setPedidos] = useState([]);
+  const [pedidosVarios, setPedidos] = useState([]);
 
   useEffect(() => {
-    const fetchPedidosMadera = async () => {
+    const fetchPedidosVarios = async () => {
       try {
-        const response = await serverAPI.get("/pedidoMadera/obtenerPedidos");
+        const response = await serverAPI.get("/pedidoVarios/obtenerPedidos");
         const sortedPedidos = response.data.slice();
         sortedPedidos.sort((a, b) => {
           const PedidoA = a.NroPedido;
@@ -28,8 +28,8 @@ export default function useFetchPedidosMadera(
     console.log("fetchPedidos useEffect - onSubmit:", onSubmit);
     console.log("fetchPedidos useEffect - onMatSubmit:", onMatSubmit);
     console.log("fetchPedidos useEffect - onDelete:", onDelete);
-    fetchPedidosMadera();
+    fetchPedidosVarios();
   }, [onSubmit, onMatSubmit, onDelete, onEstadoChange]);
 
-  return pedidosMadera;
+  return pedidosVarios;
 }

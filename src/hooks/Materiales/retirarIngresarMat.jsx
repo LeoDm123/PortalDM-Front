@@ -1,26 +1,11 @@
 import swal from "sweetalert";
 import serverAPI from "../../api/serverAPI";
 
-export const crearLog = async (
-  Codigo,
-  Descripcion,
-  Fecha,
-  NroPedido,
-  TipoMov,
-  Cantidad,
-  Unidad,
-  Comentario
-) => {
+export const retirarIngresarMat = async (TipoMov, Cantidad, MatID) => {
   try {
-    const resp = await serverAPI.post("/inv/crearLog", {
-      Codigo,
-      Descripcion,
-      Fecha,
-      NroPedido,
+    const resp = await serverAPI.post(`/mats/retirarIngresarMat/${MatID}`, {
       TipoMov,
       Cantidad,
-      Unidad,
-      Comentario,
     });
 
     SwAlertOk();

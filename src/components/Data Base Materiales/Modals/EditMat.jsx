@@ -9,7 +9,7 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import fetchMatByID from "../../../hooks/fetchMatByID";
+import fetchMatByID from "../../../hooks/Materiales/fetchMatByID";
 import swal from "sweetalert";
 import serverAPI from "../../../api/serverAPI";
 

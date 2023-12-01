@@ -4,7 +4,8 @@ import serverAPI from "../../../api/serverAPI";
 export default function useFetchPedidosPerfiles(
   onSubmit,
   onMatSubmit,
-  onDelete
+  onDelete,
+  onEstadoChange
 ) {
   const [pedidosPerfiles, setPedidos] = useState([]);
 
@@ -28,7 +29,7 @@ export default function useFetchPedidosPerfiles(
     console.log("fetchPedidos useEffect - onMatSubmit:", onMatSubmit);
     console.log("fetchPedidos useEffect - onDelete:", onDelete);
     fetchPedidosPerfiles();
-  }, [onSubmit, onMatSubmit, onDelete]);
+  }, [onSubmit, onMatSubmit, onDelete, onEstadoChange]);
 
   return pedidosPerfiles;
 }

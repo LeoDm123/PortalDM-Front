@@ -9,11 +9,11 @@ import {
   Grid,
 } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import { crearMaterial } from "../../../hooks/crearMaterial";
+import { crearMaterial } from "../../../hooks/Materiales/crearMaterial";
 
 const AddMatForm = ({ onClose, onMatSubmit }) => {
   const [Codigo, setCodigo] = useState("");
-  const [Detalle, setDetalle] = useState("");
+  const [Descripcion, setDescripcion] = useState("");
   const [Unidad, setUnidad] = useState("");
   const [Categoria, setCategoria] = useState("");
   const [Ancho, setAncho] = useState(0);
@@ -29,7 +29,12 @@ const AddMatForm = ({ onClose, onMatSubmit }) => {
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
-    if (Codigo === "" || Detalle === "" || Categoria === "" || Costo === "") {
+    if (
+      Codigo === "" ||
+      Descripcion === "" ||
+      Categoria === "" ||
+      Costo === ""
+    ) {
       return swal({
         title: "¡Error!",
         text: "Todos los campos son obligatorios",
@@ -39,7 +44,7 @@ const AddMatForm = ({ onClose, onMatSubmit }) => {
 
     crearMaterial(
       Codigo,
-      Detalle,
+      Descripcion,
       Categoria,
       Unidad,
       Ancho,
@@ -54,7 +59,7 @@ const AddMatForm = ({ onClose, onMatSubmit }) => {
     );
 
     setCodigo("");
-    setDetalle("");
+    setDescripcion("");
     setCategoria("");
     setAncho(0);
     setAlto(0);
@@ -80,11 +85,11 @@ const AddMatForm = ({ onClose, onMatSubmit }) => {
         <TextField
           type="text"
           className="form-control mt-3 w-75"
-          name="Detalle"
-          placeholder="Detalle"
-          value={Detalle}
-          onChange={(e) => setDetalle(e.target.value)}
-          label="Detalle"
+          name="Descripcion"
+          placeholder="Descripcion"
+          value={Descripcion}
+          onChange={(e) => setDescripcion(e.target.value)}
+          label="Descripcion"
         />
         <FormControl className="form-floating w-25 ms-3">
           <InputLabel htmlFor="categoria">Unidad de Medida</InputLabel>

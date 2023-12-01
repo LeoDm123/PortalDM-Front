@@ -40,7 +40,7 @@ const InventarioLogList = ({ onClose }) => {
           mb: 1,
           display: "flex",
           flexDirection: "column",
-          height: 800,
+          height: 650,
           overflow: "auto",
           scrollbarWidth: "thin",
           scrollbarColor: "dark",
@@ -103,7 +103,7 @@ const InventarioLogList = ({ onClose }) => {
                   sx={{ backgroundColor: "#E1E3E1" }}
                   className="text-center fw-bold"
                 >
-                  Detalle
+                  Comentario
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -126,7 +126,9 @@ const InventarioLogList = ({ onClose }) => {
                     <TableCell className="text-center">
                       {log.NroPedido}
                     </TableCell>
-                    <TableCell className="text-center">{log.Detalle}</TableCell>
+                    <TableCell className="text-center">
+                      {log.Comentario}
+                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>

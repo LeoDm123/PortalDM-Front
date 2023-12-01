@@ -8,7 +8,7 @@ import Title from "../../Title";
 import "../../../App.css";
 import Grid from "@mui/material/Grid";
 import MatFilterButton from "../Buttons/MatFilterButton";
-import fetchMats from "../../../hooks/fetchMats";
+import fetchMats from "../../../hooks/Materiales/fetchMats";
 import MatsOptionsButton from "../Buttons/MatOptionsButton";
 
 export default function MatList({ onMatSubmit, onMatChange }) {
@@ -23,10 +23,17 @@ export default function MatList({ onMatSubmit, onMatChange }) {
   return (
     <Grid item xs={12} md={12} lg={12}>
       <React.Fragment>
-        <div className="TitleButtonLayout">
-          <Title>Listado de Materiales</Title>
-          <MatFilterButton onFilterChange={handleCategoryChange} />
-        </div>
+        <Grid
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Grid sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Title>Listado de Materiales</Title>
+            <MatFilterButton onFilterChange={handleCategoryChange} />
+          </Grid>
+        </Grid>
         <Grid
           sx={{
             height: 480,
@@ -45,20 +52,47 @@ export default function MatList({ onMatSubmit, onMatChange }) {
           <Table stickyHeader size="medium">
             <TableHead>
               <TableRow>
-                <TableCell className="text-center fw-bold">Código</TableCell>
-                <TableCell className="text-center fw-bold">Detalle</TableCell>
-                <TableCell className="text-center fw-bold">Categoría</TableCell>
-                <TableCell className="text-center fw-bold">Proveedor</TableCell>
+                <TableCell
+                  className="text-center fw-bold"
+                  sx={{ backgroundColor: "#E1E3E1", width: "10%" }}
+                >
+                  Código
+                </TableCell>
+                <TableCell
+                  className="text-center fw-bold"
+                  sx={{ backgroundColor: "#E1E3E1", width: "35%" }}
+                >
+                  Descripción
+                </TableCell>
+                <TableCell
+                  className="text-center fw-bold"
+                  sx={{ backgroundColor: "#E1E3E1", width: "15%" }}
+                >
+                  Categoría
+                </TableCell>
+                <TableCell
+                  className="text-center fw-bold"
+                  sx={{ backgroundColor: "#E1E3E1", width: "15%" }}
+                >
+                  Proveedor
+                </TableCell>
 
-                <TableCell className="text-center fw-bold">
+                <TableCell
+                  className="text-center fw-bold"
+                  sx={{ backgroundColor: "#E1E3E1" }}
+                >
                   Stock de Seguridad
                 </TableCell>
-                <TableCell className="text-center fw-bold">
+                <TableCell
+                  className="text-center fw-bold"
+                  sx={{ backgroundColor: "#E1E3E1" }}
+                >
                   Stock Actual
                 </TableCell>
-                <TableCell className="text-center fw-bold"></TableCell>
-                <TableCell className="text-center fw-bold"></TableCell>
-                <TableCell className="text-center fw-bold"></TableCell>
+                <TableCell
+                  className="text-center fw-bold"
+                  sx={{ backgroundColor: "#E1E3E1" }}
+                ></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -73,7 +107,7 @@ export default function MatList({ onMatSubmit, onMatChange }) {
                     {materials.Codigo}
                   </TableCell>
                   <TableCell className="text-center" sx={{ width: "40%" }}>
-                    {materials.Detalle}
+                    {materials.Descripcion}
                   </TableCell>
                   <TableCell className="text-center" sx={{ width: "15%" }}>
                     {materials.Categoria}

@@ -38,7 +38,12 @@ const getStateColorClass = (product) => {
   }
 };
 
-const VidriosNestedList = ({ history, pedidoId, onMatSubmit }) => {
+const VidriosNestedList = ({
+  history,
+  pedidoId,
+  onMatSubmit,
+  onEstadoChange,
+}) => {
   const sumCantRecibida = history.reduce((total, product) => {
     const sumRecepciones = product.Recepciones
       ? product.Recepciones.reduce(
@@ -58,6 +63,32 @@ const VidriosNestedList = ({ history, pedidoId, onMatSubmit }) => {
 
     fetchData();
   }, [onMatSubmit]);
+
+  const isPedidoComplete = history.every((product) => {
+    const state = getStateColorClass(product);
+    return state === "Completo" || state === "Excedido";
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (isPedidoComplete) {
+          const response = await serverAPI.put(
+            `/pedidoVidrios/editEstado/${pedidoId}`,
+            {
+              estado: "Cerrado",
+            }
+          );
+          onEstadoChange();
+          console.log("Pedido is complete!", response.data);
+        }
+      } catch (error) {
+        console.error("Error updating estado:", error);
+      }
+    };
+
+    fetchData();
+  }, [isPedidoComplete, pedidoId]);
 
   return (
     <Grid

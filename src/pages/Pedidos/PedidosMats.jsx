@@ -12,6 +12,7 @@ import PedidosPerfilesList from "../../components/Pedidos/Lists/Perfiles/PedidoP
 import PedidosHerrajesList from "../../components/Pedidos/Lists/Herrajes/PedidoHerrajesList";
 import PedidosVidriosList from "../../components/Pedidos/Lists/Vidrios/PedidoVidriosList";
 import PedidosMaderaList from "../../components/Pedidos/Lists/Madera/PedidoMaderaList";
+import PedidosVariosList from "../../components/Pedidos/Lists/Varios/PedidoVariosList";
 import Title from "../../components/Title";
 import { DividerTitle } from "../../components/Dividers";
 
@@ -34,6 +35,7 @@ const PedidosMats = () => {
     herrajes: <PedidosHerrajesList onSubmit={onSubmit} />,
     vidrios: <PedidosVidriosList onSubmit={onSubmit} />,
     madera: <PedidosMaderaList onSubmit={onSubmit} />,
+    varios: <PedidosVariosList onSubmit={onSubmit} />,
   };
 
   return (
@@ -82,6 +84,9 @@ const PedidosMats = () => {
                         <MenuItem value="vidrios">Pedidos de Vidrios</MenuItem>
                         <MenuItem value="madera">
                           Pedidos de Insumos de Madera
+                        </MenuItem>
+                        <MenuItem value="varios">
+                          Pedidos de Insumos Varios
                         </MenuItem>
                       </Select>
                     </Grid>

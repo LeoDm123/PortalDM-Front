@@ -7,6 +7,7 @@ import Paper from "@mui/material/Paper";
 import MatList from "../../../components/Data Base Materiales/Lists/MatList";
 import "../../../App.css";
 import AddMatButton from "../../../components/Data Base Materiales/Buttons/AddMatButton";
+import AddMovInvButton from "../../../components/Data Base Materiales/Buttons/AddMovInvButton";
 import AddMatListButton from "../../../components/Data Base Materiales/Buttons/AddMatListButton";
 import InventarioLogButton from "../../../components/Data Base Materiales/Buttons/InventarioLogButton";
 const defaultTheme = createTheme();
@@ -18,6 +19,11 @@ const BaseDatosMats = () => {
   };
   const [onMatSubmit, setOnMatSubmit] = useState(false);
   const [onMatEdit, setOnMatEdit] = useState(false);
+  const [onMovInvSubmit, setOnMovInvSubmit] = useState(false);
+
+  const handleOnMovInvSubmit = () => {
+    setOnMovInvSubmit(!onMovInvSubmit);
+  };
 
   const handleOnMatSubmit = () => {
     setOnMatSubmit(!onMatSubmit);
@@ -35,6 +41,7 @@ const BaseDatosMats = () => {
             <Grid container>
               <div className="d-flex">
                 <AddMatButton onMatSubmit={handleOnMatSubmit} />
+                <AddMovInvButton onMovInvSubmit={handleOnMovInvSubmit} />
                 <AddMatListButton onMatSubmit={handleOnMatSubmit} />
                 <InventarioLogButton />
               </div>

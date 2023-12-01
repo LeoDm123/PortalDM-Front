@@ -4,7 +4,8 @@ import serverAPI from "../../../api/serverAPI";
 export default function useFetchPedidosVidrios(
   onSubmit,
   onMatSubmit,
-  onDelete
+  onDelete,
+  onEstadoChange
 ) {
   const [pedidosVidrios, setPedidos] = useState([]);
 
@@ -28,7 +29,7 @@ export default function useFetchPedidosVidrios(
     console.log("fetchPedidos useEffect - onMatSubmit:", onMatSubmit);
     console.log("fetchPedidos useEffect - onDelete:", onDelete);
     fetchPedidosVidrios();
-  }, [onSubmit, onMatSubmit, onDelete]);
+  }, [onSubmit, onMatSubmit, onDelete, onEstadoChange]);
 
   return pedidosVidrios;
 }

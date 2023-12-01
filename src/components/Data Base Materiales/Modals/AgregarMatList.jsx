@@ -11,7 +11,7 @@ import Grid from "@mui/material/Grid";
 import Title from "../../Title";
 import UploadComponent from "../UploadComponent";
 import FormatCurrency from "../../../hooks/formatCurrency";
-import { crearMaterial } from "../../../hooks/crearMaterial";
+import { crearMaterial } from "../../../hooks/Materiales/crearMaterial";
 
 const AgregarMatList = ({ open, onClose, onMatSubmit }) => {
   const [uploadedData, setUploadedData] = useState([]);

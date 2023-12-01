@@ -6,9 +6,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import fetchPedidosHerrajes from "../../../../hooks/Pedidos/Herrajes/fetchPedidoHerrajes";
-import RecibirHerrajesButton from "../../Buttons/Herrajes/RecibirHerrajesButton";
-import InfoHerrajesButton from "../../Buttons/Herrajes/InfoHerrajesButton";
+import fetchPedidosVarios from "../../../../hooks/Pedidos/Varios/fetchPedidoVarios";
+import RecibirVariosButton from "../../Buttons/Varios/RecibirVariosButton";
+import InfoVariosButton from "../../Buttons/Varios/InfoVariosButton";
 import "../../../../App.css";
 
 const formatNumber = (number) => {
@@ -25,7 +25,7 @@ const getStateColorClass = (product) => {
       )
     : 0;
 
-  const cantEntrega = parseFloat(product.CantEntrega);
+  const cantEntrega = parseFloat(product.Cantidad);
 
   if (cantRecibida === 0) {
     return "EnTransito";
@@ -38,7 +38,7 @@ const getStateColorClass = (product) => {
   }
 };
 
-const HerrajesNestedList = ({
+const VariosNestedList = ({
   history,
   pedidoId,
   onMatSubmit,
@@ -58,7 +58,7 @@ const HerrajesNestedList = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetchPedidosHerrajes();
+      await fetchPedidosVarios();
     };
 
     fetchData();
@@ -74,7 +74,7 @@ const HerrajesNestedList = ({
       try {
         if (isPedidoComplete) {
           const response = await serverAPI.put(
-            `/pedidoHerrajes/editEstado/${pedidoId}`,
+            `/pedidoVarios/editEstado/${pedidoId}`,
             {
               estado: "Cerrado",
             }
@@ -123,8 +123,9 @@ const HerrajesNestedList = ({
                 sx={{ backgroundColor: "#E1E3E1" }}
                 className="text-center fw-bold"
               >
-                Descripcion
+                Descripción
               </TableCell>
+
               <TableCell
                 sx={{ backgroundColor: "#E1E3E1" }}
                 className="text-center fw-bold"
@@ -156,16 +157,16 @@ const HerrajesNestedList = ({
           <TableBody>
             {history.map((product) => (
               <TableRow key={product.Codigo}>
-                <TableCell className="text-center" sx={{ width: "10%" }}>
+                <TableCell className="text-center" sx={{ width: "15%" }}>
                   {product.Codigo}
                 </TableCell>
-                <TableCell sx={{ width: "50%" }}>
+                <TableCell className="text-center" sx={{ width: "50%" }}>
                   {product.Descripcion}
                 </TableCell>
-                <TableCell className="text-center" sx={{ width: "10%" }}>
-                  {formatNumber(product.CantEntrega)}
+                <TableCell className="text-center" sx={{ width: "8%" }}>
+                  {formatNumber(product.Cantidad)}
                 </TableCell>
-                <TableCell className="text-center" sx={{ width: "10%" }}>
+                <TableCell className="text-center" sx={{ width: "8%" }}>
                   {formatNumber(
                     product.Recepciones
                       ? product.Recepciones.reduce(
@@ -188,7 +189,7 @@ const HerrajesNestedList = ({
                         )
                       : 0;
 
-                    const cantEntrega = parseFloat(product.CantEntrega);
+                    const cantEntrega = parseFloat(product.Cantidad);
 
                     if (cantRecibida === 0) {
                       return "En transito";
@@ -209,12 +210,12 @@ const HerrajesNestedList = ({
                   }}
                 >
                   <Grid display={"flex"}>
-                    <RecibirHerrajesButton
+                    <RecibirVariosButton
                       pedidoId={pedidoId}
                       codigoMat={product.Codigo}
                       onMatSubmit={onMatSubmit}
                     />
-                    <InfoHerrajesButton
+                    <InfoVariosButton
                       pedidoId={pedidoId}
                       codigoMat={product.Codigo}
                     />
@@ -229,4 +230,4 @@ const HerrajesNestedList = ({
   );
 };
 
-export default HerrajesNestedList;
+export default VariosNestedList;

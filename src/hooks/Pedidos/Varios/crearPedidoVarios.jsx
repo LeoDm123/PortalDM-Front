@@ -1,15 +1,23 @@
 import swal from "sweetalert";
 import serverAPI from "../../../api/serverAPI";
 
-export const crearPedido = async (Cliente, Obra, Fecha, NroPedido, Vidrios) => {
+export const crearPedido = async (
+  Cliente,
+  Obra,
+  Fecha,
+  NroPedido,
+  Proveedor,
+  Materiales
+) => {
   try {
-    const resp = await serverAPI.post("/pedidoVidrios/crearPedido", {
+    const resp = await serverAPI.post("/pedidoVarios/crearPedido", {
       Cliente,
       Obra,
       Fecha,
       NroPedido,
+      Proveedor,
       Estado: "Abierto",
-      Vidrios,
+      Materiales,
     });
 
     if (resp.data.msg === "Pedido ya se encuentra registrado") {

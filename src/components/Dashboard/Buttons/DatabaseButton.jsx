@@ -13,7 +13,7 @@ export default function DatabaseButton() {
     <React.Fragment>
       <ButtonGroup variant="contained" aria-label="split button">
         <Button className="ActionButtonListless" onClick={handleClick}>
-          Gestionar Bases de Datos
+          Gestionar Inventario
         </Button>
       </ButtonGroup>
     </React.Fragment>

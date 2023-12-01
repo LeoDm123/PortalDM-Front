@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grow from "@mui/material/Grow";
@@ -56,17 +56,15 @@ export default function MatFilterButton({ onFilterChange }) {
 
   return (
     <React.Fragment>
-      <ButtonGroup
+      <IconButton
         size="small"
-        className="me-5"
-        variant="contained"
         ref={anchorRef}
-        aria-label="split button"
+        onClick={handleToggle}
+        color="primary"
+        sx={{ paddingBottom: 1 }}
       >
-        <Button onClick={handleToggle}>
-          <FilterListIcon />
-        </Button>
-      </ButtonGroup>
+        <FilterListIcon />
+      </IconButton>
       <Popper
         sx={{
           zIndex: 1000,

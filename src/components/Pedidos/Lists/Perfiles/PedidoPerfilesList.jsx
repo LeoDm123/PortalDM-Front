@@ -21,12 +21,17 @@ const PedidosPerfilesList = ({ onSubmit }) => {
   console.log("PedidosPerfilesList rendered - onSubmit:", onSubmit);
   const [openRows, setOpenRows] = useState([]);
   const [onMatSubmit, setOnMatSubmit] = useState(false);
+  const [onEstadoChange, setOnEstadoChange] = useState(false);
   const [onDelete, setOnDelete] = useState(false);
   const FormatDate = formatDate();
   const { deletePedido, error } = DeletePedidoPerfiles();
 
   const handleMatSubmit = () => {
     setOnMatSubmit(!onMatSubmit);
+  };
+
+  const handleEstadoChange = () => {
+    setOnEstadoChange(!onEstadoChange);
   };
 
   const handleDelete = () => {
@@ -58,7 +63,12 @@ const PedidosPerfilesList = ({ onSubmit }) => {
     });
   };
 
-  const Pedidos = useFetchPedidosPerfiles(onSubmit, onMatSubmit, onDelete);
+  const Pedidos = useFetchPedidosPerfiles(
+    onSubmit,
+    onMatSubmit,
+    onDelete,
+    onEstadoChange
+  );
 
   return (
     <div>
@@ -110,6 +120,12 @@ const PedidosPerfilesList = ({ onSubmit }) => {
                 N° Orden de Compra
               </TableCell>
               <TableCell
+                sx={{ backgroundColor: "#E1E3E1", width: "25%" }}
+                className="text-center fw-bold"
+              >
+                Estado
+              </TableCell>
+              <TableCell
                 sx={{ backgroundColor: "#E1E3E1", width: "10%" }}
               ></TableCell>
             </TableRow>
@@ -127,6 +143,15 @@ const PedidosPerfilesList = ({ onSubmit }) => {
                   </TableCell>
                   <TableCell className="text-center">
                     {pedido.OrdenCompra}
+                  </TableCell>
+                  <TableCell
+                    className={`text-center ${
+                      pedido.Estado === "Cerrado"
+                        ? "text-danger"
+                        : "text-success"
+                    }`}
+                  >
+                    {pedido.Estado}
                   </TableCell>
                   <TableCell sx={{ width: "5%" }}>
                     <Grid display={"flex"}>
@@ -150,13 +175,14 @@ const PedidosPerfilesList = ({ onSubmit }) => {
                 <TableRow>
                   <TableCell
                     style={{ paddingBottom: 0, paddingTop: 0 }}
-                    colSpan={5}
+                    colSpan={6}
                   >
                     <Collapse in={openRows[index]} timeout="auto" unmountOnExit>
                       <PerfilesNestedList
                         history={pedido.Materiales}
                         pedidoId={pedido._id}
                         onMatSubmit={handleMatSubmit}
+                        onEstadoChange={handleEstadoChange}
                       />
                     </Collapse>
                   </TableCell>

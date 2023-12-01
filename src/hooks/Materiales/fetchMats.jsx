@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import serverAPI from "../api/serverAPI";
+import serverAPI from "../../api/serverAPI";
 
 export default function fetchMats(onMatSubmit, onMatEdit) {
   const [Materiales, setMateriales] = useState([]);

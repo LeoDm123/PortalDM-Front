@@ -24,6 +24,11 @@ const PedidosMaderaList = ({ onSubmit }) => {
   const [onDelete, setOnDelete] = useState(false);
   const FormatDate = formatDate();
   const { deletePedido, error } = DeletePedidoMadera();
+  const [onEstadoChange, setOnEstadoChange] = useState(false);
+
+  const handleEstadoChange = () => {
+    setOnEstadoChange(!onEstadoChange);
+  };
 
   const handleMatSubmit = () => {
     setOnMatSubmit(!onMatSubmit);
@@ -116,6 +121,12 @@ const PedidosMaderaList = ({ onSubmit }) => {
                 Proveedor
               </TableCell>
               <TableCell
+                sx={{ backgroundColor: "#E1E3E1", width: "20%" }}
+                className="text-center fw-bold"
+              >
+                Estado
+              </TableCell>
+              <TableCell
                 sx={{ backgroundColor: "#E1E3E1", width: "10%" }}
               ></TableCell>
             </TableRow>
@@ -136,6 +147,15 @@ const PedidosMaderaList = ({ onSubmit }) => {
                   </TableCell>
                   <TableCell className="text-center">
                     {pedido.Proveedor}
+                  </TableCell>
+                  <TableCell
+                    className={`text-center ${
+                      pedido.Estado === "Cerrado"
+                        ? "text-danger"
+                        : "text-success"
+                    }`}
+                  >
+                    {pedido.Estado}
                   </TableCell>
                   <TableCell sx={{ width: "5%" }}>
                     <Grid display={"flex"}>
@@ -159,13 +179,14 @@ const PedidosMaderaList = ({ onSubmit }) => {
                 <TableRow>
                   <TableCell
                     style={{ paddingBottom: 0, paddingTop: 0 }}
-                    colSpan={6}
+                    colSpan={7}
                   >
                     <Collapse in={openRows[index]} timeout="auto" unmountOnExit>
                       <MaderaNestedList
                         history={pedido.Materiales}
                         pedidoId={pedido._id}
                         onMatSubmit={handleMatSubmit}
+                        onEstadoChange={handleEstadoChange}
                       />
                     </Collapse>
                   </TableCell>

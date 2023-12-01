@@ -11,7 +11,7 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Title from "../../Title";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import fetchMatByID from "../../../hooks/fetchMatByID";
+import fetchMatByID from "../../../hooks/Materiales/fetchMatByID";
 import formatDate from "../../../hooks/formatDate";
 
 const MatDetails = ({ open, onClose, matID }) => {
@@ -284,16 +284,12 @@ const MatDetails = ({ open, onClose, matID }) => {
               <TableBody>
                 {matByID && matByID.InvLog && Array.isArray(matByID.InvLog) ? (
                   matByID.InvLog.map((log, index) => {
-                    const stockIngresos = matByID.InvLog.filter(
-                      (entry) => entry.TipoMov === "Ingreso"
-                    )
-                      .slice(0, index + 1)
+                    const stockIngresos = matByID.InvLog.slice(0, index + 1)
+                      .filter((entry) => entry.TipoMov === "Ingreso")
                       .reduce((total, entry) => total + entry.CantRecibida, 0);
 
-                    const stockEgresos = matByID.InvLog.filter(
-                      (entry) => entry.TipoMov === "Egreso"
-                    )
-                      .slice(0, index + 1)
+                    const stockEgresos = matByID.InvLog.slice(0, index + 1)
+                      .filter((entry) => entry.TipoMov === "Egreso")
                       .reduce((total, entry) => total + entry.CantRecibida, 0);
 
                     const stockActualizado = stockIngresos - stockEgresos;

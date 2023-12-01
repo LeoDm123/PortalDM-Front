@@ -1,8 +1,8 @@
-import PresupuestosButton from "./PresupuestosButton";
-import PedidosButton from "./PedidosButton";
+import PresupuestosButton from "./Buttons/PresupuestosButton";
+import PedidosButton from "./Buttons/PedidosButton";
 import "../../App.css";
-import ClientesButton from "./ClientesButton";
-import DatabaseButton from "./DatabaseButton";
+import ClientesButton from "./Buttons/ClientesButton";
+import DatabaseButton from "./Buttons/DatabaseButton";
 
 export default function ButtonChart() {
   return (

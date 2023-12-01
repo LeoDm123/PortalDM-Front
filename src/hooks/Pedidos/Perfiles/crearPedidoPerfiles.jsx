@@ -14,6 +14,7 @@ export const crearPedido = async (
       Fecha,
       NroPedido,
       OrdenCompra,
+      Estado: "Abierto",
       Materiales,
     });
 

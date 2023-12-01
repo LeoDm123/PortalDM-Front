@@ -12,7 +12,7 @@ import PedidoPerfiles from "../../../pages/Pedidos/Modals/Perfiles/PedidoPerfile
 import PedidoHerrajes from "../../../pages/Pedidos/Modals/Herrajes/PedidoHerrajes";
 import PedidoVidrios from "../../../pages/Pedidos/Modals/Vidrios/PedidoVidrios";
 import PedidoMadera from "../../../pages/Pedidos/Modals/Madera/PedidoMadera";
-import PedidoVarios from "../../../pages/Pedidos/Modals/PedidoVarios";
+import PedidoVarios from "../../../pages/Pedidos/Modals/Varios/PedidoVarios";
 
 const options = [
   "Pedido de Herrajes de Aberturas PVC",
