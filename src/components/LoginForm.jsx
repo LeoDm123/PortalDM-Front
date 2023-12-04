@@ -28,19 +28,19 @@ const defaultTheme = createTheme({
 });
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const startLogin = async (email, password) => {
+  const startLogin = async (userEmail, userPassword) => {
     try {
       setIsLoading(true);
 
       const resp = await serverAPI.post("/auth/login", {
-        email,
-        password,
+        userEmail,
+        userPassword,
       });
 
       if (resp.data.msg === "Usuario logueado") {
@@ -63,7 +63,7 @@ const LoginForm = () => {
       return console.log("todos los campos son obligatorios");
     }
 
-    startLogin(email, password);
+    startLogin(userEmail, userPassword);
   };
 
   return (
@@ -130,7 +130,7 @@ const LoginForm = () => {
                 name="email"
                 autoComplete="email"
                 autoFocus
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setUserEmail(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -141,7 +141,7 @@ const LoginForm = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setUserPassword(e.target.value)}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}

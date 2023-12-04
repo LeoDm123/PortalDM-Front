@@ -7,10 +7,33 @@ import TableRow from "@mui/material/TableRow";
 import Grid from "@mui/material/Grid";
 import DeleteButton from "../../DeleteButton";
 import fetchUsers from "../../../hooks/Users/fetchUsers";
+import DeleteUser from "../../../hooks/Users/deleteUser";
 
-const UsersList = () => {
-  const Users = fetchUsers();
-  console.log("Users", Users);
+const UsersList = ({ onUserCreation }) => {
+  const [onUserDelete, setOnUserDelete] = useState(false);
+  const Users = fetchUsers(onUserCreation, onUserDelete);
+  const { deleteUser, error } = DeleteUser();
+
+  const handleUserDelete = () => {
+    setOnUserDelete(!onUserDelete);
+  };
+
+  console.log("onUserDelete-List", onUserDelete);
+
+  const handleDeleteUser = (userId) => {
+    swal({
+      title: "¿Desea eliminar el usuario?",
+      text: "Una vez eliminado no podrá ser recuperado",
+      icon: "warning",
+      buttons: ["No", "Sí"],
+      dangerMode: true,
+    }).then((willCancel) => {
+      if (willCancel) {
+        deleteUser(userId);
+        handleUserDelete();
+      }
+    });
+  };
 
   return (
     <div>
@@ -19,7 +42,7 @@ const UsersList = () => {
           mb: 1,
           display: "flex",
           flexDirection: "column",
-          height: 300,
+          height: 290,
           overflow: "auto",
           scrollbarWidth: "thin",
           scrollbarColor: "dark",
@@ -51,13 +74,25 @@ const UsersList = () => {
                 sx={{ backgroundColor: "#E1E3E1" }}
                 className="text-center fw-bold"
               >
+                Dirección
+              </TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
+                Teléfono
+              </TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
                 Correo Electrónico
               </TableCell>
               <TableCell
                 sx={{ backgroundColor: "#E1E3E1" }}
                 className="text-center fw-bold"
               >
-                Usuario
+                DNI
               </TableCell>
               <TableCell
                 sx={{ backgroundColor: "#E1E3E1" }}
@@ -75,21 +110,27 @@ const UsersList = () => {
             {Users.map((usuario) => (
               <TableRow key={usuario._id}>
                 <TableCell className="text-center" sx={{ width: "12%" }}>
-                  {usuario.Name}
-                </TableCell>
-                <TableCell className="text-center">
-                  {usuario.Apellido}
-                </TableCell>
-                <TableCell className="text-center">{usuario.email}</TableCell>
-                <TableCell className="text-center">
                   {usuario.userName}
                 </TableCell>
                 <TableCell className="text-center">
-                  {usuario.userCategory}
+                  {usuario.userApellido}
+                </TableCell>
+                <TableCell className="text-center">
+                  {usuario.userDireccion}
+                </TableCell>
+                <TableCell className="text-center">
+                  {usuario.userTelefono}
+                </TableCell>
+                <TableCell className="text-center">
+                  {usuario.userEmail}
+                </TableCell>
+                <TableCell className="text-center">{usuario.userDNI}</TableCell>
+                <TableCell className="text-center">
+                  {usuario.userCategoria}
                 </TableCell>
                 <TableCell className="text-center">
                   <DeleteButton
-                    onDelete={() => handleDeletePago(presupuesto._id, pago._id)}
+                    onDelete={() => handleDeleteUser(usuario._id)}
                   />
                 </TableCell>
               </TableRow>

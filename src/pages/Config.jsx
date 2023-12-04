@@ -6,39 +6,39 @@ import Paper from "@mui/material/Paper";
 import "../App.css";
 import Header from "../components/Menu/Header";
 import UsersList from "../components/Config/Lists/UsersLists";
+import AddUserButton from "../components/Config/Buttons/AddUserButton";
 
 const defaultTheme = createTheme();
 
 const Config = () => {
+  const [onUserCreation, setOnUserCreation] = useState(false);
+
+  const handleOnUserCreation = () => {
+    setOnUserCreation(!onUserCreation);
+  };
+
+  console.log("onUserCreation-Config", onUserCreation);
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Header
         content={
           <Container maxWidth="xl" sx={{ mt: 2 }}>
+            <Grid>
+              <AddUserButton onUserCreation={handleOnUserCreation} />
+            </Grid>
             <Grid container spacing={1}>
-              {/* BOTONERA */}
-              <Grid item xs={12} md={8} lg={9}>
+              <Grid item xs={12} md={12} lg={12}>
                 <Paper
                   sx={{
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    height: 180,
+                    height: 300,
                   }}
                 >
-                  <UsersList />
+                  <UsersList onUserCreation={onUserCreation} />
                 </Paper>
-              </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 180,
-                  }}
-                ></Paper>
               </Grid>
               {/* Recent Orders */}
               <Grid item xs={12}>
