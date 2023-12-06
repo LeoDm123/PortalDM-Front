@@ -118,6 +118,9 @@ const RecibirPedidoHerrajesForm = ({
       text: "Los datos de recepción se han actualizado correctamente",
       icon: "success",
     });
+    setTimeout(() => {
+      swal.close();
+    }, 1000);
   };
 
   const SwAlertError = (errorMessage) => {

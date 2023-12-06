@@ -6,6 +6,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import serverAPI from "../../../../api/serverAPI";
 import fetchPedidosMadera from "../../../../hooks/Pedidos/Madera/fetchPedidoMadera";
 import RecibirMaderaButton from "../../Buttons/Madera/RecibirMaderaButton";
 import InfoMaderaButton from "../../Buttons/Madera/InfoMaderaButton";

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useRef } from "react";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -13,34 +13,28 @@ import VerMatButton from "./VerMatButton";
 import DeleteMatButton from "./DeleteMatButton";
 import DeleteMat from "../../../hooks/Materiales/deleteMatByID";
 
-export default function MatsOptionsButton({ matID, onMatChange }) {
+const MatsOptionsButton = ({ matID, onMatChange }) => {
   const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
-  const { deleteMat, error } = DeleteMat();
+  const anchorRef = useRef(null);
+  const { deleteMat } = DeleteMat();
 
-  const handleDeleteMat = (matId) => {
-    swal({
-      title: "¿Desea eliminar el material?",
-      text: "Una vez eliminado no podrá ser recuperado",
-      icon: "warning",
-      buttons: ["No", "Sí"],
-      dangerMode: true,
-    }).then((willCancel) => {
-      if (willCancel) {
-        deleteMat(matId);
-        fetchMats();
+  const handleDeleteMat = async (matId) => {
+    try {
+      const willDelete = await swal({
+        title: "¿Desea eliminar el material?",
+        text: "Una vez eliminado no podrá ser recuperado",
+        icon: "warning",
+        buttons: ["No", "Sí"],
+        dangerMode: true,
+      });
+
+      if (willDelete) {
+        await deleteMat(matId);
+        fetchMats(); // Asegúrate de definir fetchMats adecuadamente
       }
-    });
-  };
-
-  const handleClick = () => {
-    console.info(`You clicked ${options[selectedIndex]}`);
-  };
-
-  const handleMenuItemClick = (event, index) => {
-    setSelectedIndex(index);
-    setOpen(false);
+    } catch (error) {
+      console.error("Error deleting material:", error);
+    }
   };
 
   const handleToggle = () => {
@@ -51,12 +45,11 @@ export default function MatsOptionsButton({ matID, onMatChange }) {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-
     setOpen(false);
   };
 
   return (
-    <React.Fragment>
+    <>
       <ButtonGroup variant="text" ref={anchorRef} aria-label="split button">
         <Button
           size="small"
@@ -105,6 +98,8 @@ export default function MatsOptionsButton({ matID, onMatChange }) {
           </Grow>
         )}
       </Popper>
-    </React.Fragment>
+    </>
   );
-}
+};
+
+export default MatsOptionsButton;

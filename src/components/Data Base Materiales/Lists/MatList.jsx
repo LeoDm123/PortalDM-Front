@@ -113,13 +113,15 @@ export default function MatList({ onMatSubmit, onMatChange }) {
             <TableBody>
               {Materiales.filter(
                 (material) =>
-                  (selectedCategory === "" ||
+                  (!selectedCategory ||
                     selectedCategory === "Mostrar Todos" ||
-                    material.Categoria === selectedCategory) &&
-                  (searchTerm === "" ||
-                    material.Codigo.toLowerCase().includes(
-                      searchTerm.toLowerCase()
-                    ))
+                    (material.Categoria &&
+                      material.Categoria === selectedCategory)) &&
+                  (!searchTerm ||
+                    (material.Codigo &&
+                      material.Codigo.toLowerCase().includes(
+                        searchTerm.toLowerCase()
+                      )))
               ).map((materials) => (
                 <TableRow key={materials.id}>
                   <TableCell className="text-center" sx={{ width: "5%" }}>

@@ -6,6 +6,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import serverAPI from "../../../../api/serverAPI";
 import fetchPedidosHerrajes from "../../../../hooks/Pedidos/Herrajes/fetchPedidoHerrajes";
 import RecibirHerrajesButton from "../../Buttons/Herrajes/RecibirHerrajesButton";
 import InfoHerrajesButton from "../../Buttons/Herrajes/InfoHerrajesButton";
@@ -68,6 +69,8 @@ const HerrajesNestedList = ({
     const state = getStateColorClass(product);
     return state === "Completo" || state === "Excedido";
   });
+
+  console.log("Complete:", isPedidoComplete);
 
   useEffect(() => {
     const fetchData = async () => {

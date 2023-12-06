@@ -215,7 +215,6 @@ const EditCliente = ({
                   <MenuItem value="Consumidor Final">Consumidor Final</MenuItem>
                   <MenuItem value="Monotributista">Monotributista</MenuItem>
                   <MenuItem value="Exento">Exento</MenuItem>
-                  {/* Agrega más opciones según sea necesario */}
                 </Select>
               </FormControl>
 

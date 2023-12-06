@@ -8,25 +8,13 @@ import TableRow from "@mui/material/TableRow";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import serverAPI from "../../../api/serverAPI";
 import formatDate from "../../../hooks/formatDate";
+import fetchLogs from "../../../hooks/Inventario/fetchLog";
 
 const InventarioLogList = ({ onClose }) => {
-  const [LogData, setLogData] = useState([]);
   const [onMatRecep, setOnMatRecep] = useState(false);
+  const LogData = fetchLogs(onMatRecep);
 
   const FormatDate = formatDate();
-
-  const fetchLogData = async () => {
-    try {
-      const resp = await serverAPI.get("inv/obtenerLogs");
-      setLogData(resp.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchLogData();
-  }, [onMatRecep]);
 
   return (
     <Grid>

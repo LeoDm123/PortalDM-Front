@@ -31,6 +31,7 @@ const InfoHerrajesPedidosForm = ({ onClose, pedidoId, codigoMat }) => {
         `/pedidoHerrajes/obtenerMaterialPorCodigo/${pedidoId}/${codigoMat}`
       );
       setMaterialData(resp.data);
+      console.log(resp.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

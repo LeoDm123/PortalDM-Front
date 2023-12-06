@@ -6,6 +6,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import serverAPI from "../../../../api/serverAPI";
 import fetchPedidosVarios from "../../../../hooks/Pedidos/Varios/fetchPedidoVarios";
 import RecibirVariosButton from "../../Buttons/Varios/RecibirVariosButton";
 import InfoVariosButton from "../../Buttons/Varios/InfoVariosButton";
