@@ -2,43 +2,42 @@ import React, { useState, useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Grid from "@mui/material/Grid";
 import DeleteButton from "../../DeleteButton";
-import useFetchConceptoPago from "../../../hooks/Config/fetchConceptoPago";
-import DeleteConcepto from "../../../hooks/Config/deleteConceptoPago";
+import useFetchCondicionPago from "../../../hooks/Config/fetchCondicionPago";
+import DeleteCondicionPago from "../../../hooks/Config/deleteCondicionPago";
 import { Typography } from "@mui/material";
 import { DividerTitle } from "../../Dividers";
 
-const ConceptoPagoList = ({ onConceptCreation }) => {
-  const { loading, conceptos, fetchConceptos } = useFetchConceptoPago();
-  const { deleteConcepto, error } = DeleteConcepto();
-  const [onConceptDelete, setOnConceptDelete] = useState(false);
+const CondicionPagoList = ({ onCondicionCreation }) => {
+  const { loading, condiciones, fetchCondiciones } = useFetchCondicionPago();
+  const { deleteCondicionPago, error } = DeleteCondicionPago();
+  const [onCondicionDelete, setOnCondicionDelete] = useState(false);
 
-  const handleOnConceptDelete = () => {
-    setOnConceptDelete(!onConceptDelete);
+  const handleOnCondicionDelete = () => {
+    setOnCondicionDelete(!onCondicionDelete);
   };
 
   useEffect(() => {
-    fetchConceptos();
-  }, [onConceptCreation, onConceptDelete]);
+    fetchCondiciones();
+  }, [onCondicionCreation, onCondicionDelete]);
 
   useEffect(() => {
-    console.log("Conceptos", conceptos);
-  }, [conceptos]);
+    console.log("Condiciones", condiciones);
+  }, [condiciones]);
 
-  const handleDeleteConcepto = async (index) => {
+  const handleDeleteCondicion = async (index) => {
     swal({
-      title: "¿Desea eliminar el concepto?",
+      title: "¿Desea eliminar la condición?",
       text: "Una vez eliminado no podrá ser recuperado",
       icon: "warning",
       buttons: ["No", "Sí"],
       dangerMode: true,
     }).then(async (willCancel) => {
       if (willCancel) {
-        await deleteConcepto(index);
-        handleOnConceptDelete();
+        await deleteCondicionPago(index);
+        handleOnCondicionDelete();
       }
     });
   };
@@ -46,7 +45,7 @@ const ConceptoPagoList = ({ onConceptCreation }) => {
   return (
     <div>
       <Typography variant="h6" sx={{ color: "#01662b" }}>
-        Conceptos de Pago
+        Condiciones de Pago
       </Typography>
       <DividerTitle />
       <Grid
@@ -69,11 +68,11 @@ const ConceptoPagoList = ({ onConceptCreation }) => {
       >
         <Table stickyHeader size="medium">
           <TableBody>
-            {conceptos.map((concepto, index) => (
+            {condiciones.map((condicion, index) => (
               <TableRow key={index}>
-                <TableCell className="text-center">{concepto}</TableCell>
+                <TableCell className="text-center">{condicion}</TableCell>
                 <TableCell className="text-center">
-                  <DeleteButton onDelete={() => handleDeleteConcepto(index)} />
+                  <DeleteButton onDelete={() => handleDeleteCondicion(index)} />
                 </TableCell>
               </TableRow>
             ))}
@@ -84,4 +83,4 @@ const ConceptoPagoList = ({ onConceptCreation }) => {
   );
 };
 
-export default ConceptoPagoList;
+export default CondicionPagoList;

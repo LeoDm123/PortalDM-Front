@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import serverAPI from "../../api/serverAPI";
 
-const useFetchConceptos = () => {
+const useFetchCondicionPago = () => {
   const [loading, setLoading] = useState(true);
-  const [conceptos, setConceptos] = useState([]);
+  const [condiciones, setCondiciones] = useState([]);
 
-  const fetchConceptos = async () => {
+  const fetchCondiciones = async () => {
     try {
       const resp = await serverAPI.get("/settings/obtenerSettings");
-      setConceptos(resp.data[0]?.ConceptoPago || []);
+      setCondiciones(resp.data[0]?.CondicionPago || []);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -17,10 +17,10 @@ const useFetchConceptos = () => {
   };
 
   useEffect(() => {
-    fetchConceptos();
+    fetchCondiciones();
   }, []);
 
-  return { loading, conceptos, fetchConceptos };
+  return { loading, condiciones, fetchCondiciones };
 };
 
-export default useFetchConceptos;
+export default useFetchCondicionPago;

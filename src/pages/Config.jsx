@@ -7,14 +7,21 @@ import "../App.css";
 import Header from "../components/Menu/Header";
 import UsersList from "../components/Config/Lists/UsersList";
 import AddUserButton from "../components/Config/Buttons/AddUserButton";
-import ConceptoPagoList from "../components/Config/Lists/ConceptoPagoList";
 import AddConceptoPagoButton from "../components/Config/Buttons/AddConceptoPagoButton";
+import ConceptoPagoList from "../components/Config/Lists/ConceptoPagoList";
+import AddCondicionPagoButton from "../components/Config/Buttons/AddCondicionPagoButton";
+import CondicionPagoList from "../components/Config/Lists/CondicionPagoList";
 
 const defaultTheme = createTheme();
 
 const Config = () => {
   const [onUserCreation, setOnUserCreation] = useState(false);
   const [onConceptCreation, setOnConceptCreation] = useState(false);
+  const [onCondicionCreation, setOnCondicionCreation] = useState(false);
+
+  const handleOnCondicionCreation = () => {
+    setOnCondicionCreation(!onCondicionCreation);
+  };
 
   const handleOnConceptCreation = () => {
     setOnConceptCreation(!onConceptCreation);
@@ -35,6 +42,9 @@ const Config = () => {
               <AddUserButton onUserCreation={handleOnUserCreation} />
               <AddConceptoPagoButton
                 onConceptCreation={handleOnConceptCreation}
+              />
+              <AddCondicionPagoButton
+                onCondicionCreation={handleOnCondicionCreation}
               />
             </Grid>
             <Grid container spacing={1}>
@@ -71,7 +81,11 @@ const Config = () => {
                       flexDirection: "column",
                       height: "100%",
                     }}
-                  ></Paper>
+                  >
+                    <CondicionPagoList
+                      onCondicionCreation={onCondicionCreation}
+                    />
+                  </Paper>
                 </Grid>
                 <Grid item xs={3} sx={{ height: 280 }}>
                   <Paper

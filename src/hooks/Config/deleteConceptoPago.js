@@ -2,18 +2,20 @@ import { useState } from "react";
 import swal from "sweetalert";
 import serverAPI from "../../api/serverAPI";
 
-export default function DeleteConcepto() {
+export default function DeleteConceptoPago() {
   const [error, setError] = useState(null);
 
-  const deleteConcepto = async (index) => {
+  const deleteConceptoPago = async (index) => {
     try {
       const deleteResp = await serverAPI.delete(
-        `/settings/deleteConcepto/${index}`
+        `/settings/deleteConceptoPago/${index}`
       );
 
       console.log(deleteResp);
 
-      if (deleteResp.data.message === "Concepto eliminado correctamente") {
+      if (
+        deleteResp.data.message === "Concepto de pago eliminado correctamente"
+      ) {
         console.log(deleteResp.data.message);
         SwAlertOk();
       } else {
@@ -24,7 +26,7 @@ export default function DeleteConcepto() {
     }
   };
 
-  return { deleteConcepto, error };
+  return { deleteConceptoPago, error };
 }
 
 const SwAlertOk = () => {
