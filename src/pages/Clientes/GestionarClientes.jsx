@@ -11,6 +11,7 @@ import OpenClientesDBButton from "../../components/Clientes/Buttons/OpenClientsD
 import Header from "../../components/Menu/Header";
 import ClientCardList from "../../components/Clientes/Lists/ClientCardList";
 import ClientInfo from "../../components/Clientes/ClientInfo";
+import OpenClientsConfigButton from "../../components/Config/Buttons/OpenClientsConfigButton";
 
 const defaultTheme = createTheme();
 
@@ -37,10 +38,19 @@ const GestionarClientes = () => {
         content={
           <Container maxWidth="xl" sx={{ mt: 2, mb: 2 }}>
             <Grid container>
-              <div className="d-flex">
-                <AddClientButton onClientCreation={handleOnClientCreation} />
-                <OpenClientesDBButton />
-              </div>
+              <Grid
+                sx={{
+                  display: "Flex",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
+                <Grid sx={{ display: "Flex" }}>
+                  <AddClientButton onClientCreation={handleOnClientCreation} />
+                  <OpenClientesDBButton />
+                </Grid>
+                <OpenClientsConfigButton />
+              </Grid>
               {/* Listado de Clientes */}
               <Grid item xs={12} md={12} lg={12} display={"flex"}>
                 <Paper

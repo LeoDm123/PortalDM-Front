@@ -12,6 +12,7 @@ import EditMatButton from "./EditMatButton";
 import VerMatButton from "./VerMatButton";
 import DeleteMatButton from "./DeleteMatButton";
 import DeleteMat from "../../../hooks/Materiales/deleteMatByID";
+import fetchMats from "../../../hooks/Materiales/fetchMats";
 
 const MatsOptionsButton = ({ matID, onMatChange }) => {
   const [open, setOpen] = React.useState(false);
@@ -30,7 +31,7 @@ const MatsOptionsButton = ({ matID, onMatChange }) => {
 
       if (willDelete) {
         await deleteMat(matId);
-        fetchMats(); // Asegúrate de definir fetchMats adecuadamente
+        fetchMats();
       }
     } catch (error) {
       console.error("Error deleting material:", error);

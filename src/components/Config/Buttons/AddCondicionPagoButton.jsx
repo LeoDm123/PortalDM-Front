@@ -1,5 +1,5 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import AddCondicionPagoModal from "../Modal/AddCondicionPagoModal";
@@ -17,16 +17,9 @@ export default function AddCondicionPagoButton({ onCondicionCreation }) {
 
   return (
     <Grid>
-      <Button
-        className="AddButton mb-3"
-        onClick={handleClick}
-        variant="contained"
-        startIcon={<NoteAddIcon />}
-        size="medium"
-        sx={{ width: 300, marginLeft: 1 }}
-      >
-        Agregar Condición de Pago
-      </Button>
+      <IconButton onClick={handleClick} size="small">
+        <NoteAddIcon />
+      </IconButton>
       <AddCondicionPagoModal
         open={modalOpen}
         onClose={handleCloseModal}

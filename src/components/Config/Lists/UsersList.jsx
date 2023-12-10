@@ -5,20 +5,26 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Grid from "@mui/material/Grid";
+import { Typography } from "@mui/material";
 import DeleteButton from "../../DeleteButton";
 import fetchUsers from "../../../hooks/Users/fetchUsers";
 import DeleteUser from "../../../hooks/Users/deleteUser";
+import AddUserButton from "../Buttons/AddUserButton";
+import { DividerTitle } from "../../Dividers";
 
-const UsersList = ({ onUserCreation }) => {
+const UsersList = () => {
   const [onUserDelete, setOnUserDelete] = useState(false);
+  const [onUserCreation, setOnUserCreation] = useState(false);
   const Users = fetchUsers(onUserCreation, onUserDelete);
   const { deleteUser, error } = DeleteUser();
+
+  const handleOnUserCreation = () => {
+    setOnUserCreation(!onUserCreation);
+  };
 
   const handleUserDelete = () => {
     setOnUserDelete(!onUserDelete);
   };
-
-  console.log("onUserDelete-List", onUserDelete);
 
   const handleDeleteUser = (userId) => {
     swal({
@@ -37,6 +43,14 @@ const UsersList = ({ onUserCreation }) => {
 
   return (
     <div>
+      <Grid sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography variant="h6" sx={{ color: "#01662b" }}>
+          Listado de Usuarios
+        </Typography>
+
+        <AddUserButton onUserCreation={handleOnUserCreation} />
+      </Grid>
+      <DividerTitle />
       <Grid
         sx={{
           mb: 1,

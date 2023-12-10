@@ -2,9 +2,9 @@ import * as React from "react";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
-import AddConceptoPagoModal from "../Modal/AddConceptoPagoModal";
+import AddCondicionFacturacionModal from "../Modal/AddCondicionFacturacionModal";
 
-export default function AddConceptoPagoButton({ onConceptCreation }) {
+export default function AddCondicionFacturacionButton({ onCondicionCreation }) {
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -20,10 +20,10 @@ export default function AddConceptoPagoButton({ onConceptCreation }) {
       <IconButton onClick={handleClick} size="small">
         <NoteAddIcon />
       </IconButton>
-      <AddConceptoPagoModal
+      <AddCondicionFacturacionModal
         open={modalOpen}
         onClose={handleCloseModal}
-        onConceptCreation={onConceptCreation}
+        onCondicionCreation={onCondicionCreation}
       />
     </Grid>
   );

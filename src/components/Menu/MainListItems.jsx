@@ -1,115 +1,156 @@
-import * as React from "react";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import ListSubheader from "@mui/material/ListSubheader";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PeopleIcon from "@mui/icons-material/People";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import InventoryIcon from "@mui/icons-material/Inventory";
-import RoomPreferencesIcon from "@mui/icons-material/RoomPreferences";
 import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
-import List from "@mui/material/List";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import WindowIcon from "@mui/icons-material/Window";
-import Collapse from "@mui/material/Collapse";
-import PowerInputIcon from "@mui/icons-material/PowerInput";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
-function MainListItems() {
-  const [open, setOpen] = React.useState(true);
+const MenuContext = createContext();
 
-  const handleClick = () => {
-    setOpen(!open);
+const MenuProvider = ({ children }) => {
+  const [value, setValue] = useState(null);
+
+  const handleChange = (newValue) => {
+    setValue(newValue);
   };
 
+  return (
+    <MenuContext.Provider value={{ value, handleChange }}>
+      {children}
+    </MenuContext.Provider>
+  );
+};
+
+const useMenuContext = () => {
+  const context = useContext(MenuContext);
+  if (!context) {
+    throw new Error("useMenuContext must be used within a MenuProvider");
+  }
+  return context;
+};
+
+const VerticalTabs = () => {
+  const { handleChange } = useMenuContext();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [value, setValue] = useState(null);
+
+  useEffect(() => {
+    const path = location.pathname;
+    if (path === "/Main") setValue(0);
+    else if (path === "/PedidosMats") setValue(1);
+    else if (path === "/GestionarClientes") setValue(2);
+    else if (path === "/BaseDatosMats") setValue(4);
+    else if (path === "/Config") setValue(6);
+  }, [location.pathname]);
 
   return (
-    <List
-      sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-    >
-      <ListItemButton onClick={() => navigate("/Main")}>
-        <ListItemIcon>
-          <DashboardIcon />
-        </ListItemIcon>
-        <ListItemText primary="Dashboard" />
-      </ListItemButton>
-      <ListItemButton onClick={handleClick}>
-        <ListItemIcon>
-          <ShoppingCartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Pedidos" />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton
-            sx={{ pl: 4 }}
-            onClick={() => navigate("/PedidosMats")}
-          >
-            <ListItemIcon>
-              <PowerInputIcon />
-            </ListItemIcon>
-            <ListItemText primary="Perfiles" />
-          </ListItemButton>
-          <ListItemButton
-            sx={{ pl: 4 }}
-            onClick={() => navigate("/PedidosMats")}
-          >
-            <ListItemIcon>
-              <RoomPreferencesIcon />
-            </ListItemIcon>
-            <ListItemText primary="Herrajes" />
-          </ListItemButton>
-          <ListItemButton
-            sx={{ pl: 4 }}
-            onClick={() => navigate("/PedidosMats")}
-          >
-            <ListItemIcon>
-              <WindowIcon />
-            </ListItemIcon>
-            <ListItemText primary="Vidrios" />
-          </ListItemButton>
-        </List>
-      </Collapse>
-      <ListItemButton onClick={() => navigate("/GestionarClientes")}>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Clientes" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <BarChartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Informes" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/BaseDatosMats")}>
-        <ListItemIcon>
-          <InventoryIcon />
-        </ListItemIcon>
-        <ListItemText primary="Inventario" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <RequestQuoteIcon />
-        </ListItemIcon>
-        <ListItemText primary="Presupuestos" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/Config")}>
-        <ListItemIcon>
-          <SettingsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Configuración" />
-      </ListItemButton>
-    </List>
+    <Tabs value={value} onChange={handleChange} orientation="vertical">
+      <Tab
+        icon={<DashboardIcon />}
+        iconPosition="start"
+        label="Dashboard"
+        onClick={() => {
+          setValue(0);
+          navigate("/Main");
+        }}
+        sx={{
+          backgroundColor:
+            value === 0 ? "rgba(1, 102, 43, 0.15)" : "transparent",
+          justifyContent: "flex-start",
+        }}
+      />
+      <Tab
+        icon={<ShoppingCartIcon />}
+        iconPosition="start"
+        label="Pedidos"
+        onClick={() => {
+          setValue(1);
+          navigate("/PedidosMats");
+        }}
+        sx={{
+          backgroundColor:
+            value === 1 ? "rgba(1, 102, 43, 0.15)" : "transparent",
+          justifyContent: "flex-start",
+        }}
+      />
+      <Tab
+        icon={<PeopleIcon />}
+        iconPosition="start"
+        label="Clientes"
+        onClick={() => {
+          setValue(2);
+          navigate("/GestionarClientes");
+        }}
+        sx={{
+          backgroundColor:
+            value === 2 ? "rgba(1, 102, 43, 0.15)" : "transparent",
+          justifyContent: "flex-start",
+        }}
+      />
+      <Tab
+        icon={<BarChartIcon />}
+        iconPosition="start"
+        label="Informes"
+        onClick={() => {
+          setValue(3);
+          // Agrega la ruta para el informe
+        }}
+        sx={{
+          backgroundColor:
+            value === 3 ? "rgba(1, 102, 43, 0.15)" : "transparent",
+          justifyContent: "flex-start",
+        }}
+      />
+      <Tab
+        icon={<InventoryIcon />}
+        iconPosition="start"
+        label="Inventario"
+        onClick={() => {
+          setValue(4);
+          navigate("/BaseDatosMats");
+        }}
+        sx={{
+          backgroundColor:
+            value === 4 ? "rgba(1, 102, 43, 0.15)" : "transparent",
+          justifyContent: "flex-start",
+        }}
+      />
+      <Tab
+        icon={<RequestQuoteIcon />}
+        iconPosition="start"
+        label="Presupuestos"
+        onClick={() => {
+          setValue(5);
+          // Agrega la ruta para presupuestos
+        }}
+        sx={{
+          backgroundColor:
+            value === 5 ? "rgba(1, 102, 43, 0.15)" : "transparent",
+          justifyContent: "flex-start",
+        }}
+      />
+      <Tab
+        icon={<SettingsIcon />}
+        iconPosition="start"
+        label="Configuración"
+        onClick={() => {
+          setValue(6);
+          navigate("/Config");
+        }}
+        sx={{
+          backgroundColor:
+            value === 6 ? "rgba(1, 102, 43, 0.15)" : "transparent",
+          justifyContent: "flex-start",
+        }}
+      />
+    </Tabs>
   );
-}
+};
 
-export default MainListItems;
+export { MenuProvider, useMenuContext, VerticalTabs };

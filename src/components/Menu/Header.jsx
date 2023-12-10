@@ -13,9 +13,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import "../../App.css";
-import MainListItems from "./MainListItems";
+import { MenuProvider, VerticalTabs } from "./MainListItems";
 
-const drawerWidth = 240;
+const drawerWidth = 210;
 
 window.onbeforeunload = () => {
   localStorage.removeItem("loggedUser");
@@ -80,6 +80,7 @@ const defaultTheme = createTheme({
 
 const Header = ({ content }) => {
   const [open, setOpen] = useState(true);
+  const [value, setValue] = useState(null);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -136,7 +137,9 @@ const Header = ({ content }) => {
             </IconButton>
           </Toolbar>
           <Divider />
-          <MainListItems />
+          <MenuProvider>
+            <VerticalTabs value={value} setValue={setValue} />
+          </MenuProvider>
         </Drawer>
 
         <Box

@@ -1,10 +1,10 @@
 import * as React from "react";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
-import NoteAddIcon from "@mui/icons-material/NoteAdd";
-import AddConceptoPagoModal from "../Modal/AddConceptoPagoModal";
+import SettingsIcon from "@mui/icons-material/Settings";
+import ClientsConfigModal from "../Modal/Clients/ClientsConfigModal";
 
-export default function AddConceptoPagoButton({ onConceptCreation }) {
+export default function OpenClientsConfigButton() {
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -18,13 +18,9 @@ export default function AddConceptoPagoButton({ onConceptCreation }) {
   return (
     <Grid>
       <IconButton onClick={handleClick} size="small">
-        <NoteAddIcon />
+        <SettingsIcon sx={{ width: 30, height: 30 }} />
       </IconButton>
-      <AddConceptoPagoModal
-        open={modalOpen}
-        onClose={handleCloseModal}
-        onConceptCreation={onConceptCreation}
-      />
+      <ClientsConfigModal open={modalOpen} onClose={handleCloseModal} />
     </Grid>
   );
 }

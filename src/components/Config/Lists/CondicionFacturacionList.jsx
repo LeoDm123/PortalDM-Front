@@ -5,15 +5,16 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Grid from "@mui/material/Grid";
 import DeleteButton from "../../DeleteButton";
-import useFetchCondicionPago from "../../../hooks/Config/fetchCondicionPago";
-import DeleteCondicionPago from "../../../hooks/Config/deleteCondicionPago";
-import AddCondicionPagoButton from "../Buttons/AddCondicionPagoButton";
+import useFetchCondicionFacturacion from "../../../hooks/Config/fetchCondicionFacturacion";
+import DeleteCondicionFacturacion from "../../../hooks/Config/deleteCondicionFacturacion";
+import AddCondicionFacturacionButton from "../Buttons/AddCondicionFacturacionButton";
 import { Typography } from "@mui/material";
 import { DividerTitle } from "../../Dividers";
 
-const CondicionPagoList = () => {
-  const { loading, condiciones, fetchCondiciones } = useFetchCondicionPago();
-  const { deleteCondicionPago, error } = DeleteCondicionPago();
+const CondicionFacturacionList = () => {
+  const { loading, condiciones, fetchCondiciones } =
+    useFetchCondicionFacturacion();
+  const { deleteCondicionFacturacion, error } = DeleteCondicionFacturacion();
   const [onCondicionDelete, setOnCondicionDelete] = useState(false);
   const [onCondicionCreation, setOnCondicionCreation] = useState(false);
 
@@ -42,7 +43,7 @@ const CondicionPagoList = () => {
       dangerMode: true,
     }).then(async (willCancel) => {
       if (willCancel) {
-        await deleteCondicionPago(index);
+        await deleteCondicionFacturacion(index);
         handleOnCondicionDelete();
       }
     });
@@ -52,9 +53,9 @@ const CondicionPagoList = () => {
     <div>
       <Grid sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant="h6" sx={{ color: "#01662b" }}>
-          Condiciones de Pago
+          Cond. de Facturación
         </Typography>
-        <AddCondicionPagoButton
+        <AddCondicionFacturacionButton
           onCondicionCreation={handleOnCondicionCreation}
         />
       </Grid>
@@ -81,7 +82,13 @@ const CondicionPagoList = () => {
           <TableBody>
             {condiciones.map((condicion, index) => (
               <TableRow key={index}>
-                <TableCell className="text-center">{condicion}</TableCell>
+                <TableCell className="text-center">
+                  {condicion.Detalle +
+                    "%" +
+                    " (IVA: " +
+                    condicion.equivIVA +
+                    "%)"}
+                </TableCell>
                 <TableCell className="text-center">
                   <DeleteButton onDelete={() => handleDeleteCondicion(index)} />
                 </TableCell>
@@ -94,4 +101,4 @@ const CondicionPagoList = () => {
   );
 };
 
-export default CondicionPagoList;
+export default CondicionFacturacionList;

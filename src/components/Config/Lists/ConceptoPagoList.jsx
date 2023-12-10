@@ -7,14 +7,20 @@ import TableRow from "@mui/material/TableRow";
 import Grid from "@mui/material/Grid";
 import DeleteButton from "../../DeleteButton";
 import useFetchConceptoPago from "../../../hooks/Config/fetchConceptoPago";
-import DeleteConcepto from "../../../hooks/Config/deleteConceptoPago";
+import DeleteConceptoPago from "../../../hooks/Config/deleteConceptoPago";
+import AddConceptoPagoButton from "../Buttons/AddConceptoPagoButton";
 import { Typography } from "@mui/material";
 import { DividerTitle } from "../../Dividers";
 
-const ConceptoPagoList = ({ onConceptCreation }) => {
+const ConceptoPagoList = () => {
   const { loading, conceptos, fetchConceptos } = useFetchConceptoPago();
-  const { deleteConcepto, error } = DeleteConcepto();
+  const { deleteConceptoPago, error } = DeleteConceptoPago();
   const [onConceptDelete, setOnConceptDelete] = useState(false);
+  const [onConceptCreation, setOnConceptCreation] = useState(false);
+
+  const handleOnConceptCreation = () => {
+    setOnConceptCreation(!onConceptCreation);
+  };
 
   const handleOnConceptDelete = () => {
     setOnConceptDelete(!onConceptDelete);
@@ -37,7 +43,7 @@ const ConceptoPagoList = ({ onConceptCreation }) => {
       dangerMode: true,
     }).then(async (willCancel) => {
       if (willCancel) {
-        await deleteConcepto(index);
+        await deleteConceptoPago(index);
         handleOnConceptDelete();
       }
     });
@@ -45,16 +51,19 @@ const ConceptoPagoList = ({ onConceptCreation }) => {
 
   return (
     <div>
-      <Typography variant="h6" sx={{ color: "#01662b" }}>
-        Conceptos de Pago
-      </Typography>
+      <Grid sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography variant="h6" sx={{ color: "#01662b" }}>
+          Conceptos de Pago
+        </Typography>
+        <AddConceptoPagoButton onConceptCreation={handleOnConceptCreation} />
+      </Grid>
       <DividerTitle />
       <Grid
         sx={{
           mb: 1,
           display: "flex",
           flexDirection: "column",
-          height: 200,
+          height: 430,
           overflow: "auto",
           scrollbarWidth: "thin",
           scrollbarColor: "dark",

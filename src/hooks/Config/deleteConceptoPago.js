@@ -17,7 +17,7 @@ export default function DeleteConceptoPago() {
         deleteResp.data.message === "Concepto de pago eliminado correctamente"
       ) {
         console.log(deleteResp.data.message);
-        SwAlertOk();
+        SwalAlertOk();
       } else {
         console.log("Operación de eliminación fallida.");
       }
@@ -26,13 +26,13 @@ export default function DeleteConceptoPago() {
     }
   };
 
+  const SwalAlertOk = () => {
+    swal({
+      title: "¡Éxito!",
+      text: "¡El concepto se eliminó correctamente!",
+      icon: "success",
+    });
+  };
+
   return { deleteConceptoPago, error };
 }
-
-const SwAlertOk = () => {
-  swal({
-    title: "¡Exito!",
-    text: "El concepto se eliminó correctamente",
-    icon: "success",
-  });
-};

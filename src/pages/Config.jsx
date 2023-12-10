@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -6,47 +6,15 @@ import Paper from "@mui/material/Paper";
 import "../App.css";
 import Header from "../components/Menu/Header";
 import UsersList from "../components/Config/Lists/UsersList";
-import AddUserButton from "../components/Config/Buttons/AddUserButton";
-import AddConceptoPagoButton from "../components/Config/Buttons/AddConceptoPagoButton";
-import ConceptoPagoList from "../components/Config/Lists/ConceptoPagoList";
-import AddCondicionPagoButton from "../components/Config/Buttons/AddCondicionPagoButton";
-import CondicionPagoList from "../components/Config/Lists/CondicionPagoList";
 
 const defaultTheme = createTheme();
 
 const Config = () => {
-  const [onUserCreation, setOnUserCreation] = useState(false);
-  const [onConceptCreation, setOnConceptCreation] = useState(false);
-  const [onCondicionCreation, setOnCondicionCreation] = useState(false);
-
-  const handleOnCondicionCreation = () => {
-    setOnCondicionCreation(!onCondicionCreation);
-  };
-
-  const handleOnConceptCreation = () => {
-    setOnConceptCreation(!onConceptCreation);
-  };
-
-  const handleOnUserCreation = () => {
-    setOnUserCreation(!onUserCreation);
-  };
-
-  console.log("onUserCreation-Config", onUserCreation);
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Header
         content={
           <Container maxWidth="xl" sx={{ mt: 2 }}>
-            <Grid display={"Flex"}>
-              <AddUserButton onUserCreation={handleOnUserCreation} />
-              <AddConceptoPagoButton
-                onConceptCreation={handleOnConceptCreation}
-              />
-              <AddCondicionPagoButton
-                onCondicionCreation={handleOnCondicionCreation}
-              />
-            </Grid>
             <Grid container spacing={1}>
               <Grid item xs={12} md={12} lg={12}>
                 <Paper
@@ -54,59 +22,11 @@ const Config = () => {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    height: 300,
+                    height: 320,
                   }}
                 >
-                  <UsersList onUserCreation={onUserCreation} />
+                  <UsersList />
                 </Paper>
-              </Grid>
-              <Grid container item xs={12} display={"flex"} spacing={1}>
-                <Grid item xs={3} sx={{ height: 280 }}>
-                  <Paper
-                    sx={{
-                      p: 2,
-                      display: "flex",
-                      flexDirection: "column",
-                      height: "100%",
-                    }}
-                  >
-                    <ConceptoPagoList onConceptCreation={onConceptCreation} />
-                  </Paper>
-                </Grid>
-                <Grid item xs={3} sx={{ height: 280 }}>
-                  <Paper
-                    sx={{
-                      p: 2,
-                      display: "flex",
-                      flexDirection: "column",
-                      height: "100%",
-                    }}
-                  >
-                    <CondicionPagoList
-                      onCondicionCreation={onCondicionCreation}
-                    />
-                  </Paper>
-                </Grid>
-                <Grid item xs={3} sx={{ height: 280 }}>
-                  <Paper
-                    sx={{
-                      p: 2,
-                      display: "flex",
-                      flexDirection: "column",
-                      height: "100%",
-                    }}
-                  ></Paper>
-                </Grid>
-                <Grid item xs={3} sx={{ height: 280 }}>
-                  <Paper
-                    sx={{
-                      p: 2,
-                      display: "flex",
-                      flexDirection: "column",
-                      height: "100%",
-                    }}
-                  ></Paper>
-                </Grid>
               </Grid>
             </Grid>
           </Container>
