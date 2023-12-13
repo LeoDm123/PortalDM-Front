@@ -70,11 +70,11 @@ const PedidosVariosList = ({ onSubmit }) => {
       <Grid
         sx={{
           px: 1,
-          py: 1,
+          pb: 1,
           mb: 1,
           display: "flex",
           flexDirection: "column",
-          height: 500,
+          height: 540,
           overflow: "auto",
           scrollbarWidth: "thin",
           scrollbarColor: "dark",

@@ -8,6 +8,7 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
+import PostAddIcon from "@mui/icons-material/PostAdd";
 import PedidoPerfiles from "../../../pages/Pedidos/Modals/Perfiles/PedidoPerfiles";
 import PedidoHerrajes from "../../../pages/Pedidos/Modals/Herrajes/PedidoHerrajes";
 import PedidoVidrios from "../../../pages/Pedidos/Modals/Vidrios/PedidoVidrios";
@@ -15,11 +16,11 @@ import PedidoMadera from "../../../pages/Pedidos/Modals/Madera/PedidoMadera";
 import PedidoVarios from "../../../pages/Pedidos/Modals/Varios/PedidoVarios";
 
 const options = [
-  "Pedido de Herrajes de Aberturas PVC",
-  "Pedido de Perfiles de PVC",
-  "Pedido de Insumos Puertas de Madera",
-  "Pedido de Vidrios",
-  "Pedido de Insumos Varios",
+  "Herrajes de Aberturas PVC",
+  "Perfiles de PVC",
+  "Insumos Puertas de Madera",
+  "Vidrios",
+  "Insumos Varios",
 ];
 
 export default function PresupuestosButton({ onSubmit }) {
@@ -81,8 +82,13 @@ export default function PresupuestosButton({ onSubmit }) {
         aria-label="split button"
         className="mb-3"
       >
-        <Button className="ActionButton" onClick={handleToggle}>
-          Crear pedido de material
+        <Button
+          className="ActionButton"
+          onClick={handleToggle}
+          startIcon={<PostAddIcon />}
+          sx={{ width: 195 }}
+        >
+          Crear pedido
         </Button>
         <Button
           className="ActionButtonIcon"

@@ -6,10 +6,7 @@ import Landing from "./pages/Landing";
 import Register from "./pages/Register";
 import Main from "./pages/Main";
 //Paginas de Presupuestos
-import PresupuestoPM from "./pages/Presupuestos/PresupuestoPM";
-import PresupuestoEM from "./pages/Presupuestos/PresupuestoEM";
-import PresupuestoExtras from "./pages/Presupuestos/PresupuestoExtras";
-import PresupuestoDeck from "./pages/Presupuestos/PresupuestoDeck";
+import Presupuestos from "./pages/Presupuestos/Presupuestos";
 //Paginas de Base de Datos de Materiales
 import BaseDatosMats from "./pages/Data Base Materiales/MatsDB/BaseDatosMats";
 //Paginas de Pedidos
@@ -28,10 +25,7 @@ function App() {
         <Route path="/Register" element={<Register />} />
         <Route path="/Main" element={<Main />} />
         {/* PRESUPUESTOS */}
-        <Route path="/PresupuestoPM" element={<PresupuestoPM />} />
-        <Route path="/PresupuestoEM" element={<PresupuestoEM />} />
-        <Route path="/PresupuestoDeck" element={<PresupuestoDeck />} />
-        <Route path="/PresupuestoExtras" element={<PresupuestoExtras />} />
+        <Route path="/Presupuestos" element={<Presupuestos />} />
         {/* BASE DE DATOS DE MATERIALES */}
         <Route path="/BaseDatosMats" element={<BaseDatosMats />} />
         {/* PEDIDOS */}

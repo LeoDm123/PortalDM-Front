@@ -17,7 +17,7 @@ const RecibirPedidoMaderaForm = ({
   const [PedidoData, setPedidoData] = useState({});
   const [Descripcion, setDescripcion] = useState("");
   const [Proveedor, setProveedor] = useState("");
-  const [Unidad, setUnidad] = useState("");
+  const [Unidad, setUnidad] = useState("u");
   const [Ancho, setAncho] = useState("");
   const [Alto, setAlto] = useState("");
   const [Espesor, setEspesor] = useState("");
@@ -58,6 +58,7 @@ const RecibirPedidoMaderaForm = ({
   useEffect(() => {
     if (codigoMat !== null && MaterialData) {
       const selectedMaterial = MaterialData;
+      console.log("Selected Material", selectedMaterial);
       setCodigo(selectedMaterial.Codigo);
       setDescripcion(selectedMaterial.Descripcion);
       setProveedor(PedidoData.Proveedor);

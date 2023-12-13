@@ -6,14 +6,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import "../../App.css";
 import Header from "../../components/Menu/Header";
-import AddPedidoButton from "../../components/Pedidos/Buttons/AddPedidoButton";
-import PedidosPerfilesList from "../../components/Pedidos/Lists/Perfiles/PedidoPerfilesList";
-import PedidosHerrajesList from "../../components/Pedidos/Lists/Herrajes/PedidoHerrajesList";
-import PedidosVidriosList from "../../components/Pedidos/Lists/Vidrios/PedidoVidriosList";
-import PedidosMaderaList from "../../components/Pedidos/Lists/Madera/PedidoMaderaList";
-import PedidosVariosList from "../../components/Pedidos/Lists/Varios/PedidoVariosList";
+import PresPuertasForm from "../../components/Presupuestos/Forms/Puertas/PresPuertasForm";
 
-const PedidosMats = () => {
+const Presupuestos = () => {
   const [onSubmit, setOnSubmit] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -25,18 +20,12 @@ const PedidosMats = () => {
     setOnSubmit(!onSubmit);
   };
 
-  const optionComponents = [
-    <PedidosPerfilesList onSubmit={onSubmit} />,
-    <PedidosHerrajesList onSubmit={onSubmit} />,
-    <PedidosVidriosList onSubmit={onSubmit} />,
-    <PedidosMaderaList onSubmit={onSubmit} />,
-    <PedidosVariosList onSubmit={onSubmit} />,
-  ];
+  const optionComponents = [<PresPuertasForm />];
 
   return (
     <Header
       content={
-        <Container maxWidth="xl" sx={{ mt: 2, mb: 2 }}>
+        <Container maxWidth="xl" sx={{ mt: 2, mb: 1 }}>
           <Grid container>
             <Grid item xs={12} md={12} lg={12} display={"flex"}>
               <Paper
@@ -65,7 +54,7 @@ const PedidosMats = () => {
                     sx={{ marginBottom: 1 }}
                   >
                     <Tab
-                      label="Perfiles de PVC"
+                      label="Puertas"
                       sx={{
                         boxShadow: "0 4px 12px 0 rgba(0,0,0,0.16)",
 
@@ -77,7 +66,7 @@ const PedidosMats = () => {
                       }}
                     />
                     <Tab
-                      label="Herrajes de PVC"
+                      label="Muebles"
                       sx={{
                         boxShadow: "0 4px 12px 0 rgba(0,0,0,0.16)",
 
@@ -89,7 +78,7 @@ const PedidosMats = () => {
                       }}
                     />
                     <Tab
-                      label="Vidrios"
+                      label="Decks"
                       sx={{
                         boxShadow: "0 4px 12px 0 rgba(0,0,0,0.16)",
 
@@ -101,19 +90,7 @@ const PedidosMats = () => {
                       }}
                     />
                     <Tab
-                      label="Insumos de Madera"
-                      sx={{
-                        boxShadow: "0 4px 12px 0 rgba(0,0,0,0.16)",
-
-                        "&:hover": {
-                          color: "rgba(1, 102, 43)",
-                        },
-                        textTransform: "Initial",
-                        fontSize: "15px",
-                      }}
-                    />
-                    <Tab
-                      label="Insumos Varios"
+                      label="Extras"
                       sx={{
                         boxShadow: "0 4px 12px 0 rgba(0,0,0,0.16)",
 
@@ -125,8 +102,6 @@ const PedidosMats = () => {
                       }}
                     />
                   </Tabs>
-
-                  <AddPedidoButton onSubmit={handleSubmit} />
                 </Grid>
                 {optionComponents[selectedTab]}
               </Paper>
@@ -138,4 +113,4 @@ const PedidosMats = () => {
   );
 };
 
-export default PedidosMats;
+export default Presupuestos;

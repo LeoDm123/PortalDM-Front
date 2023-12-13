@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
@@ -16,8 +16,24 @@ import fetchMats from "../../../hooks/Materiales/fetchMats";
 
 const MatsOptionsButton = ({ matID, onMatChange }) => {
   const [open, setOpen] = React.useState(false);
-  const anchorRef = useRef(null);
-  const { deleteMat } = DeleteMat();
+  const anchorRef = React.useRef(null);
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+  const handleMenuItemClick = (event, index) => {
+    setSelectedIndex(index);
+    handleClose();
+  };
+
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    setOpen(false);
+  };
 
   const handleDeleteMat = async (matId) => {
     try {
@@ -38,31 +54,25 @@ const MatsOptionsButton = ({ matID, onMatChange }) => {
     }
   };
 
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
-
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-    setOpen(false);
-  };
+  const options = [
+    <DeleteMatButton onDelete={() => handleDeleteMat(matID)} />,
+    <EditMatButton matID={matID} onMatChange={onMatChange} />,
+    <VerMatButton matID={matID} />,
+  ];
 
   return (
-    <>
-      <ButtonGroup variant="text" ref={anchorRef} aria-label="split button">
-        <Button
-          size="small"
-          aria-controls={open ? "split-button-menu" : undefined}
-          aria-expanded={open ? "true" : undefined}
-          aria-label="select merge strategy"
-          aria-haspopup="menu"
-          onClick={handleToggle}
-        >
-          <MoreHorizIcon />
-        </Button>
-      </ButtonGroup>
+    <React.Fragment>
+      <IconButton
+        ref={anchorRef}
+        size="small"
+        aria-controls={open ? "split-button-menu" : undefined}
+        aria-expanded={open ? "true" : undefined}
+        aria-label="select merge strategy"
+        aria-haspopup="menu"
+        onClick={handleToggle}
+      >
+        <MoreHorizIcon />
+      </IconButton>
       <Popper
         sx={{
           zIndex: 1,
@@ -84,22 +94,22 @@ const MatsOptionsButton = ({ matID, onMatChange }) => {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
-                  <MenuItem>
-                    <DeleteMatButton onDelete={() => handleDeleteMat(matID)} />
-                  </MenuItem>
-                  <MenuItem>
-                    <VerMatButton matID={matID} />
-                  </MenuItem>
-                  <MenuItem>
-                    <EditMatButton matID={matID} onMatChange={onMatChange} />
-                  </MenuItem>
+                  {options.map((option, index) => (
+                    <MenuItem
+                      key={option}
+                      selected={index === selectedIndex}
+                      onClick={(event) => handleMenuItemClick(event, index)}
+                    >
+                      {option}
+                    </MenuItem>
+                  ))}
                 </MenuList>
               </ClickAwayListener>
             </Paper>
           </Grow>
         )}
       </Popper>
-    </>
+    </React.Fragment>
   );
 };
 
