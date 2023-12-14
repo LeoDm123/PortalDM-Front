@@ -1,23 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
-import { useState } from "react";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Typography,
+  Grid,
+} from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import TextField from "@mui/material/TextField";
 import swal from "sweetalert";
 import serverAPI from "../../../../../api/serverAPI";
 import Button from "@mui/material/Button";
-import { Typography } from "@mui/material";
+import fetchMats from "../../../../../hooks/Materiales/fetchMats";
 
-const AddMaterialMarcoModal = ({ open, onClose, onConceptCreation }) => {
+const AddMaterialMarcoModal = ({ open, onClose }) => {
+  const Materiales = fetchMats();
   const [Detalle, setDetalle] = useState("");
+  const [Categoria, setCategoria] = useState("");
+  const [MatId, setMatId] = useState("");
+  const [FilteredMateriales, setFilteredMateriales] = useState([]);
 
-  const crearConceptoPago = async (Detalle) => {
+  useEffect(() => {
+    if (Detalle) {
+      const selectedMaterial = Materiales.find(
+        (material) => material.Descripcion === Detalle
+      );
+      if (selectedMaterial) {
+        setMatId(selectedMaterial._id);
+      }
+    }
+  }, [Detalle, Materiales]);
+
+  const crearComponenteMarco = async (Detalle) => {
     try {
       const resp = await serverAPI.post(
         "/presPuertasSettings/crearComponenteMarco",
         {
           Detalle,
+          MatId,
         }
       );
 
@@ -27,7 +49,7 @@ const AddMaterialMarcoModal = ({ open, onClose, onConceptCreation }) => {
         console.log(resp);
 
         setDetalle("");
-        onConceptCreation();
+        setMatId("");
 
         SwAlertOk();
         onClose();
@@ -35,6 +57,15 @@ const AddMaterialMarcoModal = ({ open, onClose, onConceptCreation }) => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleCategoriaChange = (e) => {
+    setCategoria(e.target.value);
+
+    const filteredMateriales = Materiales.filter(
+      (material) => material.Categoria === e.target.value
+    );
+    setFilteredMateriales(filteredMateriales);
   };
 
   const SwAlertOk = () => {
@@ -61,7 +92,7 @@ const AddMaterialMarcoModal = ({ open, onClose, onConceptCreation }) => {
       return;
     }
 
-    crearConceptoPago(Detalle);
+    crearComponenteMarco(Detalle);
   };
 
   return (
@@ -82,19 +113,72 @@ const AddMaterialMarcoModal = ({ open, onClose, onConceptCreation }) => {
             <HighlightOffIcon onClick={onClose} fontSize="large" />
           </div>
 
-          <div className="w-100 me-3">
-            <TextField
-              fullWidth
-              label="Detalle"
-              variant="outlined"
-              value={Detalle}
-              onChange={(e) => setDetalle(e.target.value)}
-            />
-          </div>
-          <Typography sx={{ marginTop: 2, marginRight: 1 }} variant="body2">
-            Descripción: Se entiende por concepto de pago al valor relativo al
-            presupuesto que se le atribuye al pago realizado por un cliente.
-            Ejemplo: Anticipo, saldo, etc.
+          <Grid container spacing={1}>
+            <Grid item sx={{ width: "50%" }}>
+              <FormControl className="form-floating w-100">
+                <InputLabel htmlFor="categoria">Categoría:</InputLabel>
+                <Select
+                  className="form-select my-3 w-100"
+                  name="Categoria"
+                  value={Categoria}
+                  onChange={handleCategoriaChange}
+                >
+                  <MenuItem value="">
+                    Seleccionar una categoría de producto
+                  </MenuItem>
+                  <MenuItem value="Perfileria de PVC">
+                    Perfilería de PVC
+                  </MenuItem>
+                  <MenuItem value="Madera Maciza y Alistonados">
+                    Madera Maciza y Alistonados
+                  </MenuItem>
+                  <MenuItem value="Placas de MDF y Cantos">
+                    Placas de MDF y Cantos
+                  </MenuItem>
+                  <MenuItem value="Deck y Revestimientos de WPC">
+                    Deck y Revestimientos de WPC
+                  </MenuItem>
+                  <MenuItem value="Insumos de Lustre">
+                    Insumos de Lustre
+                  </MenuItem>
+                  <MenuItem value="Insumos Varios">Insumos Varios</MenuItem>
+                  <MenuItem value="Herrajes para Aberturas de PVC">
+                    Herrajes para Aberturas de PVC
+                  </MenuItem>
+                  <MenuItem value="Herrajes para Puertas de Madera">
+                    Herrajes para Puertas de Madera
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item sx={{ width: "50%" }}>
+              <FormControl className="form-floating w-100 ">
+                <InputLabel>Material</InputLabel>
+                <Select
+                  className="form-select my-3 w-100"
+                  name="Terminacion"
+                  value={Detalle}
+                  onChange={(e) => [
+                    setDetalle(e.target.value),
+                    console.log(e.target.value),
+                  ]}
+                >
+                  <MenuItem disabled value="">
+                    Seleccionar un material
+                  </MenuItem>
+                  {FilteredMateriales.map((material) => (
+                    <MenuItem key={material._id} value={material.Descripcion}>
+                      {material.Descripcion}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+
+          <Typography variant="body2">
+            Descripción: Material utilizado para la producción de los marcos de
+            madera de cada puerta.
           </Typography>
 
           <Button
@@ -104,7 +188,7 @@ const AddMaterialMarcoModal = ({ open, onClose, onConceptCreation }) => {
             type="submit"
             className="mt-3"
           >
-            Crear Concepto de Pago
+            Seleccionar Material
           </Button>
         </form>
       </Paper>

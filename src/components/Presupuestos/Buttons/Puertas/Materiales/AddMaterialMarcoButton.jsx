@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import AddMaterialMarcoModal from "../../../Modal/Puertas/Materiales/AddMaterialMarcoModal";
 
-export default function AddMaterialMarcoButton({ onConceptCreation }) {
+export default function AddMaterialMarcoButton() {
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -20,11 +20,7 @@ export default function AddMaterialMarcoButton({ onConceptCreation }) {
       <IconButton onClick={handleClick} size="small">
         <NoteAddIcon />
       </IconButton>
-      <AddMaterialMarcoModal
-        open={modalOpen}
-        onClose={handleCloseModal}
-        onConceptCreation={onConceptCreation}
-      />
+      <AddMaterialMarcoModal open={modalOpen} onClose={handleCloseModal} />
     </Grid>
   );
 }

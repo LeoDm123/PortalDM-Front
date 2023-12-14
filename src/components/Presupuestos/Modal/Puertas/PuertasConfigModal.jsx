@@ -31,8 +31,16 @@ const PuertasConfigModal = ({ open, onClose }) => {
           </Grid>
           <DividerTitle />
         </Grid>
-        <Grid>
-          <MaterialesMarcosList />
+        <Grid container spacing={1} sx={{ width: "100%" }}>
+          <Grid item>
+            <MaterialesMarcosList />
+          </Grid>
+          <Grid item>
+            <MaterialesMarcosList />
+          </Grid>
+          <Grid item>
+            <MaterialesMarcosList />
+          </Grid>
         </Grid>
       </Paper>
     </Modal>
