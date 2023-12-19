@@ -15,11 +15,10 @@ import serverAPI from "../../../../../api/serverAPI";
 import Button from "@mui/material/Button";
 import fetchMats from "../../../../../hooks/Materiales/fetchMats";
 
-const AddMaterialMarcoModal = ({ open, onClose }) => {
+const AddMaterialHojaModal = ({ open, onClose }) => {
   const Materiales = fetchMats();
   const [Detalle, setDetalle] = useState("");
   const [Categoria, setCategoria] = useState("");
-  const [Caracteristica, setCaracteristica] = useState("");
   const [MatId, setMatId] = useState("");
   const [FilteredMateriales, setFilteredMateriales] = useState([]);
 
@@ -34,14 +33,13 @@ const AddMaterialMarcoModal = ({ open, onClose }) => {
     }
   }, [Detalle, Materiales]);
 
-  const crearComponenteMarco = async (Detalle) => {
+  const crearComponenteHoja = async (Detalle) => {
     try {
       const resp = await serverAPI.post(
-        "/presPuertasSettings/crearComponenteMarco",
+        "/presPuertasSettings/crearComponenteHoja",
         {
           Detalle,
           MatId,
-          Caracteristica,
         }
       );
 
@@ -52,7 +50,6 @@ const AddMaterialMarcoModal = ({ open, onClose }) => {
 
         setDetalle("");
         setMatId("");
-        setCaracteristica("");
 
         SwAlertOk();
         onClose();
@@ -95,7 +92,7 @@ const AddMaterialMarcoModal = ({ open, onClose }) => {
       return;
     }
 
-    crearComponenteMarco(Detalle);
+    crearComponenteHoja(Detalle);
   };
 
   return (
@@ -112,12 +109,12 @@ const AddMaterialMarcoModal = ({ open, onClose }) => {
       >
         <form id="registerForm" onSubmit={handleSubmit}>
           <div className="d-flex justify-content-between mb-2">
-            <h1 className="h3">Asignar Componente de Marco</h1>
+            <h1 className="h3">Asignar Componente de Hoja</h1>
             <HighlightOffIcon onClick={onClose} fontSize="large" />
           </div>
 
           <Grid container spacing={1}>
-            <Grid item sx={{ width: "40%" }}>
+            <Grid item sx={{ width: "50%" }}>
               <FormControl className="form-floating w-100">
                 <InputLabel htmlFor="categoria">Categoría:</InputLabel>
                 <Select
@@ -154,7 +151,7 @@ const AddMaterialMarcoModal = ({ open, onClose }) => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item sx={{ width: "40%" }}>
+            <Grid item sx={{ width: "50%" }}>
               <FormControl className="form-floating w-100 ">
                 <InputLabel>Material</InputLabel>
                 <Select
@@ -174,29 +171,10 @@ const AddMaterialMarcoModal = ({ open, onClose }) => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item sx={{ width: "20%" }}>
-              <FormControl className="form-floating w-100">
-                <InputLabel htmlFor="categoria">Caracteristica:</InputLabel>
-                <Select
-                  className="form-select my-3 w-100"
-                  name="Caracteristica"
-                  value={Caracteristica}
-                  onChange={(e) => setCaracteristica(e.target.value)}
-                >
-                  <MenuItem value="">
-                    Seleccionar una caracteristica de producto
-                  </MenuItem>
-                  <MenuItem value="Madera Maciza">Madera Maciza</MenuItem>
-                  <MenuItem value="Tablero Multilaminado">
-                    Tablero Multilaminado
-                  </MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
           </Grid>
 
           <Typography variant="body2">
-            Descripción: Material utilizado para la producción de los marcos de
+            Descripción: Material utilizado para la producción de las hojas de
             madera de cada puerta.
           </Typography>
 
@@ -215,4 +193,4 @@ const AddMaterialMarcoModal = ({ open, onClose }) => {
   );
 };
 
-export default AddMaterialMarcoModal;
+export default AddMaterialHojaModal;

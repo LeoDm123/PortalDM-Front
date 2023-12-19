@@ -9,19 +9,19 @@ import {
   Paper,
 } from "@mui/material";
 import { DividerTitle } from "../../../../Dividers";
-import useFetchMaterialesMarco from "../../../../../hooks/Presupuestos/Puertas/Config/fetchMaterialMarco";
-import AddMaterialMarcoButton from "../../../Buttons/Puertas/Materiales/AddMaterialMarcoButton";
+import useFetchMaterialesRelleno from "../../../../../hooks/Presupuestos/Puertas/Config/fetchMaterialRelleno";
+import AddMaterialRellenoButton from "../../../Buttons/Puertas/Materiales/AddMaterialRellenoButton";
 import fetchMats from "../../../../../hooks/Materiales/fetchMats";
-import DeleteMaterialesMarco from "../../../../../hooks/Presupuestos/Puertas/Config/deleteMaterialMarco";
+import DeleteMaterialesRelleno from "../../../../../hooks/Presupuestos/Puertas/Config/deleteMaterialRelleno";
 import DeleteButton from "../../../../DeleteButton";
 import FormatCurrency from "../../../../../hooks/formatCurrency";
 
-const MaterialesMarcosList = () => {
+const MaterialesRellenoList = () => {
   const [onCreation, setOnCreation] = useState(false);
-  const { loading, materialesMarco, fetchMaterialesMarco } =
-    useFetchMaterialesMarco();
+  const { loading, materialesRelleno, fetchMaterialesRelleno } =
+    useFetchMaterialesRelleno();
   const Materiales = fetchMats();
-  const { deleteMaterialesMarco, error } = DeleteMaterialesMarco();
+  const { deleteMaterialesRelleno, error } = DeleteMaterialesRelleno();
   const formatCurrency = FormatCurrency();
   const [Mats, setMats] = useState([]);
 
@@ -30,13 +30,13 @@ const MaterialesMarcosList = () => {
   };
 
   useEffect(() => {
-    if (materialesMarco.length === 0) {
+    if (materialesRelleno.length === 0) {
       return;
     }
 
     const fetchCostForMaterial = async () => {
       const updatedMats = await Promise.all(
-        materialesMarco.map(async (material) => {
+        materialesRelleno.map(async (material) => {
           const matchingMaterial = Materiales.find(
             (m) => m._id === material.MatId
           );
@@ -55,8 +55,8 @@ const MaterialesMarcosList = () => {
     };
 
     fetchCostForMaterial();
-    fetchMaterialesMarco();
-  }, [materialesMarco, Materiales, onCreation]);
+    fetchMaterialesRelleno();
+  }, [materialesRelleno, Materiales, onCreation]);
 
   const handleDeleteMaterial = async (index) => {
     swal({
@@ -67,8 +67,8 @@ const MaterialesMarcosList = () => {
       dangerMode: true,
     }).then(async (willCancel) => {
       if (willCancel) {
-        deleteMaterialesMarco(index);
-        fetchMaterialesMarco();
+        deleteMaterialesRelleno(index);
+        fetchMaterialesRelleno();
       }
     });
   };
@@ -77,9 +77,9 @@ const MaterialesMarcosList = () => {
     <Paper elevation={5} sx={{ p: 1 }}>
       <Grid sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant="h6" sx={{ color: "#01662b" }}>
-          Materiales de Marco
+          Materiales de Relleno
         </Typography>
-        <AddMaterialMarcoButton />
+        <AddMaterialRellenoButton />
       </Grid>
       <DividerTitle />
       <Grid
@@ -120,4 +120,4 @@ const MaterialesMarcosList = () => {
   );
 };
 
-export default MaterialesMarcosList;
+export default MaterialesRellenoList;

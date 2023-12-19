@@ -6,6 +6,10 @@ import Title from "../../../Title";
 import { DividerTitle } from "../../../Dividers";
 import CloseButton from "../../../CloseButton";
 import MaterialesMarcosList from "../../Lists/Puertas/Materiales/MaterialesMarcosList";
+import MaterialesHojaList from "../../Lists/Puertas/Materiales/MaterialesHojaList";
+import MaterialesRellenoList from "../../Lists/Puertas/Materiales/MaterialesRellenoList";
+import ApliquesList from "../../Lists/Puertas/Terminaciones/ApliquesList";
+import TerminacionesList from "../../Lists/Puertas/Terminaciones/TerminacionesList";
 
 const PuertasConfigModal = ({ open, onClose }) => {
   return (
@@ -17,6 +21,8 @@ const PuertasConfigModal = ({ open, onClose }) => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
+          width: "100%",
+          height: "100%",
         }}
         className="CreateModal"
       >
@@ -31,15 +37,31 @@ const PuertasConfigModal = ({ open, onClose }) => {
           </Grid>
           <DividerTitle />
         </Grid>
-        <Grid container spacing={1} sx={{ width: "100%" }}>
-          <Grid item>
+        <Grid
+          container
+          spacing={1}
+          sx={{ width: "100%", display: "Flex", marginTop: 1 }}
+        >
+          <Grid item lg>
             <MaterialesMarcosList />
           </Grid>
-          <Grid item>
-            <MaterialesMarcosList />
+          <Grid item lg>
+            <MaterialesHojaList />
           </Grid>
-          <Grid item>
-            <MaterialesMarcosList />
+          <Grid item lg>
+            <MaterialesRellenoList />
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          spacing={1}
+          sx={{ width: "100%", display: "Flex", marginTop: 1 }}
+        >
+          <Grid item lg>
+            <ApliquesList />
+          </Grid>
+          <Grid item lg>
+            <TerminacionesList />
           </Grid>
         </Grid>
       </Paper>

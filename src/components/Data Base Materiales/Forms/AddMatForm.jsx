@@ -100,9 +100,10 @@ const AddMatForm = ({ onClose, onMatSubmit }) => {
             onChange={(e) => setUnidad(e.target.value)}
           >
             <MenuItem value="">Seleccionar una unidad de medida</MenuItem>
-            <MenuItem value="ml">Metro Lineal [ml.]</MenuItem>
+            <MenuItem value="ml">Metro lineal [ml.]</MenuItem>
             <MenuItem value="m2">Metro cuadrado [m2.]</MenuItem>
             <MenuItem value="m3">Metro cúbico [m3.]</MenuItem>
+            <MenuItem value="m3">Pie cuadrado [pie2.]</MenuItem>
             <MenuItem value="u">Unidad [u.]</MenuItem>
           </Select>
         </FormControl>
@@ -162,6 +163,7 @@ const AddMatForm = ({ onClose, onMatSubmit }) => {
             <MenuItem value="G.U. Herrajes">G.U. Herrajes</MenuItem>
             <MenuItem value="Madergold">Madergold</MenuItem>
             <MenuItem value="Maderplak">Maderplak</MenuItem>
+            <MenuItem value="MS Maderas">MS Maderas</MenuItem>
             <MenuItem value="Vancar">Vancar</MenuItem>
             <MenuItem value="Würth">Würth</MenuItem>
             <MenuItem value="Pinturería Silva">Pinturería Silva</MenuItem>

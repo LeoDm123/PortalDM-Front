@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   Typography,
   Table,
+  TableHead,
   TableBody,
   TableCell,
   TableRow,
@@ -9,19 +10,19 @@ import {
   Paper,
 } from "@mui/material";
 import { DividerTitle } from "../../../../Dividers";
-import useFetchMaterialesMarco from "../../../../../hooks/Presupuestos/Puertas/Config/fetchMaterialMarco";
-import AddMaterialMarcoButton from "../../../Buttons/Puertas/Materiales/AddMaterialMarcoButton";
+import useFetchTerminaciones from "../../../../../hooks/Presupuestos/Puertas/Config/fetchTerminaciones";
+import AddTerminacionButton from "../../../Buttons/Puertas/Terminaciones/AddTerminacionButton";
 import fetchMats from "../../../../../hooks/Materiales/fetchMats";
-import DeleteMaterialesMarco from "../../../../../hooks/Presupuestos/Puertas/Config/deleteMaterialMarco";
+import DeleteTerminaciones from "../../../../../hooks/Presupuestos/Puertas/Config/deleteTerminaciones";
 import DeleteButton from "../../../../DeleteButton";
 import FormatCurrency from "../../../../../hooks/formatCurrency";
 
-const MaterialesMarcosList = () => {
+const TerminacionesList = () => {
   const [onCreation, setOnCreation] = useState(false);
-  const { loading, materialesMarco, fetchMaterialesMarco } =
-    useFetchMaterialesMarco();
+  const { loading, Terminaciones, fetchTerminaciones } =
+    useFetchTerminaciones();
   const Materiales = fetchMats();
-  const { deleteMaterialesMarco, error } = DeleteMaterialesMarco();
+  const { deleteTerminaciones, error } = DeleteTerminaciones();
   const formatCurrency = FormatCurrency();
   const [Mats, setMats] = useState([]);
 
@@ -30,13 +31,13 @@ const MaterialesMarcosList = () => {
   };
 
   useEffect(() => {
-    if (materialesMarco.length === 0) {
+    if (Terminaciones.length === 0) {
       return;
     }
 
     const fetchCostForMaterial = async () => {
       const updatedMats = await Promise.all(
-        materialesMarco.map(async (material) => {
+        Terminaciones.map(async (material) => {
           const matchingMaterial = Materiales.find(
             (m) => m._id === material.MatId
           );
@@ -55,8 +56,8 @@ const MaterialesMarcosList = () => {
     };
 
     fetchCostForMaterial();
-    fetchMaterialesMarco();
-  }, [materialesMarco, Materiales, onCreation]);
+    fetchTerminaciones();
+  }, [Terminaciones, Materiales, onCreation]);
 
   const handleDeleteMaterial = async (index) => {
     swal({
@@ -67,8 +68,8 @@ const MaterialesMarcosList = () => {
       dangerMode: true,
     }).then(async (willCancel) => {
       if (willCancel) {
-        deleteMaterialesMarco(index);
-        fetchMaterialesMarco();
+        deleteTerminaciones(index);
+        fetchTerminaciones();
       }
     });
   };
@@ -77,9 +78,9 @@ const MaterialesMarcosList = () => {
     <Paper elevation={5} sx={{ p: 1 }}>
       <Grid sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant="h6" sx={{ color: "#01662b" }}>
-          Materiales de Marco
+          Terminaciones
         </Typography>
-        <AddMaterialMarcoButton />
+        <AddTerminacionButton />
       </Grid>
       <DividerTitle />
       <Grid
@@ -101,12 +102,41 @@ const MaterialesMarcosList = () => {
         }}
       >
         <Table stickyHeader size="medium">
+          <TableHead>
+            <TableRow>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
+                Detalle
+              </TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
+                Precio
+              </TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              >
+                Porc. %
+              </TableCell>
+              <TableCell
+                sx={{ backgroundColor: "#E1E3E1" }}
+                className="text-center fw-bold"
+              ></TableCell>
+            </TableRow>
+          </TableHead>
           <TableBody>
-            {Mats.map((material, index) => (
+            {Terminaciones.map((aplique, index) => (
               <TableRow key={index}>
-                <TableCell className="text-left">{material.Detalle}</TableCell>
+                <TableCell className="text-left">{aplique.Detalle}</TableCell>
                 <TableCell className="text-center">
-                  {formatCurrency(material.Costo)}
+                  {formatCurrency(aplique.Precio)}
+                </TableCell>
+                <TableCell className="text-center">
+                  {aplique.Porcentaje}
                 </TableCell>
                 <TableCell className="text-center">
                   <DeleteButton onDelete={() => handleDeleteMaterial(index)} />
@@ -120,4 +150,4 @@ const MaterialesMarcosList = () => {
   );
 };
 
-export default MaterialesMarcosList;
+export default TerminacionesList;
