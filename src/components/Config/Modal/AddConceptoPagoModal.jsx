@@ -4,12 +4,9 @@ import Paper from "@mui/material/Paper";
 import { useState } from "react";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
 import swal from "sweetalert";
 import serverAPI from "../../../api/serverAPI";
 import Button from "@mui/material/Button";
-import Title from "../../Title";
-import { DividerTitle } from "../../Dividers";
 import { Typography } from "@mui/material";
 
 const AddConceptoPagoModal = ({ open, onClose, onConceptCreation }) => {

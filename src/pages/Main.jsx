@@ -18,7 +18,6 @@ const Main = () => {
         content={
           <Container maxWidth="xl" sx={{ mt: 2 }}>
             <Grid container spacing={1}>
-              {/* BOTONERA */}
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
                   sx={{
@@ -31,7 +30,6 @@ const Main = () => {
                   <ButtonChart />
                 </Paper>
               </Grid>
-              {/* Recent Deposits */}
               <Grid item xs={12} md={4} lg={3}>
                 <Paper
                   sx={{
@@ -44,7 +42,6 @@ const Main = () => {
                   <Deposits />
                 </Paper>
               </Grid>
-              {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper
                   sx={{

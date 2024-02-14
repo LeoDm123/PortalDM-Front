@@ -1,49 +1,41 @@
 import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Typography,
-  TextField,
-  List,
-  ListItem,
-  Grid,
-} from "@mui/material";
+import { TextField, Grid } from "@mui/material";
 import Title from "../../../../Title";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import swal from "sweetalert";
 import serverAPI from "../../../../../api/serverAPI";
 import Button from "@mui/material/Button";
 import fetchMats from "../../../../../hooks/Materiales/fetchMats";
+import useFetchTerminaciones from "../../../../../hooks/Presupuestos/Puertas/Config/fetchTerminaciones";
 import { DividerSecondary } from "../../../../Dividers";
-import AddInsumosTerminacionForm from "../../../Forms/Puertas/Terminaciones/AddInsumosTerminacionForm";
+import InfoInsumosTerminacionForm from "../../../Forms/Puertas/Terminaciones/InfoInsumosTerminacionForm";
 
-const AddTerminacionModal = ({ open, onClose }) => {
-  const Materiales = fetchMats();
+const InfoTerminacionModal = ({ open, onClose, terminacionIndex }) => {
+  const { loading, Terminaciones, fetchTerminaciones } =
+    useFetchTerminaciones();
+  const terminacion = Terminaciones[terminacionIndex];
+  const [editedMats, setEditedMats] = useState([]);
   const [Detalle, setDetalle] = useState("");
-  const [materialesFromChild, setMaterialesFromChild] = useState([]);
 
   useEffect(() => {
-    if (Detalle) {
-      const selectedMaterial = Materiales.find(
-        (material) => material.Descripcion === Detalle
-      );
-      if (selectedMaterial) {
-        setMatId(selectedMaterial._id);
-      }
-    }
-  }, [Detalle, Materiales]);
+    setDetalle(terminacion?.Detalle);
+    setEditedMats(terminacion?.Materiales || []);
+  }, [terminacion]);
 
-  const crearTerminacion = async (Detalle) => {
+  const handleMaterialesChange = (materiales) => {
+    setEditedMats(materiales);
+  };
+
+  const editarTerminacion = async (Detalle) => {
     try {
-      const resp = await serverAPI.post(
-        "/presPuertasSettings/crearTerminacion",
+      const resp = await serverAPI.put(
+        "/presPuertasSettings/editarTerminacion",
         {
+          terminacionIndex,
           Detalle,
-          materialesFromChild,
+          editedMats,
         }
       );
 
@@ -86,11 +78,7 @@ const AddTerminacionModal = ({ open, onClose }) => {
       return;
     }
 
-    crearTerminacion(Detalle, materialesFromChild);
-  };
-
-  const handleMaterialesChange = (materiales) => {
-    setMaterialesFromChild(materiales);
+    editarTerminacion(terminacionIndex, Detalle, editedMats);
   };
 
   return (
@@ -108,7 +96,7 @@ const AddTerminacionModal = ({ open, onClose }) => {
       >
         <form id="registerForm" onSubmit={handleSubmit}>
           <div className="d-flex justify-content-between mb-2">
-            <h1 className="h3">Asignar Terminación</h1>
+            <h1 className="h3">Información de Terminación</h1>
             <HighlightOffIcon onClick={onClose} fontSize="large" />
           </div>
 
@@ -129,8 +117,9 @@ const AddTerminacionModal = ({ open, onClose }) => {
           <DividerSecondary />
           <Grid>
             <Title>Insumos de terminación</Title>
-            <AddInsumosTerminacionForm
-              onMaterialesChange={handleMaterialesChange}
+            <InfoInsumosTerminacionForm
+              terminacionIndex={terminacionIndex}
+              onMatsEdit={handleMaterialesChange}
             />
           </Grid>
 
@@ -141,7 +130,7 @@ const AddTerminacionModal = ({ open, onClose }) => {
             type="submit"
             className="mt-3"
           >
-            Ingresar Terminación
+            Guardar Cambios
           </Button>
         </form>
       </Paper>
@@ -149,4 +138,4 @@ const AddTerminacionModal = ({ open, onClose }) => {
   );
 };
 
-export default AddTerminacionModal;
+export default InfoTerminacionModal;

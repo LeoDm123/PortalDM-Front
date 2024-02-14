@@ -51,7 +51,6 @@ const GestionarClientes = () => {
                 </Grid>
                 <OpenClientsConfigButton />
               </Grid>
-              {/* Listado de Clientes */}
               <Grid item xs={12} md={12} lg={12} display={"flex"}>
                 <Paper
                   sx={{

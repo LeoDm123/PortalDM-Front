@@ -16,6 +16,7 @@ import fetchMats from "../../../../../hooks/Materiales/fetchMats";
 import DeleteTerminaciones from "../../../../../hooks/Presupuestos/Puertas/Config/deleteTerminaciones";
 import DeleteButton from "../../../../DeleteButton";
 import FormatCurrency from "../../../../../hooks/formatCurrency";
+import InfoTerminacionButton from "../../../Buttons/Puertas/Terminaciones/InfoTerminacionButton";
 
 const TerminacionesList = () => {
   const [onCreation, setOnCreation] = useState(false);
@@ -31,23 +32,44 @@ const TerminacionesList = () => {
   };
 
   useEffect(() => {
-    if (Terminaciones.length === 0) {
-      return;
-    }
-
     const fetchCostForMaterial = async () => {
       const updatedMats = await Promise.all(
-        Terminaciones.map(async (material) => {
-          const matchingMaterial = Materiales.find(
-            (m) => m._id === material.MatId
+        Terminaciones.map(async (terminacion) => {
+          const materialesDeTerminacion = terminacion.Materiales;
+
+          const detallesMateriales = await Promise.all(
+            materialesDeTerminacion.map(async (materialTerminacion) => {
+              const matchingMaterial = Materiales.find(
+                (material) => material._id === materialTerminacion.ID
+              );
+
+              if (matchingMaterial) {
+                const { Presentacion, Cantidad } = materialTerminacion;
+                const Costo = matchingMaterial.Costo;
+
+                const costoTotalMaterial = (Costo / Presentacion) * Cantidad;
+
+                return { Costo, Presentacion, Cantidad, costoTotalMaterial };
+              } else {
+                return {
+                  Costo: 0,
+                  Presentacion: "No encontrado",
+                  Cantidad: 0,
+                  costoTotalMaterial: 0,
+                };
+              }
+            })
           );
-          const costo = matchingMaterial
-            ? matchingMaterial.Costo
-            : "No disponible";
+
+          const costoTotal = detallesMateriales.reduce(
+            (acc, detalle) => acc + detalle.costoTotalMaterial,
+            0
+          );
 
           return {
-            Detalle: material.Detalle,
-            Costo: costo,
+            ...terminacion,
+            costoTotal,
+            detallesMateriales,
           };
         })
       );
@@ -56,7 +78,6 @@ const TerminacionesList = () => {
     };
 
     fetchCostForMaterial();
-    fetchTerminaciones();
   }, [Terminaciones, Materiales, onCreation]);
 
   const handleDeleteMaterial = async (index) => {
@@ -119,9 +140,7 @@ const TerminacionesList = () => {
               <TableCell
                 sx={{ backgroundColor: "#E1E3E1" }}
                 className="text-center fw-bold"
-              >
-                Porc. %
-              </TableCell>
+              ></TableCell>
               <TableCell
                 sx={{ backgroundColor: "#E1E3E1" }}
                 className="text-center fw-bold"
@@ -129,17 +148,19 @@ const TerminacionesList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {Terminaciones.map((aplique, index) => (
+            {Mats.map((terminacion, index) => (
               <TableRow key={index}>
-                <TableCell className="text-left">{aplique.Detalle}</TableCell>
-                <TableCell className="text-center">
-                  {formatCurrency(aplique.Precio)}
+                <TableCell className="text-left">
+                  {terminacion.Detalle}
                 </TableCell>
                 <TableCell className="text-center">
-                  {aplique.Porcentaje}
+                  {formatCurrency(terminacion.costoTotal)}
                 </TableCell>
-                <TableCell className="text-center">
+                <TableCell className="text-center" sx={{ width: "5%" }}>
                   <DeleteButton onDelete={() => handleDeleteMaterial(index)} />
+                </TableCell>
+                <TableCell className="text-center" sx={{ width: "5%" }}>
+                  <InfoTerminacionButton terminacionIndex={index} />
                 </TableCell>
               </TableRow>
             ))}

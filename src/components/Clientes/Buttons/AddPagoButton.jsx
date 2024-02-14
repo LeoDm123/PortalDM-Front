@@ -2,7 +2,6 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import AddPago from "../../../pages/Clientes/Modals/AddPago";
 

@@ -36,9 +36,9 @@ const AddApliqueModal = ({ open, onClose }) => {
   const [FilteredMateriales, setFilteredMateriales] = useState([]);
 
   useEffect(() => {
-    if (Detalle) {
+    if (MatAsociado) {
       const selectedMaterial = Materiales.find(
-        (material) => material.Descripcion === Detalle
+        (material) => material.Descripcion === MatAsociado
       );
       if (selectedMaterial) {
         setMatId(selectedMaterial._id);
@@ -281,6 +281,7 @@ const AddApliqueModal = ({ open, onClose }) => {
                   <MenuItem value="Metro Cubico [m3.]">
                     Metro Cubico [m3.]
                   </MenuItem>
+                  <MenuItem value="Unidad [u.]">Unidad [u.]</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

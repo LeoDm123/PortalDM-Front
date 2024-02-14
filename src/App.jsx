@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 
 //Paginas Generales
 import Landing from "./pages/Landing";
@@ -19,7 +19,7 @@ import Config from "./pages/Config";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/Register" element={<Register />} />
@@ -36,7 +36,7 @@ function App() {
         {/* CONFIGURACION */}
         <Route path="/Config" element={<Config />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

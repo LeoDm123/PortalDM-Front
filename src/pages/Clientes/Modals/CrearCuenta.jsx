@@ -152,8 +152,6 @@ const CrearCuenta = ({ open, onClose, onClientCreation }) => {
             <h1 className="h3">Ingresar Cliente</h1>
             <HighlightOffIcon onClick={onClose} fontSize="large" />
           </div>
-
-          {/* NOMBRE O RAZON SOCIAL */}
           <div className="d-flex flex-direction-row">
             <div className="w-100 me-3">
               <TextField
@@ -163,8 +161,6 @@ const CrearCuenta = ({ open, onClose, onClientCreation }) => {
                 value={ClientName}
                 onChange={(e) => setClientName(e.target.value)}
               />
-
-              {/* APELLIDO */}
               <TextField
                 fullWidth
                 label="Apellido"
@@ -173,8 +169,6 @@ const CrearCuenta = ({ open, onClose, onClientCreation }) => {
                 value={ClientApellido}
                 onChange={(e) => setClientApellido(e.target.value)}
               />
-
-              {/* CONDICION IVA */}
               <FormControl variant="outlined" fullWidth className="mt-3">
                 <InputLabel id="ivaInputLabel">Condición de IVA</InputLabel>
                 <Select
@@ -192,11 +186,8 @@ const CrearCuenta = ({ open, onClose, onClientCreation }) => {
                   <MenuItem value="Consumidor Final">Consumidor Final</MenuItem>
                   <MenuItem value="Monotributista">Monotributista</MenuItem>
                   <MenuItem value="Exento">Exento</MenuItem>
-                  {/* Agrega más opciones según sea necesario */}
                 </Select>
               </FormControl>
-
-              {/* DNI */}
               <TextField
                 fullWidth
                 type="number"
@@ -206,8 +197,6 @@ const CrearCuenta = ({ open, onClose, onClientCreation }) => {
                 value={ClientDNI}
                 onChange={(e) => setClientDNI(e.target.value)}
               />
-
-              {/* CUIT */}
               <TextField
                 fullWidth
                 label="CUIT"
@@ -217,8 +206,6 @@ const CrearCuenta = ({ open, onClose, onClientCreation }) => {
                 onChange={handleCUITChange}
               />
             </div>
-
-            {/* DIRECCION */}
             <div className="w-100">
               <TextField
                 fullWidth
@@ -227,8 +214,6 @@ const CrearCuenta = ({ open, onClose, onClientCreation }) => {
                 value={ClientAdress}
                 onChange={(e) => setClientAdress(e.target.value)}
               />
-
-              {/* TELEFONO */}
               <TextField
                 fullWidth
                 type="number"
@@ -238,8 +223,6 @@ const CrearCuenta = ({ open, onClose, onClientCreation }) => {
                 value={ClientTel}
                 onChange={(e) => setClientTel(e.target.value)}
               />
-
-              {/* CORREO ELECTRONICO */}
               <TextField
                 fullWidth
                 type="email"

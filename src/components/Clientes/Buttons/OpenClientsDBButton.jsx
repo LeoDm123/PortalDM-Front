@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-import CrearCuenta from "../../../pages/Clientes/Modals/CrearCuenta";
 
 export default function OpenClientesDBButton() {
   const navigate = useNavigate();
