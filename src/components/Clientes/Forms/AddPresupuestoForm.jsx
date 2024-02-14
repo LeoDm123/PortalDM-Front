@@ -112,7 +112,7 @@ const AddPresupuesto = ({
               className="form-control mt-3 w-75 ms-3"
               name="CUIT"
               placeholder="CUIT"
-              value={clientByID.ClientCUIT}
+              value={clientByID.ClientCUIT || ""}
               disabled
               label="CUIT"
             />

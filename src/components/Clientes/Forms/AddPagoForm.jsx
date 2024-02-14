@@ -11,13 +11,14 @@ import {
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { crearPago } from "../../../hooks/Clientes/Pagos/crearPago";
 import fetchClientByID from "../../../hooks/Clientes/fetchClientByID";
+import getCurrentDate from "../../../hooks/getCurrentDate";
 
 const AddPagoForm = ({ onClose, selectedClientIndex, onSubmitPay }) => {
   const [PresupuestoCodigo, setPresupuestoCodigo] = useState("");
   const [PagoMonto, setPagoMonto] = useState(0);
   const [PagoCondicion, setPagoCondicion] = useState("");
   const [PagoConcepto, setPagoConcepto] = useState("");
-  const [FechaPago, setFechaPago] = useState("");
+  const [FechaPago, setFechaPago] = useState(getCurrentDate());
   const [PagoComprobante, setPagoComprobante] = useState("");
   const [Comentarios, setComentarios] = useState("");
   const [ClientCUIT, setClientCUIT] = useState("");
@@ -90,7 +91,7 @@ const AddPagoForm = ({ onClose, selectedClientIndex, onSubmitPay }) => {
           className="form-control mt-3 w-75 ms-3"
           name="CUIT"
           placeholder="CUIT"
-          value={clientByID.ClientCUIT}
+          value={clientByID.ClientCUIT || ""}
           disabled
           label="CUIT"
         />
